@@ -2,9 +2,12 @@ routes:
   /:
     as: addons.menu_editor
     uses: index
-  /edit:
+  /edit/{menu}:
     as: addons.menu_editor.edit
     uses: edit
   /new:
     as: addons.menu_editor.new
     uses: new
+  post@store:
+    as: addons.menu_editor.store
+    uses: store
