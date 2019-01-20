@@ -11,10 +11,10 @@
         <div class="card p-1">
             <div class="fieldset-builder">
                 <div class="form-group">
-                    <label class="block">Feed url</label>
-                    <input type="text" class="form-control mb-2" autofocus="autofocus" v-model="feedName">
+                    <label class="block">Feed url <i class="required">*</i></label>
+                    <input type="url" required class="form-control mb-2" autofocus="autofocus" v-model="feedName">
                     <button type="button" class="btn btn-primary" v-on:click="saveFeed">
-                        Save Menu
+                        Save Feed
                     </button>
                 </div>
             </div>
