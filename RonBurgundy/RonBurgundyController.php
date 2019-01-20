@@ -25,4 +25,14 @@ class RonBurgundyController extends Controller
     {
         return $this->view('edit');
     }
+
+    /**
+     * Maps to the new feed screen
+     *
+     * @return mixed
+     */
+    public function new()
+    {
+        return $this->view('new');
+    }
 }

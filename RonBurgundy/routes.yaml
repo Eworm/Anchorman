@@ -5,3 +5,6 @@ routes:
   /edit:
     as: addons.menu_editor.edit
     uses: edit
+  /new:
+    as: addons.menu_editor.new
+    uses: new

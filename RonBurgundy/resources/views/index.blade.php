@@ -4,7 +4,7 @@
 
     <div class="flex items-center mb-3">
         <h1 class="w-full text-center mb-2 md:mb-0 md:text-left md:w-auto md:flex-1">Syndication</h1>
-        <a href="" class="btn btn-primary">New feed</a>
+        <a href="{{ route('addons.menu_editor.new') }}" class="btn btn-primary">New feed</a>
     </div>
 
     <div class="card flush dossier-for-mobile">

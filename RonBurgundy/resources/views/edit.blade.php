@@ -87,7 +87,7 @@
                                             <td>NL</td>
                                         </tr>
                                         <tr>
-                                            <td>Last built:</td>
+                                            <td>Last build:</td>
                                             <td>Sun, 20 Jan 2019 19:32:36 +0100</td>
                                         </tr>
 
