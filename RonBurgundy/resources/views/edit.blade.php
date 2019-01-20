@@ -53,11 +53,31 @@
 
                         </div>
 
-                        <ul>
-                            <li>Scheduling (manually add minutes)</li>
-                            <li>Publish or draft new articles</li>
-                            <li>Permalinks point to</li>
-                        </ul>
+                        <div class="form-group">
+
+                            <div class="field-inner">
+                                <label class="block">
+                                    Scheduling
+                                </label>
+                                <div class="help-block">Time in minutes</div>
+                                <input type="number" class="form-control type-number">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="field-inner">
+                                <label class="block">
+                                    Publish or draft new articles
+                                </label>
+                                <ul>
+                                    <li>Publish</li>
+                                    <li>Draft</li>
+                                </ul>
+                            </div>
+
+                        </div>
 
                     </div>
 
