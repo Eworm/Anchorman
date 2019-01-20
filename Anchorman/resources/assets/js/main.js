@@ -1,2 +1,2 @@
 // Vue.component('bkmenulist', require('./components/BkMenuList.vue'));
-Vue.component('rbnewfeed', require('./components/RbNewFeed.vue'));
+Vue.component('amnewfeed', require('./components/AmNewFeed.vue'));

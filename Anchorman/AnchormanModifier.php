@@ -1,10 +1,10 @@
 <?php
 
-namespace Statamic\Addons\RonBurgundy;
+namespace Statamic\Addons\Anchorman;
 
 use Statamic\Extend\Modifier;
 
-class RonBurgundyModifier extends Modifier
+class AnchormanModifier extends Modifier
 {
     /**
      * Modify a value

@@ -1,10 +1,10 @@
 <?php
 
-namespace Statamic\Addons\RonBurgundy;
+namespace Statamic\Addons\Anchorman;
 
 use Statamic\Extend\ServiceProvider;
 
-class RonBurgundyServiceProvider extends ServiceProvider
+class AnchormanServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.

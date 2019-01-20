@@ -1,12 +1,12 @@
 <?php
 
-namespace Statamic\Addons\RonBurgundy;
+namespace Statamic\Addons\Anchorman;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Statamic\Extend\Controller;
 
-class RonBurgundyController extends Controller
+class AnchormanController extends Controller
 {
     /**
      * Maps to the index
@@ -15,7 +15,7 @@ class RonBurgundyController extends Controller
      */
     public function index()
     {
-        $feeds_storage  = Storage::files('/site/storage/addons/RonBurgundy');
+        $feeds_storage  = Storage::files('/site/storage/addons/Anchorman');
         $feeds          = [];
 
         if (!$feeds_storage) {
@@ -23,7 +23,7 @@ class RonBurgundyController extends Controller
         }
 
         foreach ($feeds_storage as $feed) {
-            $add = str_replace('site/storage/addons/RonBurgundy/', '', $feed);
+            $add = str_replace('site/storage/addons/Anchorman/', '', $feed);
             $add = str_replace('.json', '', $add);
             $feeds[] = $add;
         }

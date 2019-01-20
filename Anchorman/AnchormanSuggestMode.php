@@ -1,8 +1,8 @@
-<?php namespace Statamic\Addons\RonBurgundy;
+<?php namespace Statamic\Addons\Anchorman;
 
 use Statamic\Addons\Suggest\Modes\AbstractMode;
 
-class RonBurgundySuggestMode extends AbstractMode
+class AnchormanSuggestMode extends AbstractMode
 {
     public function suggestions()
     {

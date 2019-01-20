@@ -1,11 +1,11 @@
 <?php
 
-namespace Statamic\Addons\RonBurgundy;
+namespace Statamic\Addons\Anchorman;
 
 use Statamic\API\Nav;
 use Statamic\Extend\Listener;
 
-class RonBurgundyListener extends Listener
+class AnchormanListener extends Listener
 {
     /**
      * The events to be listened for, and the methods to call.

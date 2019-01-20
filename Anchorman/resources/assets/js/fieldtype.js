@@ -1,8 +1,8 @@
-Vue.component('ron_burgundy-fieldtype', {
+Vue.component('anchorman-fieldtype', {
 
     mixins: [Fieldtype],
 
-    template: '<div>RonBurgundy</div>',
+    template: '<div>Anchorman</div>',
 
     data: function() {
         return {

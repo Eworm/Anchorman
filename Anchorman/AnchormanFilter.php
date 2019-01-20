@@ -1,10 +1,10 @@
 <?php
 
-namespace Statamic\Addons\RonBurgundy;
+namespace Statamic\Addons\Anchorman;
 
 use Statamic\Extend\Filter;
 
-class RonBurgundyFilter extends Filter
+class AnchormanFilter extends Filter
 {
     /**
      * Perform filtering on a collection

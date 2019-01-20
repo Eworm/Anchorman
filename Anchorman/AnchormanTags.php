@@ -1,13 +1,13 @@
 <?php
 
-namespace Statamic\Addons\RonBurgundy;
+namespace Statamic\Addons\Anchorman;
 
 use Statamic\Extend\Tags;
 
-class RonBurgundyTags extends Tags
+class AnchormanTags extends Tags
 {
     /**
-     * The {{ ron_burgundy }} tag
+     * The {{ anchorman }} tag
      *
      * @return string|array
      */
@@ -17,7 +17,7 @@ class RonBurgundyTags extends Tags
     }
 
     /**
-     * The {{ ron_burgundy:example }} tag
+     * The {{ anchorman:example }} tag
      *
      * @return string|array
      */

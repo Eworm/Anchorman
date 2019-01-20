@@ -1,11 +1,11 @@
 <?php
 
-namespace Statamic\Addons\RonBurgundy;
+namespace Statamic\Addons\Anchorman;
 
 use Statamic\Extend\Tasks;
 use Illuminate\Console\Scheduling\Schedule;
 
-class RonBurgundyTasks extends Tasks
+class AnchormanTasks extends Tasks
 {
     /**
      * Define the task schedule

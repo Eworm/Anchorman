@@ -1,10 +1,10 @@
 <?php
 
-namespace Statamic\Addons\RonBurgundy;
+namespace Statamic\Addons\Anchorman;
 
 use Statamic\Extend\Fieldtype;
 
-class RonBurgundyFieldtype extends Fieldtype
+class AnchormanFieldtype extends Fieldtype
 {
     /**
      * The blank/default value

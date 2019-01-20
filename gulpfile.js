@@ -6,6 +6,6 @@ require('laravel-elixir-vue');
 
 elixir(function(mix) {
     mix.webpack([
-        './RonBurgundy/resources/assets/js/main.js'
-    ], './RonBurgundy/resources/assets/js/scripts.js');
+        './Anchorman/resources/assets/js/main.js'
+    ], './Anchorman/resources/assets/js/scripts.js');
 });

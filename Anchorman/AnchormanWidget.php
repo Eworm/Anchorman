@@ -1,10 +1,10 @@
 <?php
 
-namespace Statamic\Addons\RonBurgundy;
+namespace Statamic\Addons\Anchorman;
 
 use Statamic\Extend\Widget;
 
-class RonBurgundyWidget extends Widget
+class AnchormanWidget extends Widget
 {
     /**
      * The HTML that should be shown in the widget

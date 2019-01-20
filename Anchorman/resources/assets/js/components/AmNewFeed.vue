@@ -14,12 +14,12 @@ export default {
             console.log('test');
             if (this.feedName !== '') {
                 this.$http.post(
-                    cp_url("addons/ron-burgundy/store"), {
+                    cp_url("addons/anchorman/store"), {
                         feed_name: this.feedName
                     },
                     function(res) {
                         console.log(res);
-                        // location.href = cp_url('addons/ron-burgundy/edit/') + res.feed
+                        // location.href = cp_url('addons/anchorman/edit/') + res.feed
                     }
                 )
             } else {

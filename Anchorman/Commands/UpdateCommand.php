@@ -1,6 +1,6 @@
 <?php
 
-namespace Statamic\Addons\RonBurgundy\Commands;
+namespace Statamic\Addons\Anchorman\Commands;
 
 use SimplePie;
 use Statamic\API\Entry;
@@ -13,7 +13,7 @@ class UpdateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'ronburgundy:update';
+    protected $signature = 'anchorman:update';
 
     /**
      * The console command description.
