@@ -3,7 +3,6 @@
 namespace Statamic\Addons\RonBurgundy\Commands;
 
 use SimplePie;
-use Illuminate\Support\Facades\Storage;
 use Statamic\API\Entry;
 use Statamic\Extend\Command;
 
@@ -40,21 +39,43 @@ class UpdateCommand extends Command
     {
 
         //
+        $url = 'https://woutmager.nl/dvhn.rss';
+
         $feed = new SimplePie();
         $feed->set_cache_location('local/cache');
         $feed->set_feed_url(array(
-            'https://woutmager.nl/dvhn.rss'
+            $url
         ));
         $feed->init();
 
+        $bar = $this->output->createProgressBar($feed->get_item_quantity());
+        $bar->start();
+
         foreach ($feed->get_items() as $item):
-            Entry::create(slugify($item->get_title()))
-                ->collection('feed')
-                ->with(['title' => $item->get_title()])
-                ->date($item->get_date('Y-m-d'))
-                ->save();
+
+            $slugged = slugify($item->get_title());
+
+            if (Entry::slugExists($slugged, 'feed')) {
+
+                // $this->info($item->get_title() . " <fg=red>already exists</>");
+
+            } else {
+
+                Entry::create($slugged)
+                    ->collection('feed')
+                    ->with(['title' => $item->get_title()])
+                    ->date($item->get_date('Y-m-d'))
+                    ->save();
+
+                $bar->advance();
+                // $this->info($item->get_title() . ' <fg=red>created</>');
+
+            }
+
         endforeach;
-        echo 'Update of https://woutmager.nl/dvhn.rss complete. ' . $itemCount=$feed->get_item_quantity() . ' articles created';
+
+        $bar->finish();
+        $this->info("\nUpdate of " . $url . " complete.");
 
     }
 }

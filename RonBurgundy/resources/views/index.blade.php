@@ -38,7 +38,6 @@
                         <div class="btn-group action-more">
                             <button type="button" class="btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="icon icon-dots-three-vertical"></i> </button>
                             <ul class="dropdown-menu">
-                                <li><a href="http://statamic-rss.localhost/cp/collections/entries/blog/what-i-did-last-summer">Edit</a></li>
                                 <li class="warning">
                                     <a href="#">Delete</a>
                                 </li>

@@ -19,7 +19,14 @@
 
                         <div class="form-group title-meta-fieldtype w-2/3">
 
-                            Quam diu etiam furor iste tuus nos eludet? Unam incolunt Belgae, aliam Aquitani, tertiam.
+                            <ul>
+                                <li>Choose a collection</li>
+                                <li>Add a url</li>
+                                <li>Refresh now</li>
+                                <li>Scheduling (manually add minutes)</li>
+                                <li>Publish or draft new articles</li>
+                                <li>Permalinks point to</li>
+                            </ul>
 
                         </div>
 
