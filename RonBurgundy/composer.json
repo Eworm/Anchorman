@@ -1,0 +1,7 @@
+{
+    "name": "wout-mager/ronburgundy",
+    "require": {
+        "willvincent/feeds": "1.1.*",
+        "simplepie/simplepie": "1.5.*"
+    }
+}

@@ -1,0 +1,7 @@
+routes:
+  /:
+    as: addons.menu_editor
+    uses: index
+  /edit:
+    as: addons.menu_editor.edit
+    uses: edit
