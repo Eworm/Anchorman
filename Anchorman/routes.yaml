@@ -5,9 +5,9 @@ routes:
   /edit/{feed}:
     as: addons.menu_editor.edit
     uses: edit
-  /new:
-    as: addons.menu_editor.new
-    uses: new
+  /create:
+    as: addons.menu_editor.create
+    uses: create
   post@store:
     as: addons.menu_editor.store
     uses: store
