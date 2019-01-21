@@ -2,75 +2,76 @@
 
 @section('content')
 
-    <amlist inline-template>
+<amlist inline-template>
 
     <div class="flex items-center mb-3">
-        <h1 class="w-full text-center mb-2 md:mb-0 md:text-left md:w-auto md:flex-1">Syndication</h1>
+        <h1 class="flex-1">Your feeds</h1>
         <a href="{{ route('addons.menu_editor.create') }}" class="btn btn-primary">Create feed</a>
     </div>
 
-    <div class="card flush dossier-for-mobile">
-    <div class="dossier-table-wrapper">
-        <table class="dossier has-checkboxes">
-            <thead>
-                <tr>
-                    <th class="column-title active column-sortable">
-                        Name
-                    </th>
-                    <th class="column-slug column-sortable">
-                        Feed
-                    </th>
-                    <th class="column-date column-sortable">
-                        Updated
-                        <i class="icon icon-chevron-down"></i>
-                    </th>
-                    <th class="column-actions"></th>
-                </tr>
-            </thead>
-            <tbody>
+    <div class="card flush dossier">
 
-                @foreach ($feeds as $feed)
+        <div class="dossier-table-wrapper">
 
+            <table class="dossier">
+
+                <thead>
                     <tr>
-
-                        <td class="cell-title first-cell">
-                            <span class="column-label">Title</span>
-                            <a href="{{ route('addons.menu_editor.edit', $feed->name) }}" title="Edit {{ $feed->title }}">
-                                {{ $feed->title }}
-                            </a>
-                        </td>
-
-                        <td>
-                            <span class="column-label">Feed</span>
-                            <span>{{ $feed->permalink }}</span>
-                        </td>
-
-                        <td>
-                            <span class="column-label">Updated</span>
-                            <span>
-                                Last checked 1 uur ago
-                            </span>
-                        </td>
-
-                        <td class="column-actions">
-                            <div class="btn-group action-more">
-                                <button type="button" class="btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="icon icon-dots-three-vertical"></i> </button>
-                                <ul class="dropdown-menu">
-                                    <li class="warning" @click="deleteFeed('{{ $feed->title }}')">
-                                        <a href="#" title="Delete this feed">Delete</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-
+                        <th class="column-title">Name</th>
+                        <th class="column-slug">Feed</th>
+                        <th class="column-date">Updated</th>
+                        <th class="column-actions"></th>
                     </tr>
+                </thead>
+                <tbody>
 
-                @endforeach
+                    @foreach ($feeds as $feed)
 
-            </tbody>
-        </table>
+                        <tr>
+
+                            <td class="cell-title first-cell">
+                                <a href="{{ route('addons.menu_editor.edit', $feed->name) }}" title="Edit {{ $feed->title }}">
+                                    {{ $feed->title }}
+                                </a>
+                            </td>
+
+                            <td class="cell-permalink">
+                                {{ $feed->permalink }}
+                            </td>
+
+                            <td class="cell-updated">
+                                Last checked 1 uur ago
+                            </td>
+
+                            <td class="column-actions">
+
+                                <div class="btn-group action-more">
+
+                                    <button type="button" class="btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="icon icon-dots-three-vertical"></i>
+                                    </button>
+                                    
+                                    <ul class="dropdown-menu">
+                                        <li class="warning" @click="deleteFeed('{{ $feed->title }}')">
+                                            <a href="#" title="Delete this feed">Delete</a>
+                                        </li>
+                                    </ul>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    @endforeach
+
+                </tbody>
+
+            </table>
+
+        </div>
+
     </div>
-</div>
 
 </amlist>
 
