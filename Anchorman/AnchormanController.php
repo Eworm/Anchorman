@@ -48,9 +48,12 @@ class AnchormanController extends Controller
      */
     public function edit(Request $request)
     {
+
+        // $info = $this->storage->getJson($request->feed);
+        // dd($info);
+
         return $this->view('edit', [
-            // 'items' => $this->getItems($request),
-            // 'feed' => $request->feed
+            'feed' => $this->storage->getJson($request->feed)
         ]);
     }
 
@@ -82,8 +85,11 @@ class AnchormanController extends Controller
         $feed_title = slugify($feed->get_title());
 
         $this->storage->putJSON($feed_title, [
+            'feed'          => $request->feed_url,
             'title'         => $feed->get_title(),
             'description'   => $feed->get_description(),
+            'language'      => $feed->get_language(),
+            'copyright'     => $feed->get_copyright(),
             'permalink'     => $feed->get_permalink(),
         ]);
 

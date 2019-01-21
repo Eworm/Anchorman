@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="flex items-center mb-3">
-        <h1 class="w-full text-center mb-2 md:mb-0 md:text-left md:w-auto md:flex-1">Eigen Standaard Artikelen</h1>
+        <h1 class="w-full text-center mb-2 md:mb-0 md:text-left md:w-auto md:flex-1">Edit {{ $feed['title'] }}</h1>
 
         <div class="controls flex flex-wrap items-center w-full lg:w-auto justify-center">
             <div class="mr-2 my-1">
@@ -30,7 +30,7 @@
                                 <label class="block">
                                     Feed url
                                 </label>
-                                <input type="url" class="form-control type-url">
+                                <input type="url" class="form-control type-url" value="{{ $feed['feed'] }}">
                             </div>
 
                         </div>
@@ -60,7 +60,7 @@
                                     Scheduling
                                 </label>
                                 <div class="help-block">Time in minutes</div>
-                                <input type="number" class="form-control type-number">
+                                <input type="number" class="form-control type-number" value="60">
                             </div>
 
                         </div>
@@ -105,15 +105,15 @@
 
                                         <tr>
                                             <td>Homepage:</td>
-                                            <td><a href="https://www.dvhn.nl/">https://www.dvhn.nl/</a></td>
+                                            <td><a href="{{ $feed['permalink'] }}" rel="external">{{ $feed['permalink'] }}</a></td>
                                         </tr>
                                         <tr>
                                             <td>Description:</td>
-                                            <td>RSS Feed</td>
+                                            <td>{{ $feed['description'] }}</td>
                                         </tr>
                                         <tr>
                                             <td>Language:</td>
-                                            <td>NL</td>
+                                            <td>{{ $feed['language'] }}</td>
                                         </tr>
                                         <tr>
                                             <td>Last build:</td>
