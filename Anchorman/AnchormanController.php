@@ -5,10 +5,21 @@ namespace Statamic\Addons\Anchorman;
 use SimplePie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Statamic\API\YAML;
+use Statamic\API\Path;
+use Statamic\API\File;
+use Statamic\API\Fieldset;
 use Statamic\Extend\Controller;
 
 class AnchormanController extends Controller
 {
+
+    /**
+     * @var bool
+     */
+    private $isFirstParty = false;
+
+
     /**
      * Maps to the index
      *
@@ -49,8 +60,24 @@ class AnchormanController extends Controller
     public function edit(Request $request)
     {
 
-        // $info = $this->storage->getJson($request->feed);
-        // dd($info);
+        // dd($this->getDirectory() . '/edit.yaml');
+        // dd(File::get($this->getDirectory() . '/edit.yaml'));
+
+        // $fieldset = Fieldset::create($this->id . '.settings');
+        $fieldset = Fieldset::create('edit');
+        $fieldset->type('addon');
+
+        $contents = [
+            'fields' => []
+        ];
+
+        $contents = array_merge_recursive($contents, YAML::parse($this->getFile('/edit.yaml')));
+
+        // dd($fieldset);
+        // dd($contents);
+        $fieldset->contents($contents);
+        // dd($fieldset);
+        // return $fieldset;
 
         return $this->view('edit', [
             'feed' => $this->storage->getJson($request->feed)
@@ -98,5 +125,40 @@ class AnchormanController extends Controller
             'message' => 'Pages updated successfully.',
             'feed'    => $feed_title
         ];
+    }
+
+
+    public function isFirstParty($firstParty = null)
+    {
+        if (is_null($firstParty)) {
+            return $this->isFirstParty;
+        }
+
+        $this->isFirstParty = $firstParty;
+
+        return $this;
+    }
+
+
+    /**
+     * Get the contents of a given file in the addon's directory.
+     *
+     * @param string $path
+     * @return string
+     */
+    public function getFile($path)
+    {
+        return File::get($this->getDirectory() . $path);
+    }
+
+
+    /**
+     * The path to the directory.
+     *
+     * @return string
+     */
+    public function directory()
+    {
+        // return $this->isFirstParty() ? bundles_path($this->id) : addons_path($this->id);
     }
 }

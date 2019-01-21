@@ -1,0 +1,4 @@
+fields:
+  feed_collection:
+    type: collections
+    max_items: 1
