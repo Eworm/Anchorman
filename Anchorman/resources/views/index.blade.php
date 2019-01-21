@@ -14,15 +14,24 @@
         <table class="dossier has-checkboxes">
             <thead>
                 <tr>
-                    <th class="column-title active column-sortable"> Name  </th>
-                    <th class="column-slug column-sortable"> Feed  </th>
-                    <th class="column-date column-sortable"> Updated <i class="icon icon-chevron-down"></i> </th>
+                    <th class="column-title active column-sortable">
+                        Name
+                    </th>
+                    <th class="column-slug column-sortable">
+                        Feed
+                    </th>
+                    <th class="column-date column-sortable">
+                        Updated
+                        <i class="icon icon-chevron-down"></i>
+                    </th>
                     <th class="column-actions"></th>
                 </tr>
             </thead>
             <tbody>
 
                 @foreach ($feeds as $feed)
+
+                    {{dump($feed)}}
 
                     <tr>
 
@@ -35,7 +44,7 @@
 
                         <td>
                             <span class="column-label">Feed</span>
-                            <span>https://woutmager.nl/dvhn.rss</span>
+                            <span>{{ $feed }}</span>
                         </td>
 
                         <td>

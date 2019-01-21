@@ -27,6 +27,11 @@ class AnchormanController extends Controller
             $add = str_replace('site/storage/addons/Anchorman/', '', $feed);
             $add = str_replace('.json', '', $add);
             $feeds[] = $add;
+
+            // $feeds[] = (object) [
+            //     'title' => 'test'
+            // ];
+
         }
 
         return $this->view('index', [
@@ -73,9 +78,12 @@ class AnchormanController extends Controller
         $feed->handle_content_type();
 
         $feed_title = slugify($feed->get_title());
-        // return $feed_title;
 
-        $this->storage->putJSON($feed_title, []);
+        $this->storage->putJSON($feed_title, [
+            'title'         => $feed->get_title(),
+            'description'   => $feed->get_description(),
+            'permalink'     => $feed->get_permalink(),
+        ]);
 
         return [
             'success' => true,
