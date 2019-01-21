@@ -6,6 +6,6 @@ require('laravel-elixir-vue');
 
 elixir(function(mix) {
     mix.webpack([
-        './Anchorman/resources/assets/js/main.js'
-    ], './Anchorman/resources/assets/js/scripts.js');
+        './resources/assets/js/main.js'
+    ], './resources/assets/js/scripts.js');
 });
