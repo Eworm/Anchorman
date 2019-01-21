@@ -43,8 +43,8 @@ class AnchormanController extends Controller
     public function edit(Request $request)
     {
         return $this->view('edit', [
-            'items' => $this->getItems($request),
-            'feed' => $request->feed
+            // 'items' => $this->getItems($request),
+            // 'feed' => $request->feed
         ]);
     }
 
