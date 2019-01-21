@@ -35,13 +35,14 @@
 
                         <td class="cell-title first-cell">
                             <span class="column-label">Title</span>
-                            <a href="{{ route('addons.menu_editor.edit', $feed->title) }}" title="Edit {{ ucwords(str_replace('-', ' ', $feed->title)) }}">
+                            <a href="{{ route('addons.menu_editor.edit', $feed->name) }}" title="Edit {{ $feed->title }}">
                                 {{ $feed->title }}
                             </a>
                         </td>
 
                         <td>
                             <span class="column-label">Feed</span>
+                            <span>{{ $feed->permalink }}</span>
                         </td>
 
                         <td>
