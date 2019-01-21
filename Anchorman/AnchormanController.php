@@ -24,13 +24,17 @@ class AnchormanController extends Controller
         }
 
         foreach ($feeds_storage as $feed) {
-            $add = str_replace('site/storage/addons/Anchorman/', '', $feed);
-            $add = str_replace('.json', '', $add);
-            $feeds[] = $add;
 
-            // $feeds[] = (object) [
-            //     'title' => 'test'
-            // ];
+            // $add = str_replace('site/storage/addons/Anchorman/', '', $feed);
+            $rem = str_replace('site/storage/addons/Anchorman/', '', $feed);
+            $info = $this->storage->getJson($rem);
+            // $add = str_replace('.json', '', $add);
+            // $feeds[] = $add;
+
+            $feeds[] = (object) [
+                'title' => $info['title'],
+                'permalink' => $info['permalink']
+            ];
 
         }
 

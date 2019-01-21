@@ -31,20 +31,17 @@
 
                 @foreach ($feeds as $feed)
 
-                    {{dump($feed)}}
-
                     <tr>
 
                         <td class="cell-title first-cell">
                             <span class="column-label">Title</span>
-                            <a href="{{ route('addons.menu_editor.edit', $feed) }}" title="Edit {{ ucwords(str_replace('-', ' ', $feed)) }}">
-                                {{ ucwords(str_replace('-', ' ', $feed)) }}
+                            <a href="{{ route('addons.menu_editor.edit', $feed->title) }}" title="Edit {{ ucwords(str_replace('-', ' ', $feed->title)) }}">
+                                {{ $feed->title }}
                             </a>
                         </td>
 
                         <td>
                             <span class="column-label">Feed</span>
-                            <span>{{ $feed }}</span>
                         </td>
 
                         <td>
@@ -58,7 +55,7 @@
                             <div class="btn-group action-more">
                                 <button type="button" class="btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="icon icon-dots-three-vertical"></i> </button>
                                 <ul class="dropdown-menu">
-                                    <li class="warning" @click="deleteFeed('{{ $feed }}')">
+                                    <li class="warning" @click="deleteFeed('{{ $feed->title }}')">
                                         <a href="#" title="Delete this feed">Delete</a>
                                     </li>
                                 </ul>
