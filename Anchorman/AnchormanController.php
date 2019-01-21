@@ -2,6 +2,7 @@
 
 namespace Statamic\Addons\Anchorman;
 
+use SimplePie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Statamic\Extend\Controller;
@@ -31,8 +32,6 @@ class AnchormanController extends Controller
         return $this->view('index', [
             'feeds' => $feeds
         ]);
-
-        // return $this->view('index');
     }
 
     /**
@@ -65,14 +64,23 @@ class AnchormanController extends Controller
      */
     public function store(Request $request)
     {
-        $feed_name = str_slug($request->menu_name);
+        $feed_url = str_slug($request->feed_url);
 
-        $this->storage->putJSON($feed_name, []);
+        $feed = new SimplePie();
+        $feed->set_cache_location('local/cache');
+        $feed->set_feed_url($request->feed_url);
+        $feed->init();
+        $feed->handle_content_type();
+
+        $feed_title = slugify($feed->get_title());
+        // return $feed_title;
+
+        $this->storage->putJSON($feed_title, []);
 
         return [
             'success' => true,
             'message' => 'Pages updated successfully.',
-            'menu'    => $feed_name
+            'feed'    => $feed_title
         ];
     }
 }

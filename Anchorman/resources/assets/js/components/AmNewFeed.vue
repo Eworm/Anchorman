@@ -11,15 +11,13 @@ export default {
 
     methods: {
         saveFeed: function() {
-            console.log('test');
-            if (this.feedName !== '') {
+            if (this.feedUrl !== '') {
                 this.$http.post(
                     cp_url("addons/anchorman/store"), {
-                        feed_name: this.feedName
+                        feed_url: this.feedUrl
                     },
                     function(res) {
-                        console.log(res);
-                        // location.href = cp_url('addons/anchorman/edit/') + res.feed
+                        location.href = cp_url('addons/anchorman/edit/') + res.feed
                     }
                 )
             } else {

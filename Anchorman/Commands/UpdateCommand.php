@@ -43,10 +43,11 @@ class UpdateCommand extends Command
 
         $feed = new SimplePie();
         $feed->set_cache_location('local/cache');
-        $feed->set_feed_url(array(
-            $url
-        ));
+        $feed->set_feed_url($url);
         $feed->init();
+        $this->info('Title: ' . $feed->get_title());
+        $this->info('Description: ' . $feed->get_description());
+        $this->info('Permalink: ' . $feed->get_permalink());
 
         $bar = $this->output->createProgressBar($feed->get_item_quantity());
         $bar->start();

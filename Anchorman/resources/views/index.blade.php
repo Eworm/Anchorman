@@ -2,6 +2,8 @@
 
 @section('content')
 
+    <amlist inline-template>
+
     <div class="flex items-center mb-3">
         <h1 class="w-full text-center mb-2 md:mb-0 md:text-left md:w-auto md:flex-1">Syndication</h1>
         <a href="{{ route('addons.menu_editor.new') }}" class="btn btn-primary">New feed</a>
@@ -19,35 +21,50 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="cell-title first-cell"> <span class="column-label">Title</span> <span class="has-status-icon">
-                        <a class="has-status-icon" href="{{ route('addons.menu_editor.edit') }}">
-                        Eigen Standaard Artikelen
-                        </a>
-                        </span>
-                    </td>
-                    <td class="cell-slug"> <span class="column-label">Feed</span> <span>
-                        https://woutmager.nl/dvhn.rss
-                        </span>
-                    </td>
-                    <td class="cell-date"> <span class="column-label">Updated</span> <span>
-                        Last checked 1 uur ago
-                        </span>
-                    </td>
-                    <td class="column-actions">
-                        <div class="btn-group action-more">
-                            <button type="button" class="btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="icon icon-dots-three-vertical"></i> </button>
-                            <ul class="dropdown-menu">
-                                <li class="warning">
-                                    <a href="#">Delete</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
+
+                @foreach ($feeds as $feed)
+
+                    <tr>
+
+                        <td class="cell-title first-cell">
+                            <span class="column-label">Title</span>
+                            <a href="{{ route('addons.menu_editor.edit', $feed) }}" title="Edit {{ ucwords(str_replace('-', ' ', $feed)) }}">
+                                {{ ucwords(str_replace('-', ' ', $feed)) }}
+                            </a>
+                        </td>
+
+                        <td>
+                            <span class="column-label">Feed</span>
+                            <span>https://woutmager.nl/dvhn.rss</span>
+                        </td>
+
+                        <td>
+                            <span class="column-label">Updated</span>
+                            <span>
+                                Last checked 1 uur ago
+                            </span>
+                        </td>
+
+                        <td class="column-actions">
+                            <div class="btn-group action-more">
+                                <button type="button" class="btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="icon icon-dots-three-vertical"></i> </button>
+                                <ul class="dropdown-menu">
+                                    <li class="warning" @click="deleteFeed('{{ $feed }}')">
+                                        <a href="#" title="Delete this feed">Delete</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                @endforeach
+
             </tbody>
         </table>
     </div>
 </div>
+
+</amlist>
 
 @endsection

@@ -12,7 +12,7 @@
             <div class="fieldset-builder">
                 <div class="form-group">
                     <label class="block">Feed url <i class="required">*</i></label>
-                    <input type="url" required class="form-control mb-2" autofocus="autofocus" v-model="feedName">
+                    <input type="url" required class="form-control mb-2" autofocus="autofocus" v-model="feedUrl">
                     <button type="button" class="btn btn-primary" v-on:click="saveFeed">
                         Save Feed
                     </button>
