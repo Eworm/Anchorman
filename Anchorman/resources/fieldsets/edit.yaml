@@ -1,16 +1,19 @@
 sections:
   main:
     fields:
-      set_feed_url:
+      url:
         type: text
         mode: url
-      feed_collection:
+      collection:
         type: collections
         max_items: 1
-      feed_status:
-        instructions: "What to do with new articles?"
+      scheduling:
+        type: text
+        mode: number
+        width: 25
+      status:
         type: radio
         inline: true
         options:
-          draft: Draft
-          publish: Publish
+          publish: Publish immediately
+          draft: Save as draft

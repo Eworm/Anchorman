@@ -10,20 +10,13 @@ use Statamic\API\Parse;
 use Statamic\API\Fieldset;
 use Illuminate\Http\Request;
 // use Statamic\Addons\SeoPro\TagData;
-use Statamic\Addons\SeoPro\Settings;
-use Statamic\Addons\SeoPro\TranslatesFieldsets;
-
+use Statamic\Addons\Anchorman\Settings;
+use Statamic\Addons\Anchorman\TranslatesFieldsets;
 
 class AnchormanController extends Controller
 {
 
     use TranslatesFieldsets;
-
-    /**
-     * @var bool
-     */
-    private $isFirstParty = false;
-
 
     /**
      * Maps to the index
@@ -62,13 +55,13 @@ class AnchormanController extends Controller
      *
      * @return mixed
      */
-     public function edit()
+     public function edit(Request $request)
      {
          $fieldset = $this->fieldset();
 
          return $this->view('edit', [
-             'title' => 'Edit feed',
-             'data' => Settings::load()->get('humans'),
+             'title' => $request->feed,
+             'data' => Settings::load()->get('edit'),
              'fieldset' => $fieldset->toPublishArray(),
              'suggestions' => [],
              'submitUrl' => route('seopro.humans.update'),
@@ -78,7 +71,7 @@ class AnchormanController extends Controller
      protected function fieldset()
      {
          return $this->translateFieldset(Fieldset::create(
-             'humans',
+             'edit',
              YAML::parse(File::get($this->getDirectory().'/resources/fieldsets/edit.yaml'))
          ));
      }
