@@ -59,18 +59,6 @@ class AnchormanController extends Controller
      */
     public function edit(Request $request)
     {
-
-        $fieldset = Fieldset::create('edit');
-        $fieldset->type('addon');
-
-        $contents = [
-            'fields' => []
-        ];
-
-        $contents = array_merge_recursive($contents, YAML::parse($this->getFile('/edit.yaml')));
-
-        $fieldset->contents($contents);
-
         return $this->view('edit', [
             'feed' => $this->storage->getJson($request->feed)
         ]);
@@ -117,40 +105,5 @@ class AnchormanController extends Controller
             'message' => 'Pages updated successfully.',
             'feed'    => $feed_title
         ];
-    }
-
-
-    public function isFirstParty($firstParty = null)
-    {
-        if (is_null($firstParty)) {
-            return $this->isFirstParty;
-        }
-
-        $this->isFirstParty = $firstParty;
-
-        return $this;
-    }
-
-
-    /**
-     * Get the contents of a given file in the addon's directory.
-     *
-     * @param string $path
-     * @return string
-     */
-    public function getFile($path)
-    {
-        return File::get($this->getDirectory() . $path);
-    }
-
-
-    /**
-     * The path to the directory.
-     *
-     * @return string
-     */
-    public function directory()
-    {
-        // return $this->isFirstParty() ? bundles_path($this->id) : addons_path($this->id);
     }
 }
