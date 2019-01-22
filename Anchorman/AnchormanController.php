@@ -60,10 +60,6 @@ class AnchormanController extends Controller
     public function edit(Request $request)
     {
 
-        // dd($this->getDirectory() . '/edit.yaml');
-        // dd(File::get($this->getDirectory() . '/edit.yaml'));
-
-        // $fieldset = Fieldset::create($this->id . '.settings');
         $fieldset = Fieldset::create('edit');
         $fieldset->type('addon');
 
@@ -73,11 +69,7 @@ class AnchormanController extends Controller
 
         $contents = array_merge_recursive($contents, YAML::parse($this->getFile('/edit.yaml')));
 
-        // dd($fieldset);
-        // dd($contents);
         $fieldset->contents($contents);
-        // dd($fieldset);
-        // return $fieldset;
 
         return $this->view('edit', [
             'feed' => $this->storage->getJson($request->feed)
