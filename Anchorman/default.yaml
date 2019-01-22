@@ -1,3 +1,6 @@
 edit:
   scheduling: 60
   status: publish
+  name: automatically
+  description: automatically
+  homepage: automatically
