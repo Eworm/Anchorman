@@ -28,59 +28,6 @@
 
                         </div>
 
-                        <div class="form-group">
-
-                            <div class="field-inner">
-                                <label class="block">
-                                    Choose a collection
-                                </label>
-                                <div>
-                                    <div class="select select-full" data-content="Feed">
-                                        <select tabindex="0" name="fields[template]">
-                                            <option></option>
-                                            <option value="about">Feed</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-
-                            <div class="field-inner">
-                                <label class="block">
-                                    Scheduling
-                                </label>
-                                <div class="help-block">Time in minutes</div>
-                                <input type="number" class="form-control type-number" value="60">
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-
-                            <div class="field-inner">
-                                <label class="block">
-                                    Publish or draft new articles
-                                </label>
-
-                                <div class="radio-fieldtype-wrapper">
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <input type="radio" value="gd" id="image_manipulation_driver-0">
-                                            <label for="image_manipulation_driver-0">Publish</label>
-                                        </li>
-                                        <li>
-                                            <input type="radio" value="imagick" id="image_manipulation_driver-1">
-                                            <label for="image_manipulation_driver-1">Draft</label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                        </div>
-
                     </div>
 
                 </div>
