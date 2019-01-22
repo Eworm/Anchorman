@@ -3,16 +3,21 @@
 namespace Statamic\Addons\Anchorman;
 
 use SimplePie;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Statamic\API\YAML;
-use Statamic\API\Path;
-use Statamic\API\File;
-use Statamic\API\Fieldset;
 use Statamic\Extend\Controller;
+use Statamic\API\File;
+use Statamic\API\YAML;
+use Statamic\API\Parse;
+use Statamic\API\Fieldset;
+use Illuminate\Http\Request;
+// use Statamic\Addons\SeoPro\TagData;
+use Statamic\Addons\SeoPro\Settings;
+use Statamic\Addons\SeoPro\TranslatesFieldsets;
+
 
 class AnchormanController extends Controller
 {
+
+    use TranslatesFieldsets;
 
     /**
      * @var bool
@@ -57,12 +62,26 @@ class AnchormanController extends Controller
      *
      * @return mixed
      */
-    public function edit(Request $request)
-    {
-        return $this->view('edit', [
-            'feed' => $this->storage->getJson($request->feed)
-        ]);
-    }
+     public function edit()
+     {
+         $fieldset = $this->fieldset();
+
+         return $this->view('edit', [
+             'title' => 'Edit feed',
+             'data' => Settings::load()->get('humans'),
+             'fieldset' => $fieldset->toPublishArray(),
+             'suggestions' => [],
+             'submitUrl' => route('seopro.humans.update'),
+         ]);
+     }
+
+     protected function fieldset()
+     {
+         return $this->translateFieldset(Fieldset::create(
+             'humans',
+             YAML::parse(File::get($this->getDirectory().'/resources/fieldsets/edit.yaml'))
+         ));
+     }
 
     /**
      * Maps to the new feed screen
