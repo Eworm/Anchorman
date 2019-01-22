@@ -8,8 +8,8 @@ use Statamic\API\File;
 use Statamic\API\YAML;
 use Statamic\API\Parse;
 use Statamic\API\Fieldset;
+use Statamic\API\Storage;
 use Illuminate\Http\Request;
-// use Statamic\Addons\SeoPro\TagData;
 use Statamic\Addons\Anchorman\Settings;
 use Statamic\Addons\Anchorman\TranslatesFieldsets;
 
