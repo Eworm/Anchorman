@@ -36,7 +36,7 @@
                             </td>
 
                             <td class="cell-permalink">
-                                {{ $feed->permalink }}
+                                {{ $feed->url }}
                             </td>
 
                             <td class="cell-updated">
@@ -50,7 +50,7 @@
                                     <button type="button" class="btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="icon icon-dots-three-vertical"></i>
                                     </button>
-                                    
+
                                     <ul class="dropdown-menu">
                                         <li class="warning" @click="deleteFeed('{{ $feed->title }}')">
                                             <a href="#" title="Delete this feed">Delete</a>

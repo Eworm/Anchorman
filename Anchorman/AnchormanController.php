@@ -42,7 +42,7 @@ class AnchormanController extends Controller
             $feeds[] = (object) [
                 'name' => slugify($info['title']),
                 'title' => $info['title'],
-                'permalink' => $info['permalink']
+                'url' => $info['url']
             ];
 
         }
@@ -59,15 +59,35 @@ class AnchormanController extends Controller
      */
      public function edit(Request $request)
      {
-         $fieldset = $this->fieldset();
 
-         return $this->view('edit', [
-             'title' => $request->feed,
-             'data' => Settings::load()->get('edit'),
-             'fieldset' => $fieldset->toPublishArray(),
-             'suggestions' => [],
-             'submitUrl' => route('addons.menu_editor.store'),
-         ]);
+         $info = $this->storage->getJson($request->feed);
+         // dd($this->storage->getJson($request->feed));
+         if ($info !== NULL) {
+
+             $fieldset = $this->fieldset();
+
+             return $this->view('edit', [
+                 // 'feed' => $this->storage->getJson($request->feed)
+                 'title' => $info['title'],
+                 'data' => $info,
+                 'fieldset' => $fieldset->toPublishArray(),
+                 'submitUrl' => route('addons.menu_editor.store'),
+             ]);
+
+         } else {
+
+             $fieldset = $this->fieldset();
+
+             return $this->view('edit', [
+                 'title' => 'Create feed',
+                 'data' => Settings::load()->get('edit'),
+                 'fieldset' => $fieldset->toPublishArray(),
+                 'submitUrl' => route('addons.menu_editor.store'),
+             ]);
+
+         }
+
+
      }
 
      protected function fieldset()
