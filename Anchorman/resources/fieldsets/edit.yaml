@@ -8,7 +8,7 @@ sections:
         mode: url
       settings:
         type: section
-      collection:
+      publish:
         type: collections
         max_items: 1
       scheduling:

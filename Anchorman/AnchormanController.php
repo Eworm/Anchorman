@@ -136,7 +136,7 @@ class AnchormanController extends Controller
 
         $this->storage->putJSON($feed_title, [
             'url'           => $request->fields['url'],
-            'collection'    => $request->fields['collection'][0],
+            'publish'    => $request->fields['publish'][0],
             'scheduling'    => $request->fields['scheduling'],
             'status'        => $request->fields['status'],
             'title'         => $feed->get_title(),
