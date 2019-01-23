@@ -61,8 +61,8 @@ class AnchormanController extends Controller
      {
 
          $info = $this->storage->getJson($request->feed);
-         
-         if ($info !== NULL) {
+
+         if ($info['url'] !== NULL) {
 
              $fieldset = $this->fieldset();
 
@@ -114,25 +114,25 @@ class AnchormanController extends Controller
      */
     public function store(Request $request)
     {
-        $feed_url = str_slug($request->feed_url);
 
         $feed = new SimplePie();
         $feed->set_cache_location('local/cache');
-        $feed->set_feed_url($request->feed_url);
+        $feed->set_feed_url($request->fields['url']);
         $feed->init();
         $feed->handle_content_type();
 
         $feed_title = slugify($feed->get_title());
 
         $this->storage->putJSON($feed_title, [
-            'feed'          => $request->feed_url,
+            'url'           => $request->fields['url'],
             'title'         => $feed->get_title(),
             'description'   => $feed->get_description(),
             'language'      => $feed->get_language(),
             'copyright'     => $feed->get_copyright(),
-            'url'           => $feed->get_permalink(),
-            'scheduling'    => '60',
-            'status'        => 'publish',
+            'permalink'     => $feed->get_permalink(),
+            'collection'    => $request->fields['collection'][0],
+            'scheduling'    => $request->fields['scheduling'],
+            'status'        => $request->fields['status'],
         ]);
 
         return [

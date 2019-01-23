@@ -21,3 +21,11 @@ sections:
         options:
           publish: Publish immediately
           draft: Save as draft
+      title:
+        type: hidden
+      description:
+        type: hidden
+      language:
+        type: hidden
+      copyright:
+        type: hidden
