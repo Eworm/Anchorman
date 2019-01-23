@@ -66,7 +66,7 @@ class AnchormanController extends Controller
              'data' => Settings::load()->get('edit'),
              'fieldset' => $fieldset->toPublishArray(),
              'suggestions' => [],
-             'submitUrl' => route('seopro.humans.update'),
+             'submitUrl' => route('addons.menu_editor.store'),
          ]);
      }
 
