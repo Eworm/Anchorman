@@ -3,6 +3,7 @@
 namespace Statamic\Addons\Anchorman\Commands;
 
 use SimplePie;
+use Illuminate\Support\Facades\Storage;
 use Statamic\API\Entry;
 use Statamic\Extend\Command;
 
@@ -38,45 +39,57 @@ class UpdateCommand extends Command
     public function handle()
     {
 
-        //
-        $url = 'https://woutmager.nl/dvhn.rss';
+        $feeds_storage  = Storage::files('/site/storage/addons/Anchorman');
 
-        $feed = new SimplePie();
-        $feed->set_cache_location('local/cache');
-        $feed->set_feed_url($url);
-        $feed->init();
-        $this->info('Title: ' . $feed->get_title());
-        $this->info('Description: ' . $feed->get_description());
-        $this->info('Permalink: ' . $feed->get_permalink());
+        foreach ($feeds_storage as $feed) {
+            $rem = str_replace('site/storage/addons/Anchorman/', '', $feed);
+            $info = $this->storage->getJson($rem);
+            $url = $info['url'];
+            $publish = $info['publish'][0];
 
-        $bar = $this->output->createProgressBar($feed->get_item_quantity());
-        $bar->start();
+            $feed = new SimplePie();
+            $feed->set_cache_location('local/cache');
+            $feed->set_feed_url($url);
+            $feed->init();
+            $this->info('Updating ' . $feed->get_title());
+            $i = 0;
 
-        foreach ($feed->get_items() as $item):
+            foreach ($feed->get_items() as $item):
 
-            $slugged = slugify($item->get_title());
+                $slugged = slugify($item->get_title());
 
-            if (Entry::slugExists($slugged, 'feed')) {
+                if (Entry::slugExists($slugged, 'feed')) {
 
-                // $this->info($item->get_title() . " <fg=red>already exists</>");
+                    // $this->info($item->get_title() . " <fg=red>already exists</>");
 
-            } else {
+                } else {
 
-                Entry::create($slugged)
-                    ->collection('feed')
-                    ->with(['title' => $item->get_title()])
-                    ->date($item->get_date('Y-m-d'))
-                    ->save();
+                    $bar = $this->output->createProgressBar($feed->get_item_quantity());
+                    $bar->start();
+                    Entry::create($slugged)
+                        ->collection($publish)
+                        ->with(['title' => $item->get_title()])
+                        ->date($item->get_date('Y-m-d'));
+                        // ->save();
 
-                $bar->advance();
-                // $this->info($item->get_title() . ' <fg=red>created</>');
+                    $i++;
+                    $bar->advance();
+                    $bar->finish();
 
-            }
+                }
 
-        endforeach;
+            endforeach;
 
-        $bar->finish();
-        $this->info("\nUpdate of " . $url . " complete.");
+            if ($i == 0) :
 
+                $this->info("Update complete. I found no new articles");
+
+            else :
+
+                $this->info("\nUpdate complete. I found " . $i . " new articles and added them to " . $publish);
+
+            endif;
+            $this->info("\n");
+        }
     }
 }

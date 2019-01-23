@@ -66,8 +66,6 @@ class AnchormanController extends Controller
 
          if ($info['url'] !== NULL) {
 
-             // dd($info);
-
              return $this->view('edit', [
                  'title' => $info['title'],
                  'data' => $info,
@@ -76,8 +74,6 @@ class AnchormanController extends Controller
              ]);
 
          } else {
-
-             // dd(Settings::load()->get('edit'));
 
              return $this->view('edit', [
                  'title' => 'Create feed',
