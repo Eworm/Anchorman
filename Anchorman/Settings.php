@@ -44,7 +44,7 @@ class Settings
 
     protected function path()
     {
-        return settings_path('addons/seo_pro.yaml');
+        return settings_path('addons/anchorman.yaml');
     }
 
     protected function getInitialConfig()

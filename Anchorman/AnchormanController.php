@@ -12,7 +12,7 @@ use Statamic\API\YAML;
 use Statamic\API\Parse;
 use Statamic\API\Fieldset;
 use Illuminate\Http\Request;
-use Statamic\Addons\Anchorman\Settings;
+// use Statamic\Addons\Anchorman\Settings;
 use Statamic\Addons\Anchorman\TranslatesFieldsets;
 use Statamic\Extend\Controller;
 
@@ -136,7 +136,7 @@ class AnchormanController extends Controller
 
         $this->storage->putJSON($feed_title, [
             'url'           => $request->fields['url'],
-            'publish'    => $request->fields['publish'][0],
+            'publish'       => $request->fields['publish'][0],
             'scheduling'    => $request->fields['scheduling'],
             'status'        => $request->fields['status'],
             'title'         => $feed->get_title(),
