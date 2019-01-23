@@ -18,7 +18,7 @@
                 <thead>
                     <tr>
                         <th class="column-title">Name</th>
-                        <th class="column-slug">Feed</th>
+                        <th class="column-slug">Url</th>
                         <th class="column-date">Updated</th>
                         <th class="column-actions"></th>
                     </tr>

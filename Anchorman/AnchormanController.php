@@ -61,13 +61,12 @@ class AnchormanController extends Controller
      {
 
          $info = $this->storage->getJson($request->feed);
-         // dd($this->storage->getJson($request->feed));
+         
          if ($info !== NULL) {
 
              $fieldset = $this->fieldset();
 
              return $this->view('edit', [
-                 // 'feed' => $this->storage->getJson($request->feed)
                  'title' => $info['title'],
                  'data' => $info,
                  'fieldset' => $fieldset->toPublishArray(),
@@ -131,7 +130,9 @@ class AnchormanController extends Controller
             'description'   => $feed->get_description(),
             'language'      => $feed->get_language(),
             'copyright'     => $feed->get_copyright(),
-            'permalink'     => $feed->get_permalink(),
+            'url'           => $feed->get_permalink(),
+            'scheduling'    => '60',
+            'status'        => 'publish',
         ]);
 
         return [
