@@ -11,3 +11,6 @@ routes:
   post@store:
     as: addons.menu_editor.store
     uses: store
+  /refresh_all:
+    as: addons.menu_editor.refresh_all
+    uses: refresh_all

@@ -5,6 +5,7 @@ namespace Statamic\Addons\Anchorman;
 use SimplePie;
 
 use Illuminate\Support\Facades\Storage;
+use Statamic\Console\Please;
 use Statamic\API\Path;
 use Statamic\API\File;
 use Statamic\API\YAML;
@@ -94,6 +95,7 @@ class AnchormanController extends Controller
          ));
      }
 
+
     /**
      * Maps to the new feed screen
      *
@@ -103,6 +105,18 @@ class AnchormanController extends Controller
     {
         return $this->view('create');
     }
+
+
+    /**
+     * Maps to the new feed screen
+     *
+     * @return mixed
+     */
+    public function refresh_all()
+    {
+        Please::call('anchorman:update');
+    }
+
 
     /**
      * Maps to your route definition in routes.yaml

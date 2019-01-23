@@ -8,6 +8,14 @@ export default {
     },
 
     methods: {
+        refreshAll: function() {
+            console.log('Clicked');
+            this.$http.get(cp_url('addons/anchorman/refresh_all')).then(response => {
+                // this.currentReportId = response.data;
+                this.loading = false;
+            });
+        },
+
         deleteFeed: function(feed) {
             var self = this;
 
