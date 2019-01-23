@@ -9,10 +9,11 @@ export default {
 
     methods: {
         refreshAll: function() {
-            console.log('Clicked');
+            console.log('Refresh all');
             this.$http.get(cp_url('addons/anchorman/refresh_all')).then(response => {
                 // this.currentReportId = response.data;
-                this.loading = false;
+                console.log(response);
+                // this.loading = false;
             });
         },
 

@@ -66,11 +66,25 @@ class UpdateCommand extends Command
 
                     $bar = $this->output->createProgressBar($feed->get_item_quantity());
                     $bar->start();
-                    Entry::create($slugged)
-                        ->collection($publish)
-                        ->with(['title' => $item->get_title()])
-                        ->date($item->get_date('Y-m-d'));
-                        // ->save();
+
+                    if ($info['url'] == 'publish') :
+
+                        Entry::create($slugged)
+                            ->collection($publish)
+                            ->with(['title' => $item->get_title()])
+                            ->date($item->get_date('Y-m-d'));
+                            // ->save();
+
+                    else :
+
+                        Entry::create($slugged)
+                            ->collection($publish)
+                            ->published(false)
+                            ->with(['title' => $item->get_title()])
+                            ->date($item->get_date('Y-m-d'));
+                            // ->save();
+
+                    endif;
 
                     $i++;
                     $bar->advance();
