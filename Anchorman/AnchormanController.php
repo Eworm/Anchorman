@@ -61,10 +61,9 @@ class AnchormanController extends Controller
      {
 
          $info = $this->storage->getJson($request->feed);
+         $fieldset = $this->fieldset();
 
          if ($info['url'] !== NULL) {
-
-             $fieldset = $this->fieldset();
 
              return $this->view('edit', [
                  'title' => $info['title'],
@@ -74,8 +73,6 @@ class AnchormanController extends Controller
              ]);
 
          } else {
-
-             $fieldset = $this->fieldset();
 
              return $this->view('edit', [
                  'title' => 'Create feed',
@@ -125,19 +122,19 @@ class AnchormanController extends Controller
 
         $this->storage->putJSON($feed_title, [
             'url'           => $request->fields['url'],
+            'collection'    => $request->fields['collection'][0],
+            'scheduling'    => $request->fields['scheduling'],
+            'status'        => $request->fields['status'],
             'title'         => $feed->get_title(),
             'description'   => $feed->get_description(),
             'language'      => $feed->get_language(),
             'copyright'     => $feed->get_copyright(),
             'permalink'     => $feed->get_permalink(),
-            'collection'    => $request->fields['collection'][0],
-            'scheduling'    => $request->fields['scheduling'],
-            'status'        => $request->fields['status'],
         ]);
 
         return [
             'success' => true,
-            'message' => 'Pages updated successfully.',
+            'message' => 'Feed updated successfully.',
             'feed'    => $feed_title
         ];
     }

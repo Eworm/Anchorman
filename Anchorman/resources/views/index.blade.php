@@ -6,7 +6,10 @@
 
     <div class="flex items-center mb-3">
         <h1 class="flex-1">Your feeds</h1>
-        <a href="{{ route('addons.menu_editor.create') }}" class="btn btn-primary">Create feed</a>
+        <div class="controls flex flex-wrap justify-center md:block items-center w-full md:w-auto">
+            <a href="{{ route('addons.menu_editor.create') }}" class="btn btn-default">Refresh all</a>
+            <a href="{{ route('addons.menu_editor.create') }}" class="btn btn-primary ml-1 mt-1 md:mt-0">Create feed</a>
+        </div>
     </div>
 
     <div class="card flush dossier">
