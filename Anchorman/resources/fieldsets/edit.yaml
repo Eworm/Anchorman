@@ -1,13 +1,11 @@
 sections:
   Settings:
     fields:
-      feed_info:
+      general_settings:
         type: section
       url:
         type: text
         mode: url
-      publish_settings:
-        type: section
       active:
         type: toggle
       scheduling:
