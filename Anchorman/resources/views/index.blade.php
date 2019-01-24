@@ -2,8 +2,6 @@
 
 @section('content')
 
-<amlist inline-template>
-
     <div class="flex items-center mb-3">
         <h1 class="flex-1">Your feeds</h1>
         <div class="controls flex flex-wrap justify-center md:block items-center w-full md:w-auto">
@@ -23,6 +21,7 @@
                         <th class="column-title">Name</th>
                         <th class="column-slug">Url</th>
                         <th class="column-date">Updated</th>
+                        <th class="column-active">Status</th>
                         <th class="column-actions"></th>
                     </tr>
                 </thead>
@@ -44,6 +43,14 @@
 
                             <td class="cell-updated">
                                 Last checked 1 uur ago
+                            </td>
+
+                            <td class="cell-status">
+                                @if ($feed->active)
+                                    Active
+                                @else
+                                    Disabled
+                                @endif
                             </td>
 
                             <td class="column-actions">
@@ -75,7 +82,5 @@
         </div>
 
     </div>
-
-</amlist>
 
 @endsection

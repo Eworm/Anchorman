@@ -43,7 +43,8 @@ class AnchormanController extends Controller
             $feeds[] = (object) [
                 'name' => slugify($info['title']),
                 'title' => $info['title'],
-                'url' => $info['url']
+                'url' => $info['url'],
+                'active' => $info['active']
             ];
 
         }
