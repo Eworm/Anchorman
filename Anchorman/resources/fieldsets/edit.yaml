@@ -6,7 +6,7 @@ sections:
       url:
         type: text
         mode: url
-      general_settings:
+      publish_settings:
         type: section
       active:
         type: toggle
