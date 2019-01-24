@@ -138,14 +138,14 @@ export default {
         let types = this.config.allowed_fieldtypes || ['text', 'textarea', 'markdown', 'redactor'];
         this.allowedFieldtypes = types.concat(this.config.merge_allowed_fieldtypes || []);
 
-        if (this.data.source === 'field') {
-            this.sourceField = [this.data.value];
-        } else {
-            this.customText = this.data.value;
-        }
+        // if (this.data.source === 'field') {
+        //     this.sourceField = [this.data.value];
+        // } else {
+        //     this.customText = this.data.value;
+        // }
 
         // Set source after so that the suggest fields don't load before they potentially have data.
-        this.source = this.data.source;
+        // this.source = this.data.source;
 
         this.bindChangeWatcher();
     }

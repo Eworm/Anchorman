@@ -1,1 +1,1 @@
-Vue.component('anchorman-source-fieldtype', require('./SourceFieldtype.vue'));
+Vue.component('anchorman-mapping-fieldtype', require('./MappingFieldtype.vue'));

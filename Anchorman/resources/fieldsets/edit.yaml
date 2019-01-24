@@ -34,12 +34,7 @@ sections:
         type: collections
         max_items: 1
       publish_title:
-        type: anchorman.source
-        inherit: false
-        field:
-          type: text
-      publish_description:
-        type: anchorman.source
+        type: anchorman.mapping
         inherit: false
         field:
           type: text

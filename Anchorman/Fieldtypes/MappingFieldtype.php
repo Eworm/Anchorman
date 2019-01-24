@@ -6,7 +6,7 @@ use Statamic\API\Str;
 use Statamic\Extend\Fieldtype;
 use Statamic\CP\FieldtypeFactory;
 
-class SourceFieldtype extends Fieldtype
+class MappingFieldtype extends Fieldtype
 {
     public $selectable = false;
 
