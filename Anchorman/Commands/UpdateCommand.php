@@ -58,7 +58,7 @@ class UpdateCommand extends Command
 
                 $slugged = slugify($item->get_title());
 
-                if (Entry::slugExists($slugged, 'feed')) {
+                if (Entry::slugExists($slugged, $publish)) {
 
                     // $this->info($item->get_title() . " <fg=red>already exists</>");
 
@@ -67,13 +67,13 @@ class UpdateCommand extends Command
                     $bar = $this->output->createProgressBar($feed->get_item_quantity());
                     $bar->start();
 
-                    if ($info['url'] == 'publish') :
+                    if ($info['status'] == 'publish') :
 
                         Entry::create($slugged)
                             ->collection($publish)
                             ->with(['title' => $item->get_title()])
-                            ->date($item->get_date('Y-m-d'));
-                            // ->save();
+                            ->date($item->get_date('Y-m-d'))
+                            ->save();
 
                     else :
 
@@ -81,8 +81,8 @@ class UpdateCommand extends Command
                             ->collection($publish)
                             ->published(false)
                             ->with(['title' => $item->get_title()])
-                            ->date($item->get_date('Y-m-d'));
-                            // ->save();
+                            ->date($item->get_date('Y-m-d'))
+                            ->save();
 
                     endif;
 
