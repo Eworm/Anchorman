@@ -16,9 +16,8 @@ class AnchormanTasks extends Tasks
     public function schedule(Schedule $schedule)
     {
 
-        $schedule->command('anchorman:update')->everyMinute();
+        $schedule->command('anchorman:update')->everyMinute()->sendOutputTo('/Users/wout/Sites/statamic-rss/site/storage/addons/Anchorman/log.txt')->emailOutputTo('wout@woutmager.nl');
         file_get_contents("https://cronhub.io/ping/20ea29f0-0c79-11e9-bad3-65985bc7f86f");
-
 
         // $feeds_storage  = Storage::files('/site/storage/addons/Anchorman');
         //
