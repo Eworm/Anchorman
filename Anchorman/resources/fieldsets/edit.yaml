@@ -8,13 +8,15 @@ sections:
         mode: url
       settings:
         type: section
+      active:
+        type: toggle
       publish:
         type: collections
         max_items: 1
       scheduling:
         type: text
         mode: number
-        width: 25
+        width: 50
       status:
         type: radio
         inline: true

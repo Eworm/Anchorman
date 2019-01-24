@@ -1,3 +1,4 @@
 edit:
+  active: true
   scheduling: 60
   status: publish

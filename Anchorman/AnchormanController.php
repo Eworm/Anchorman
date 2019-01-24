@@ -139,6 +139,7 @@ class AnchormanController extends Controller
             'publish'       => $request->fields['publish'],
             'scheduling'    => $request->fields['scheduling'],
             'status'        => $request->fields['status'],
+            'active'        => $request->fields['active'],
             'title'         => $feed->get_title(),
             'description'   => $feed->get_description(),
             'language'      => $feed->get_language(),
