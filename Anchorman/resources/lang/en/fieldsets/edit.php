@@ -4,7 +4,8 @@ return [
 
     'url' => 'Feed url',
 
-    'active' => 'Active',
+    'active' => 'Status',
+    'active_instruct' => 'Should this feed check for new articles?',
 
     'publish' => 'Collection',
     'publish_instruct' => 'Which collection to add new articles to',
