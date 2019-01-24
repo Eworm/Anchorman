@@ -129,18 +129,30 @@ class AnchormanController extends Controller
 
         $feed = new SimplePie();
         $feed->set_cache_location('local/cache');
-        $feed->set_feed_url($request->fields['url']);
+        if ($request->url) {
+            $feed->set_feed_url($request->url);
+            $url        = $request->url;
+            $scheduling = '60';
+            $active     = true;
+            $status     = 'publish';
+        } else {
+            $feed->set_feed_url($request->fields['url']);
+            $url        = $request->fields['url'];
+            $scheduling = $request->fields['scheduling'];
+            $active     = $request->fields['active'];
+            $status     = $request->fields['status'];
+        }
         $feed->init();
         $feed->handle_content_type();
 
         $feed_title = slugify($feed->get_title());
 
         $this->storage->putJSON($feed_title, [
-            'url'           => $request->fields['url'],
+            'url'           => $url,
+            'scheduling'    => $scheduling,
+            'status'        => $status,
+            'active'        => $active,
             'publish'       => $request->fields['publish'],
-            'scheduling'    => $request->fields['scheduling'],
-            'status'        => $request->fields['status'],
-            'active'        => $request->fields['active'],
             'title'         => $feed->get_title(),
             'description'   => $feed->get_description(),
             'language'      => $feed->get_language(),

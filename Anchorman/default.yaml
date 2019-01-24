@@ -2,4 +2,3 @@ edit:
   active: true
   scheduling: 60
   status: publish
-  title: '@seo:title'

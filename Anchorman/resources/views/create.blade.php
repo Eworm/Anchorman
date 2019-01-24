@@ -23,7 +23,7 @@
                                 <label class="block">
                                     Feed url
                                 </label>
-                                <input type="url" class="form-control type-url" v-model="feedUrl">
+                                <input type="url" class="form-control type-url" v-model="url">
                             </div>
 
                         </div>
