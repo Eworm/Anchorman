@@ -7,7 +7,7 @@ routes:
     uses: edit
   /create:
     as: addons.menu_editor.create
-    uses: edit
+    uses: create
   post@store:
     as: addons.menu_editor.store
     uses: store
