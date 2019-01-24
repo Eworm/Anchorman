@@ -47,9 +47,9 @@
 
                             <td class="cell-status">
                                 @if ($feed->active)
-                                    Active
+                                    Enabled
                                 @else
-                                    Disabled
+                                    <span class="red">Disabled</span>
                                 @endif
                             </td>
 
