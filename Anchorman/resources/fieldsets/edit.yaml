@@ -1,5 +1,5 @@
 sections:
-  main:
+  Settings:
     fields:
       feed_info:
         type: section
@@ -28,6 +28,8 @@ sections:
         type: hidden
       copyright:
         type: hidden
+  Mapping:
+    fields:
       mapping:
         type: section
       publish:
