@@ -9,7 +9,7 @@ return [
     'active_instruct' => "If disabled, this feed won't check for new articles.",
 
     'publish' => 'Collection',
-    'publish_instruct' => 'Pick a collection to add new articles to.',
+    'publish_instruct' => 'Pick a collection for new articles.',
 
     'scheduling' => 'Schedule',
     'scheduling_instruct' => 'Wait time between updates, in minutes.',
@@ -18,6 +18,6 @@ return [
     'status_instruct' => 'What to do with them.',
 
     'publish_options' => 'Item content',
-    'publish_options_instruct' => 'I found these fields in this feed. Select the entry fields you would like to save the content to.',
+    'publish_options_instruct' => 'The feed comes with these fields. Select the entry fields they should use.',
 
 ];

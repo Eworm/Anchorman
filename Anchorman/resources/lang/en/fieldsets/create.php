@@ -9,6 +9,6 @@ return [
     'url_instruct' => "The url of the rss feed.",
 
     'publish' => 'Collection',
-    'publish_instruct' => 'Pick a collection to add new articles to.',
+    'publish_instruct' => 'Pick a collection for new articles.',
 
 ];
