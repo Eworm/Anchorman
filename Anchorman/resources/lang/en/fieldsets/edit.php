@@ -18,6 +18,6 @@ return [
     'status_instruct' => 'What to do with them.',
 
     'publish_options' => 'Item content',
-    'publish_options_instruct' => 'I found these fields in the feed. How do these fields connect with your Statamic setup?',
+    'publish_options_instruct' => 'I found these fields in this feed. Select the entry fields you would like to save the content to.',
 
 ];
