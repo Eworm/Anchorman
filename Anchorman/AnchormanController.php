@@ -54,14 +54,14 @@ class AnchormanController extends Controller
     }
 
     /**
-     * Maps to the edit screen
+     * Maps to the edit page
      *
      * @return mixed
      */
      public function edit(Request $request)
      {
          $info      = $this->storage->getJson($request->feed);
-         $fieldset  = $this->fieldset();
+         $fieldset  = $this->fieldset('edit');
 
          return $this->view('edit', [
              'title'        => $info['title'],
@@ -71,23 +71,30 @@ class AnchormanController extends Controller
          ]);
      }
 
-     protected function fieldset()
+     protected function fieldset($fieldset)
      {
          return $this->translateFieldset(Fieldset::create(
-             'edit',
-             YAML::parse(File::get($this->getDirectory() . '/resources/fieldsets/edit.yaml'))
+             $fieldset,
+             YAML::parse(File::get($this->getDirectory() . '/resources/fieldsets/' . $fieldset . '.yaml'))
          ));
      }
 
 
     /**
-     * Maps to the new feed screen
+     * Maps to the create page
      *
      * @return mixed
      */
     public function create()
     {
-        return $this->view('create');
+        $fieldset  = $this->fieldset('create');
+
+        return $this->view('create', [
+            'title'        => 'Create feed',
+            'data'         => '$info',
+            'fieldset'     => $fieldset->toPublishArray(),
+            'submitUrl'    => route('addons.anchorman.store'),
+        ]);
     }
 
 
@@ -176,6 +183,7 @@ class AnchormanController extends Controller
         if ($request->url) {
             $feed->set_feed_url($request->url);
             $url        = $request->url;
+            $publish    = $request->publish;
             $scheduling = '60';
             $active     = true;
             $status     = 'publish';
@@ -185,6 +193,7 @@ class AnchormanController extends Controller
             $scheduling = $request->fields['scheduling'];
             $active     = $request->fields['active'];
             $status     = $request->fields['status'];
+            $publish    = $request->fields['publish'];
         }
 
         $feed->init();
@@ -197,7 +206,7 @@ class AnchormanController extends Controller
             'scheduling'    => $scheduling,
             'status'        => $status,
             'active'        => $active,
-            'publish'       => $request->fields['publish'],
+            'publish'       => $publish,
             'title'         => $feed->get_title(),
             'description'   => $feed->get_description(),
             'language'      => $feed->get_language(),

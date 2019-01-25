@@ -1,0 +1,11 @@
+sections:
+  Settings:
+    fields:
+      general_settings:
+        type: section
+      url:
+        type: text
+        mode: url
+      publish:
+        type: collections
+        max_items: 1
