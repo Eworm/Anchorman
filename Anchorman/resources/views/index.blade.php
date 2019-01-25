@@ -6,7 +6,7 @@
         <h1 class="flex-1">Your feeds</h1>
         <div class="controls flex flex-wrap justify-center md:block items-center w-full md:w-auto">
             <a href="#" @click="refreshAll" class="btn btn-default">Refresh all</a>
-            <a href="{{ route('addons.menu_editor.create') }}" class="btn btn-primary ml-1 mt-1 md:mt-0">Create feed</a>
+            <a href="{{ route('addons.anchorman.create') }}" class="btn btn-primary ml-1 mt-1 md:mt-0">Create feed</a>
         </div>
     </div>
 
@@ -32,7 +32,7 @@
                         <tr>
 
                             <td class="cell-title first-cell">
-                                <a href="{{ route('addons.menu_editor.edit', $feed->name) }}" title="Edit {{ $feed->title }}">
+                                <a href="{{ route('addons.anchorman.edit', $feed->name) }}" title="Edit {{ $feed->title }}">
                                     {{ $feed->title }}
                                 </a>
                             </td>

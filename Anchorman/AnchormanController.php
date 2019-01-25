@@ -32,7 +32,7 @@ class AnchormanController extends Controller
         $feeds          = [];
 
         if (!$feeds_storage) {
-            return redirect()->route('addons.menu_editor.create');
+            return redirect()->route('addons.anchorman.create');
         }
 
         foreach ($feeds_storage as $feed) {
@@ -68,7 +68,7 @@ class AnchormanController extends Controller
              'title'        => $info['title'],
              'data'         => $info,
              'fieldset'     => $fieldset->toPublishArray(),
-             'submitUrl'    => route('addons.menu_editor.store'),
+             'submitUrl'    => route('addons.anchorman.store'),
          ]);
      }
 

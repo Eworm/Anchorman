@@ -20,7 +20,7 @@ class AnchormanListener extends Listener
     {
         // Create the first level navigation item
         // Note: by using route('store'), it assumes you've set up a route named 'store'.
-        $syndication = Nav::item('Syndication')->route('addons.menu_editor')->icon('rss');
+        $syndication = Nav::item('Syndication')->route('addons.anchorman')->icon('rss');
 
         // Finally, add our first level navigation item
         // to the navigation under the 'tools' section.

@@ -1,19 +1,19 @@
 routes:
   /:
-    as: addons.menu_editor
+    as: addons.anchorman
     uses: index
   /edit/{feed}:
-    as: addons.menu_editor.edit
+    as: addons.anchorman.edit
     uses: edit
   /create:
-    as: addons.menu_editor.create
+    as: addons.anchorman.create
     uses: create
   post@store:
-    as: addons.menu_editor.store
+    as: addons.anchorman.store
     uses: store
   /refresh_all:
-    as: addons.menu_editor.refresh_all
+    as: addons.anchorman.refresh_all
     uses: refresh_all
   /get_item_structure:
-    as: addons.menu_editor.get_item_structure
+    as: addons.anchorman.get_item_structure
     uses: get_item_structure
