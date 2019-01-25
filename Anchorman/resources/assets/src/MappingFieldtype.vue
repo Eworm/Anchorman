@@ -117,17 +117,12 @@ export default {
 
     ready() {
 
-        console.log(Statamic.Publish.contentData.permalink);
-        this.permalink = Statamic.Publish.contentData.permalink;
-        // console.log(this);
-
         this.$http.get(
             cp_url("addons/anchorman/get_item_structure"), {
                 url: Statamic.Publish.contentData.permalink
             },
             function(res) {
                 this.structure = res;
-                console.log(this.structure);
             }
         )
         console.log(this);
