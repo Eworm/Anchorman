@@ -4,7 +4,6 @@ namespace Statamic\Addons\Anchorman;
 
 use SimplePie;
 use Statamic\Addons\Anchorman\Pie;
-// use SimplePie\Api;
 use Illuminate\Support\Facades\Storage;
 use Statamic\Console\Please;
 use Statamic\API\Path;
@@ -104,7 +103,7 @@ class AnchormanController extends Controller
 
 
     /**
-     * Get a feed
+     * Get a feed structure
      *
      * @return mixed
      */
@@ -115,23 +114,46 @@ class AnchormanController extends Controller
         $feed->set_feed_url($request->url);
         $success = $feed->init();
         $feed->handle_content_type();
+        $structure = array();
 
         if ($success)
         {
-            echo 'Title: ' . $feed->get_title();
-            echo '<br>';
-            echo 'Type: ' . $feed->get_type();
-            echo '<br>';
+            if ($item = $feed->get_item(0))
+            {
 
-            foreach ($feed->get_items() as $item):
+                if ($item->get_title())
+                {
+                    array_push($structure, 'title');
+                }
 
-                if ($enclosure = $item->get_enclosure())
-            	{
-            		echo $enclosure->get_thumbnail();
-                    echo '<br>';
-            	}
+                if ($item->get_description())
+                {
+                    array_push($structure, 'description');
+                }
 
-            endforeach;
+                if ($item->get_content())
+                {
+                    array_push($structure, 'content');
+                }
+
+                if ($item->get_author())
+                {
+                    array_push($structure, 'author');
+                }
+
+                if ($item->get_date())
+                {
+                    array_push($structure, 'date');
+                }
+
+                if ($item->get_permalink())
+                {
+                    array_push($structure, 'permalink');
+                }
+
+            }
+
+            return $structure;
         }
         else
         {

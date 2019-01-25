@@ -17,4 +17,7 @@ return [
     'status' => 'New articles',
     'status_instruct' => 'What to do with them.',
 
+    'publish_options' => 'Item content',
+    'publish_options_instruct' => 'I found these fields in the feed. How do these fields connect with your Statamic setup?',
+
 ];
