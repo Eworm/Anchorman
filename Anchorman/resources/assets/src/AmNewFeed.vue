@@ -11,7 +11,6 @@ export default {
 
     methods: {
         saveFeed: function() {
-            console.log(this.url);
             if (this.url !== '') {
                 this.$http.post(
                     cp_url("addons/anchorman/store"), {

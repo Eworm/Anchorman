@@ -55,6 +55,7 @@ export default {
 
     data() {
         return {
+            permalink: null,
             source: null,
             customText: null,
             sourceField: null,
@@ -95,10 +96,10 @@ export default {
         suggestConfig() {
             return {
                 type: 'suggest',
-                mode: 'seo_pro',
+                mode: 'anchorman',
                 max_items: 1,
                 create: true,
-                placeholder: translate('addons.SeoPro::messages.source_suggest_placeholder')
+                placeholder: translate('addons.Anchorman::messages.source_suggest_placeholder')
             }
         },
 
@@ -114,40 +115,26 @@ export default {
 
     watch: {
 
-        source(val) {
-            this.data.source = val;
 
-            if (val === 'field') {
-                this.data.value = Array.isArray(this.sourceField) ? this.sourceField[0] : this.sourceField;
-            } else {
-                this.data.value = this.customText;
-            }
-        },
-
-        sourceField(val) {
-            this.data.value = Array.isArray(val) ? val[0] : val;
-        },
-
-        customText(val) {
-            this.data.value = val;
-        }
 
     },
 
     ready() {
-        let types = this.config.allowed_fieldtypes || ['text', 'textarea', 'markdown', 'redactor'];
-        this.allowedFieldtypes = types.concat(this.config.merge_allowed_fieldtypes || []);
 
-        // if (this.data.source === 'field') {
-        //     this.sourceField = [this.data.value];
-        // } else {
-        //     this.customText = this.data.value;
-        // }
+        console.log(Statamic.Publish.contentData.permalink);
+        this.permalink = Statamic.Publish.contentData.permalink;
+        console.log(this);
 
-        // Set source after so that the suggest fields don't load before they potentially have data.
-        // this.source = this.data.source;
+        this.$http.get(
+            cp_url("addons/anchorman/get_item_structure"), {
+                url: Statamic.Publish.contentData.permalink
+            },
+            function(res) {
+                console.log(res);
+            }
+        )
 
-        this.bindChangeWatcher();
+        // this.bindChangeWatcher();
     }
 
 }

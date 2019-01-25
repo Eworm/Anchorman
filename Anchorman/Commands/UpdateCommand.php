@@ -48,7 +48,7 @@ class UpdateCommand extends Command
             $publish = $info['publish'][0];
 
             $feed = new SimplePie();
-            $feed->set_cache_location('local/cache');
+            $feed->set_cache_location(Pie::cache_location());
             $feed->set_feed_url($url);
             $feed->init();
             $this->info('Updating ' . $feed->get_title());

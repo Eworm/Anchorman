@@ -33,7 +33,7 @@ sections:
       publish:
         type: collections
         max_items: 1
-      publish_title:
+      publish_options:
         type: anchorman.mapping
         inherit: false
         field:

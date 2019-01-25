@@ -14,3 +14,6 @@ routes:
   /refresh_all:
     as: addons.menu_editor.refresh_all
     uses: refresh_all
+  /get_item_structure:
+    as: addons.menu_editor.get_item_structure
+    uses: get_item_structure

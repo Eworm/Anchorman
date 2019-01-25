@@ -3,7 +3,8 @@
 namespace Statamic\Addons\Anchorman;
 
 use SimplePie;
-
+use Statamic\Addons\Anchorman\Pie;
+// use SimplePie\Api;
 use Illuminate\Support\Facades\Storage;
 use Statamic\Console\Please;
 use Statamic\API\Path;
@@ -12,7 +13,6 @@ use Statamic\API\YAML;
 use Statamic\API\Parse;
 use Statamic\API\Fieldset;
 use Illuminate\Http\Request;
-// use Statamic\Addons\Anchorman\Settings;
 use Statamic\Addons\Anchorman\TranslatesFieldsets;
 use Statamic\Extend\Controller;
 
@@ -37,14 +37,14 @@ class AnchormanController extends Controller
 
         foreach ($feeds_storage as $feed) {
 
-            $rem = str_replace('site/storage/addons/Anchorman/', '', $feed);
-            $info = $this->storage->getJson($rem);
+            $rem    = str_replace('site/storage/addons/Anchorman/', '', $feed);
+            $info   = $this->storage->getJson($rem);
 
             $feeds[] = (object) [
-                'name' => slugify($info['title']),
-                'title' => $info['title'],
-                'url' => $info['url'],
-                'active' => $info['active']
+                'name'      => slugify($info['title']),
+                'title'     => $info['title'],
+                'url'       => $info['url'],
+                'active'    => $info['active']
             ];
 
         }
@@ -61,38 +61,22 @@ class AnchormanController extends Controller
      */
      public function edit(Request $request)
      {
+         $info      = $this->storage->getJson($request->feed);
+         $fieldset  = $this->fieldset();
 
-         $info = $this->storage->getJson($request->feed);
-         $fieldset = $this->fieldset();
-
-         if ($info['url'] !== NULL) {
-
-             return $this->view('edit', [
-                 'title' => $info['title'],
-                 'data' => $info,
-                 'fieldset' => $fieldset->toPublishArray(),
-                 'submitUrl' => route('addons.menu_editor.store'),
-             ]);
-
-         } else {
-
-             return $this->view('edit', [
-                 'title' => 'Create feed',
-                 'data' => Settings::load()->get('edit'),
-                 'fieldset' => $fieldset->toPublishArray(),
-                 'submitUrl' => route('addons.menu_editor.store'),
-             ]);
-
-         }
-
-
+         return $this->view('edit', [
+             'title'        => $info['title'],
+             'data'         => $info,
+             'fieldset'     => $fieldset->toPublishArray(),
+             'submitUrl'    => route('addons.menu_editor.store'),
+         ]);
      }
 
      protected function fieldset()
      {
          return $this->translateFieldset(Fieldset::create(
              'edit',
-             YAML::parse(File::get($this->getDirectory().'/resources/fieldsets/edit.yaml'))
+             YAML::parse(File::get($this->getDirectory() . '/resources/fieldsets/edit.yaml'))
          ));
      }
 
@@ -109,13 +93,50 @@ class AnchormanController extends Controller
 
 
     /**
-     * Maps to the new feed screen
+     * Maps to the refresh all command
      *
      * @return mixed
      */
     public function refresh_all()
     {
         Please::call('anchorman:update');
+    }
+
+
+    /**
+     * Get a feed
+     *
+     * @return mixed
+     */
+    public function get_item_structure(Request $request)
+    {
+        $feed = new SimplePie();
+        $feed->set_cache_location(Pie::cache_location());
+        $feed->set_feed_url($request->url);
+        $success = $feed->init();
+        $feed->handle_content_type();
+
+        if ($success)
+        {
+            echo 'Title: ' . $feed->get_title();
+            echo '<br>';
+            echo 'Type: ' . $feed->get_type();
+            echo '<br>';
+
+            foreach ($feed->get_items() as $item):
+
+                if ($enclosure = $item->get_enclosure())
+            	{
+            		echo $enclosure->get_thumbnail();
+                    echo '<br>';
+            	}
+
+            endforeach;
+        }
+        else
+        {
+        	echo $feed->error();
+        }
     }
 
 
@@ -128,7 +149,8 @@ class AnchormanController extends Controller
     {
 
         $feed = new SimplePie();
-        $feed->set_cache_location('local/cache');
+        $feed->set_cache_location(Pie::cache_location());
+
         if ($request->url) {
             $feed->set_feed_url($request->url);
             $url        = $request->url;
@@ -142,6 +164,7 @@ class AnchormanController extends Controller
             $active     = $request->fields['active'];
             $status     = $request->fields['status'];
         }
+
         $feed->init();
         $feed->handle_content_type();
 
