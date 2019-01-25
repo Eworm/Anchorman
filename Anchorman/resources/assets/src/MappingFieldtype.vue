@@ -100,7 +100,7 @@ export default {
         },
 
         suggestSuggestions() {
-            return SeoPro.fieldSuggestions.filter(item => this.allowedFieldtypes.includes(item.type));
+            return Anchorman.fieldSuggestions.filter(item => this.allowedFieldtypes.includes(item.type));
         },
 
         fieldConfig() {

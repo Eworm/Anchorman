@@ -71,14 +71,6 @@ class AnchormanController extends Controller
          ]);
      }
 
-     protected function fieldset($fieldset)
-     {
-         return $this->translateFieldset(Fieldset::create(
-             $fieldset,
-             YAML::parse(File::get($this->getDirectory() . '/resources/fieldsets/' . $fieldset . '.yaml'))
-         ));
-     }
-
 
     /**
      * Maps to the create page
@@ -116,6 +108,7 @@ class AnchormanController extends Controller
      */
     public function get_item_structure(Request $request)
     {
+
         $feed = new SimplePie();
         $feed->set_cache_location(Pie::cache_location());
         $feed->set_feed_url($request->url);
@@ -219,5 +212,14 @@ class AnchormanController extends Controller
             'message' => 'Feed updated successfully.',
             'feed'    => $feed_title
         ];
+    }
+
+
+    protected function fieldset($fieldset)
+    {
+        return $this->translateFieldset(Fieldset::create(
+            $fieldset,
+            YAML::parse(File::get($this->getDirectory() . '/resources/fieldsets/' . $fieldset . '.yaml'))
+        ));
     }
 }
