@@ -1,6 +1,6 @@
 <template>
 
-    <div class="mb-3" v-for="(index, item) in structure">
+    <div class="mb-0">
 
         <label class="block">
             {{ item | capitalize }}

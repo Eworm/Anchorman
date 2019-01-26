@@ -33,7 +33,32 @@ sections:
       publish:
         type: collections
         max_items: 1
-      publish_options:
+      publish__title:
+        type: anchorman.mapping
+        inherit: false
+        field:
+          type: text
+      publish__description:
+        type: anchorman.mapping
+        inherit: false
+        field:
+          type: text
+      publish__content:
+        type: anchorman.mapping
+        inherit: false
+        field:
+          type: text
+      publish__author:
+        type: anchorman.mapping
+        inherit: false
+        field:
+          type: text
+      publish__date:
+        type: anchorman.mapping
+        inherit: false
+        field:
+          type: text
+      publish__permalink:
         type: anchorman.mapping
         inherit: false
         field:
