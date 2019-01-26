@@ -3,7 +3,7 @@
 namespace Statamic\Addons\Anchorman;
 
 use SimplePie;
-use Statamic\Addons\Anchorman\Pie;
+use Statamic\Addons\Anchorman\Feed;
 use Illuminate\Support\Facades\Storage;
 use Statamic\Console\Please;
 use Statamic\API\Path;
@@ -110,7 +110,7 @@ class AnchormanController extends Controller
     {
 
         $feed = new SimplePie();
-        $feed->set_cache_location(Pie::cache_location());
+        $feed->set_cache_location(Feed::cache_location());
         $feed->set_feed_url($request->url);
         $success = $feed->init();
         $feed->handle_content_type();
@@ -171,41 +171,37 @@ class AnchormanController extends Controller
     {
 
         $feed = new SimplePie();
-        $feed->set_cache_location(Pie::cache_location());
+        $feed->set_cache_location(Feed::cache_location());
 
         if ($request->url) {
             $feed->set_feed_url($request->url);
-            $url        = $request->url;
-            $publish    = $request->publish;
-            $scheduling = '60';
-            $active     = true;
-            $status     = 'publish';
+            $feed_vars = Feed::feed_vars($request);
         } else {
             $feed->set_feed_url($request->fields['url']);
-            $url        = $request->fields['url'];
-            $scheduling = $request->fields['scheduling'];
-            $active     = $request->fields['active'];
-            $status     = $request->fields['status'];
-            $publish    = $request->fields['publish'];
+            $feed_vars = Feed::feed_vars_edit($request);
         }
 
-        $feed->init();
+        $success = $feed->init();
         $feed->handle_content_type();
-
         $feed_title = slugify($feed->get_title());
 
-        $this->storage->putJSON($feed_title, [
-            'url'           => $url,
-            'scheduling'    => $scheduling,
-            'status'        => $status,
-            'active'        => $active,
-            'publish'       => $publish,
-            'title'         => $feed->get_title(),
-            'description'   => $feed->get_description(),
-            'language'      => $feed->get_language(),
-            'copyright'     => $feed->get_copyright(),
-            'permalink'     => $feed->get_permalink(),
-        ]);
+        if ($success)
+        {
+
+            $this->storage->putJSON($feed_title, [
+                'url'           => $feed_vars['url'],
+                'publish'       => $feed_vars['publish'],
+                'scheduling'    => $feed_vars['scheduling'],
+                'active'        => $feed_vars['active'],
+                'status'        => $feed_vars['status'],
+                'title'         => $feed->get_title(),
+                'description'   => $feed->get_description(),
+                'language'      => $feed->get_language(),
+                'copyright'     => $feed->get_copyright(),
+                'permalink'     => $feed->get_permalink(),
+            ]);
+
+        }
 
         return [
             'success' => true,
