@@ -94,7 +94,7 @@ export default {
                 type: 'suggest',
                 mode: 'anchorman',
                 max_items: 1,
-                create: true,
+                create: false,
                 placeholder: translate('addons.Anchorman::messages.source_suggest_placeholder')
             }
         },
@@ -111,11 +111,40 @@ export default {
 
     watch: {
 
+        source(val) {
+            this.data.source = val;
 
+            if (val === 'field') {
+                this.data.value = Array.isArray(this.sourceField) ? this.sourceField[0] : this.sourceField;
+            } else {
+                this.data.value = this.customText;
+            }
+        },
+
+        sourceField(val) {
+            this.data.value = Array.isArray(val) ? val[0] : val;
+        },
+
+        customText(val) {
+            this.data.value = val;
+        }
 
     },
 
     ready() {
+
+        let types = this.config.allowed_fieldtypes || ['text', 'textarea', 'markdown', 'redactor'];
+        this.allowedFieldtypes = types.concat(this.config.merge_allowed_fieldtypes || []);
+
+        console.log(this.data);
+        if (this.data.source === 'field') {
+            this.sourceField = [this.data.value];
+        } else {
+            this.customText = this.data.value;
+        }
+
+        // Set source after so that the suggest fields don't load before they potentially have data.
+        this.source = this.data.source;
 
         this.$http.get(
             cp_url("addons/anchorman/get_item_structure"), {
@@ -125,9 +154,9 @@ export default {
                 this.structure = res;
             }
         )
-        console.log(this);
+        // console.log(this);
 
-        // this.bindChangeWatcher();
+        this.bindChangeWatcher();
     }
 
 }

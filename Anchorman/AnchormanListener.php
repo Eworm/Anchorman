@@ -13,17 +13,22 @@ class AnchormanListener extends Listener
      * @var array
      */
      public $events = [
-         'cp.nav.created' => 'addNavItems'
+         'cp.nav.created' => 'addNavItems',
+         'cp.add_to_head' => 'addToHead'
      ];
 
      public function addNavItems($nav)
     {
-        // Create the first level navigation item
-        // Note: by using route('store'), it assumes you've set up a route named 'store'.
         $syndication = Nav::item('Syndication')->route('addons.anchorman')->icon('rss');
-
-        // Finally, add our first level navigation item
-        // to the navigation under the 'tools' section.
         $nav->addTo('tools', $syndication);
+    }
+
+    public function addToHead()
+    {
+        $assetContainer = $this->getConfig('asset_container');
+
+        $suggestions = json_encode((new FieldSuggestions)->suggestions());
+
+        return "<script>var Anchorman = { assetContainer: '{$assetContainer}', fieldSuggestions: {$suggestions} };</script>";
     }
 }
