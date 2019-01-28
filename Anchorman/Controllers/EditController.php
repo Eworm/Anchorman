@@ -69,12 +69,12 @@ class EditController extends Controller
 
          $data = $this->preProcessWithBlankFields(
             $fieldset,
-            Settings::load()->get('defaults')
+            Settings::load()->get('edit')
         );
 
          return $this->view('edit', [
              'title'        => $info['title'],
-             'data' => $data,
+             'data'         => $data,
              'fieldset'     => $fieldset->toPublishArray(),
              'suggestions'  => $this->getSuggestions($fieldset),
              'submitUrl'    => route('addons.anchorman.store'),
