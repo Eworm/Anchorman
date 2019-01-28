@@ -1,5 +1,5 @@
 sections:
-  Settings:
+  settings:
     fields:
       general_settings:
         type: section
@@ -26,39 +26,39 @@ sections:
         type: hidden
       copyright:
         type: hidden
-  Mapping:
+  mapping:
     fields:
       mapping:
         type: section
       publish:
         type: collections
         max_items: 1
-      publish__title:
+      publish_title:
         type: anchorman.mapping
         inherit: false
         field:
           type: text
-      publish__description:
+      publish_description:
         type: anchorman.mapping
         inherit: false
         field:
           type: text
-      publish__content:
+      publish_content:
         type: anchorman.mapping
         inherit: false
         field:
           type: text
-      publish__author:
+      publish_author:
         type: anchorman.mapping
         inherit: false
         field:
           type: text
-      publish__date:
+      publish_date:
         type: anchorman.mapping
         inherit: false
         field:
           type: text
-      publish__permalink:
+      publish_permalink:
         type: anchorman.mapping
         inherit: false
         field:

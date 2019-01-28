@@ -25,10 +25,10 @@ class AnchormanListener extends Listener
 
     public function addToHead()
     {
-        $assetContainer = $this->getConfig('asset_container');
-
-        $suggestions = json_encode((new FieldSuggestions)->suggestions());
-
-        return "<script>var Anchorman = { assetContainer: '{$assetContainer}', fieldSuggestions: {$suggestions} };</script>";
+        // $assetContainer = $this->getConfig('asset_container');
+        //
+        // $suggestions = json_encode((new FieldSuggestions)->suggestions());
+        //
+        // return "<script>var Anchorman = { assetContainer: '{$assetContainer}', fieldSuggestions: {$suggestions} };</script>";
     }
 }

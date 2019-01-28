@@ -15,7 +15,7 @@
             <div class="flex-1">
 
                 <div v-if="source === 'field'" class="source-field-select">
-                    <suggest-fieldtype :data.sync="sourceField" :config="suggestConfig" :suggestions-prop="suggestSuggestions"></suggest-fieldtype>
+                    <suggest-fieldtype :data.sync="mappingField" :config="suggestConfig" :suggestions-prop="suggestSuggestions"></suggest-fieldtype>
                 </div>
 
                 <component
@@ -61,7 +61,7 @@ export default {
         return {
             source: null,
             customText: null,
-            sourceField: null,
+            mappingField: null,
             autoBindChangeWatcher: false,
             changeWatcherWatchDeep: false,
             structure: [],
@@ -115,13 +115,13 @@ export default {
             this.data.source = val;
 
             if (val === 'field') {
-                this.data.value = Array.isArray(this.sourceField) ? this.sourceField[0] : this.sourceField;
+                this.data.value = Array.isArray(this.mappingField) ? this.mappingField[0] : this.mappingField;
             } else {
                 this.data.value = this.customText;
             }
         },
 
-        sourceField(val) {
+        mappingField(val) {
             this.data.value = Array.isArray(val) ? val[0] : val;
         },
 
@@ -136,9 +136,8 @@ export default {
         let types = this.config.allowed_fieldtypes || ['text', 'textarea', 'markdown', 'redactor'];
         this.allowedFieldtypes = types.concat(this.config.merge_allowed_fieldtypes || []);
 
-        console.log(this.data);
         if (this.data.source === 'field') {
-            this.sourceField = [this.data.value];
+            this.mappingField = [this.data.value];
         } else {
             this.customText = this.data.value;
         }
@@ -154,7 +153,6 @@ export default {
                 this.structure = res;
             }
         )
-        // console.log(this);
 
         this.bindChangeWatcher();
     }

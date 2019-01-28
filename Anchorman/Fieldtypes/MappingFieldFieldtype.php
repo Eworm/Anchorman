@@ -1,8 +1,8 @@
 <?php
 
-namespace Statamic\Addons\SeoPro\Fieldtypes;
+namespace Statamic\Addons\Anchorman\Fieldtypes;
 
-class SourceFieldFieldtype extends FieldsFieldtype
+class MappingFieldFieldtype extends FieldsFieldtype
 {
     public $selectable = false;
 

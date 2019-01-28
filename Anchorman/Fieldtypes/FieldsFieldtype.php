@@ -1,6 +1,6 @@
 <?php
 
-namespace Statamic\Addons\SeoPro\Fieldtypes;
+namespace Statamic\Addons\Anchorman\Fieldtypes;
 
 use Statamic\Extend\Fieldtype;
 use Statamic\CP\FieldtypeFactory;
