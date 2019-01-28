@@ -14,7 +14,6 @@ use Statamic\Addons\Anchorman\Settings;
 use Statamic\API\Fieldset;
 use Illuminate\Http\Request;
 use Statamic\Addons\Anchorman\TranslatesFieldsets;
-
 use Statamic\CP\Publish\ProcessesFields;
 use Statamic\CP\Publish\ValidationBuilder;
 use Statamic\CP\Publish\PreloadsSuggestions;

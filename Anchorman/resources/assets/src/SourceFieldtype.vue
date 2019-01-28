@@ -1,28 +1,35 @@
 <template>
 
-    <div class="flex">
+    <div class="mb-2" v-for="item in structure">
 
-        <div class="source-type-select pr-2">
-            <select-fieldtype :data.sync="source" :options="sourceTypeSelectOptions"></select-fieldtype>
-        </div>
+        <label class="block">
+            {{ item | capitalize }}
+        </label>
 
-        <div class="flex-1">
-            <div v-if="source === 'inherit'" class="text-sm text-grey inherit-placeholder">
-                {{ config.placeholder }}
+        <div class="flex">
+
+            <div class="source-type-select pr-2">
+                <select-fieldtype :data.sync="source" :options="sourceTypeSelectOptions"></select-fieldtype>
             </div>
 
-            <div v-if="source === 'field'" class="source-field-select">
-                <suggest-fieldtype :data.sync="sourceField" :config="suggestConfig" :suggestions-prop="suggestSuggestions"></suggest-fieldtype>
-            </div>
+            <div class="flex-1">
+                <div v-if="source === 'inherit'" class="text-sm text-grey inherit-placeholder">
+                    {{ config.placeholder }}
+                </div>
 
-            <component
-                v-if="source === 'custom'"
-                :is="componentName"
-                :name="name"
-                :data.sync="customText"
-                :config="fieldConfig"
-                :leave-alert="true">
-            </component>
+                <div v-if="source === 'field'" class="source-field-select">
+                    <suggest-fieldtype :data.sync="sourceField" :config="suggestConfig" :suggestions-prop="suggestSuggestions"></suggest-fieldtype>
+                </div>
+
+                <component
+                    v-if="source === 'custom'"
+                    :is="componentName"
+                    :name="name"
+                    :data.sync="customText"
+                    :config="fieldConfig"
+                    :leave-alert="true">
+                </component>
+            </div>
         </div>
     </div>
 
@@ -60,6 +67,7 @@ export default {
             sourceField: null,
             autoBindChangeWatcher: false,
             changeWatcherWatchDeep: false,
+            structure: [],
             allowedFieldtypes: []
         }
     },
@@ -146,6 +154,16 @@ export default {
 
         // Set source after so that the suggest fields don't load before they potentially have data.
         this.source = this.data.source;
+
+        this.$http.get(
+            cp_url("addons/anchorman/get_item_structure"), {
+                url: Statamic.Publish.contentData.permalink
+            },
+            function(res) {
+                console.log(res);
+                this.structure = res;
+            }
+        )
 
         this.bindChangeWatcher();
     }
