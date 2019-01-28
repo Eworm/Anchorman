@@ -4,10 +4,3 @@ description: 'Anchorman is an Atom/RSS aggregator for Statamic'
 developer: 'Wout Mager'
 developer_url: 'https://woutmager.nl'
 commercial: true
-
-fieldtype_fields:
-  fields:
-    type: anchorman.fields
-source_fieldtype_fields:
-  field:
-    type: anchorman.source_field

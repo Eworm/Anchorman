@@ -64,16 +64,15 @@ class EditController extends Controller
      */
      public function edit(Request $request)
      {
-         $info      = $this->storage->getJson($request->feed);
          $fieldset  = $this->fieldset('edit');
 
          $data = $this->preProcessWithBlankFields(
             $fieldset,
-            Settings::load()->get('edit')
+            $this->storage->getJson($request->feed)
         );
 
          return $this->view('edit', [
-             'title'        => $info['title'],
+             'title'        => $data['title'],
              'data'         => $data,
              'fieldset'     => $fieldset->toPublishArray(),
              'suggestions'  => $this->getSuggestions($fieldset),
