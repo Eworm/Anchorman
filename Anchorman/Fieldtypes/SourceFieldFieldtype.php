@@ -2,7 +2,7 @@
 
 namespace Statamic\Addons\Anchorman\Fieldtypes;
 
-class MappingFieldFieldtype extends FieldsFieldtype
+class SourceFieldFieldtype extends FieldsFieldtype
 {
     public $selectable = false;
 

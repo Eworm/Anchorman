@@ -6,14 +6,14 @@ use Statamic\API\Str;
 use Statamic\Extend\Fieldtype;
 use Statamic\CP\FieldtypeFactory;
 
-class MappingFieldtype extends Fieldtype
+class SourceFieldtype extends Fieldtype
 {
     public $selectable = false;
 
     public function preProcess($data)
     {
-        if (is_string($data) && Str::startsWith($data, '@anchorman:')) {
-            return ['source' => 'field', 'value' => explode('@anchorman:', $data)[1]];
+        if (is_string($data) && Str::startsWith($data, 'anchorman:')) {
+            return ['source' => 'field', 'value' => explode('anchorman:', $data)[1]];
         }
 
         if ($data === false && $this->getFieldConfig('disableable') === true) {
@@ -30,7 +30,7 @@ class MappingFieldtype extends Fieldtype
     public function process($data)
     {
         if ($data['source'] === 'field') {
-            return '@anchorman:' . $data['value'];
+            return 'anchorman:' . $data['value'];
         }
 
         if ($data['source'] === 'inherit') {

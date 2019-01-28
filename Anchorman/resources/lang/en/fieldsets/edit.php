@@ -5,6 +5,9 @@ return [
     'url' => 'Url',
     'url_instruct' => "The url of the rss feed.",
 
+    'mapping_title' => "Mapping test",
+    'mapping_title_instruct' => "Mapping instructions",
+
     'active' => 'Enabled',
     'active_instruct' => "If disabled, this feed won't check for new articles.",
 

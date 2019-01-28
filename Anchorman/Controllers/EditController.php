@@ -1,6 +1,6 @@
 <?php
 
-namespace Statamic\Addons\Anchorman;
+namespace Statamic\Addons\Anchorman\Controllers;
 
 use SimplePie;
 use Statamic\Addons\Anchorman\Feed;
@@ -10,12 +10,16 @@ use Statamic\API\Path;
 use Statamic\API\File;
 use Statamic\API\YAML;
 use Statamic\API\Parse;
+use Statamic\Addons\Anchorman\Settings;
 use Statamic\API\Fieldset;
 use Illuminate\Http\Request;
 use Statamic\Addons\Anchorman\TranslatesFieldsets;
-use Statamic\Extend\Controller;
 
-class AnchormanController extends Controller
+use Statamic\CP\Publish\ProcessesFields;
+use Statamic\CP\Publish\ValidationBuilder;
+use Statamic\CP\Publish\PreloadsSuggestions;
+
+class EditController extends Controller
 {
 
     use TranslatesFieldsets;
@@ -63,10 +67,16 @@ class AnchormanController extends Controller
          $info      = $this->storage->getJson($request->feed);
          $fieldset  = $this->fieldset('edit');
 
+         $data = $this->preProcessWithBlankFields(
+            $fieldset,
+            Settings::load()->get('defaults')
+        );
+
          return $this->view('edit', [
              'title'        => $info['title'],
-             'data'         => $info,
+             'data' => $data,
              'fieldset'     => $fieldset->toPublishArray(),
+             'suggestions'  => $this->getSuggestions($fieldset),
              'submitUrl'    => route('addons.anchorman.store'),
          ]);
      }

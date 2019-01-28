@@ -6,7 +6,8 @@
     <script>
         Statamic.Publish = {
             contentData: {!! json_encode($data) !!},
-            fieldset: {!! json_encode($fieldset) !!}
+            fieldset: {!! json_encode($fieldset) !!},
+            suggestions: {!! json_encode($suggestions) !!}
         };
     </script>
 

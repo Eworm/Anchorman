@@ -1,5 +1,5 @@
 sections:
-  Settings:
+  settings:
     fields:
       general_settings:
         type: section
