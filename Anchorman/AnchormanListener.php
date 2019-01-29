@@ -61,6 +61,21 @@ class AnchormanListener extends Listener
         $fieldset->contents($contents);
     }
 
+    protected function getPlaceholder($key, $field, $data)
+    {
+        if (! $data) {
+            return;
+        }
+
+        $vars = (new TagData)
+            ->with(Settings::load()->get('defaults'))
+            ->with($data->getWithCascade('seo', []))
+            ->withCurrent($data)
+            ->get();
+
+        return array_get($vars, $key);
+    }
+
     public function addToHead()
     {
         $assetContainer = $this->getConfig('asset_container');

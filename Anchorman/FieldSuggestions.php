@@ -13,30 +13,28 @@ class FieldSuggestions
         // fieldSuggestions: [{"value":"amazon_id","text":"amazon_id","type":"text"},{"value":"array","text":"array","type":"array"}
         // fieldSuggestions: [{"value":"feed","text":"text","type":"type"},{
 
-        // return collect(Fieldset::all())->flatMap(function ($fieldset) {
-        //     // dd($fieldset);
-        //     return collect($fieldset->inlinedFields())->map(function ($config, $name) {
-        //         $type = array_get($config, 'type', 'text');
-        //         return ['value' => $name, 'text' => $name, 'type' => $type];
-        //     })->filter();
-        // })->sortBy('text')->values()->all();
+        return collect(Fieldset::all())->flatMap(function ($fieldset) {
+            // dd($fieldset);
+            return collect($fieldset->inlinedFields())->map(function ($config, $name) {
+                $type = array_get($config, 'type', 'text');
+                return ['value' => $name, 'text' => $name, 'type' => $type];
+            })->filter();
+        })->sortBy('text')->values()->all();
 
-        $test = Collection::whereHandle('blog');
-        $newtest = $test->data();
-        // dd($test->data());
-        $fieldtypes = [];
-
-        foreach ($newtest as $item) {
-
-            $fieldtypes[] = (object) [
-                'value'     => $item,
-                'text'      => $item,
-                'type'      => 'text'
-            ];
-
-        }
-        // dd($fieldtypes);
-        return $fieldtypes;
+        // $test = Collection::whereHandle('blog');
+        // $newtest = $test->data();
+        // $fieldtypes = [];
+        //
+        // foreach ($newtest as $item) {
+        //
+        //     $fieldtypes[] = (object) [
+        //         'value'     => $item,
+        //         'text'      => $item,
+        //         'type'      => 'text'
+        //     ];
+        //
+        // }
+        // return $fieldtypes;
 
         // return collect($test)->flatMap(function ($fieldset) {
         //     return collect($fieldset->inlinedFields())->map(function ($config, $name) {
