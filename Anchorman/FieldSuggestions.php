@@ -9,24 +9,40 @@ class FieldSuggestions
 {
     public function suggestions()
     {
+
+        // fieldSuggestions: [{"value":"amazon_id","text":"amazon_id","type":"text"},{"value":"array","text":"array","type":"array"}
+        // fieldSuggestions: [{"value":"feed","text":"text","type":"type"},{
+
         // return collect(Fieldset::all())->flatMap(function ($fieldset) {
+        //     // dd($fieldset);
         //     return collect($fieldset->inlinedFields())->map(function ($config, $name) {
         //         $type = array_get($config, 'type', 'text');
         //         return ['value' => $name, 'text' => $name, 'type' => $type];
         //     })->filter();
         // })->sortBy('text')->values()->all();
 
-        $test = Collection::whereHandle('feed');
-        return $test->data();
-        // $test = Fieldset::all();
-        // $test = Collection::handles();
+        $test = Collection::whereHandle('blog');
+        $newtest = $test->data();
         // dd($test->data());
+        $fieldtypes = [];
 
-        // return collect(Collection::whereHandle('feed'))->flatMap(function ($fieldset) {
-            // return collect($fieldset->inlinedFields())->map(function ($config, $name) {
-            //     $type = array_get($config, 'type', 'text');
-            //     return ['value' => $name, 'text' => $name, 'type' => $type];
-            // })->filter();
+        foreach ($newtest as $item) {
+
+            $fieldtypes[] = (object) [
+                'value'     => $item,
+                'text'      => $item,
+                'type'      => 'text'
+            ];
+
+        }
+        // dd($fieldtypes);
+        return $fieldtypes;
+
+        // return collect($test)->flatMap(function ($fieldset) {
+        //     return collect($fieldset->inlinedFields())->map(function ($config, $name) {
+        //         $type = array_get($config, 'type', 'text');
+        //         return ['value' => $name, 'text' => $name, 'type' => $type];
+        //     })->filter();
         // })->sortBy('text')->values()->all();
 
 
