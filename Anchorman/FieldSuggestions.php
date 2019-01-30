@@ -12,7 +12,7 @@ class FieldSuggestions
 
         // fieldSuggestions: [{"value":"amazon_id","text":"amazon_id","type":"text"},{"value":"array","text":"array","type":"array"}
         // fieldSuggestions: [{"value":"feed","text":"text","type":"type"},{
-
+        // dd(collect(Fieldset::all()));
         return collect(Fieldset::all())->flatMap(function ($fieldset) {
             // dd($fieldset);
             return collect($fieldset->inlinedFields())->map(function ($config, $name) {

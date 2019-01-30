@@ -3,7 +3,7 @@
     <div class="mb-2" v-for="item in structure">
 
         <label class="block">
-            {{ item | capitalize }}
+            {{ item.title | capitalize }}
         </label>
 
         <div class="flex">
@@ -13,16 +13,16 @@
             </div>
 
             <div class="flex-1">
-                <div v-if="source === 'inherit'" class="text-sm text-grey inherit-placeholder">
+                <div v-if="item.source === 'inherit'" class="text-sm text-grey inherit-placeholder">
                     {{ config.placeholder }}
                 </div>
 
-                <div v-if="source === 'field'" class="source-field-select">
+                <div v-if="item.source === 'field'" class="source-field-select">
                     <suggest-fieldtype :data.sync="sourceField" :config="suggestConfig" :suggestions-prop="suggestSuggestions"></suggest-fieldtype>
                 </div>
 
                 <component
-                    v-if="source === 'custom'"
+                    v-if="item.source === 'custom'"
                     :is="componentName"
                     :name="name"
                     :data.sync="customText"

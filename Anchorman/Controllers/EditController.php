@@ -122,7 +122,7 @@ class EditController extends Controller
         $feed->set_feed_url($request->url);
         $success = $feed->init();
         $feed->handle_content_type();
-        $structure = array();
+        $structure = [];
 
         if ($success)
         {
@@ -131,32 +131,42 @@ class EditController extends Controller
 
                 if ($item->get_title())
                 {
-                    array_push($structure, 'title');
+                    $structure[] = (object) [
+                        'title' => 'title',
+                        'source' => 'title'
+                    ];
                 }
 
                 if ($item->get_description())
                 {
-                    array_push($structure, 'description');
+                    $structure[] = (object) [
+                        'title' => 'description',
+                        'source' => 'custom'
+                    ];
                 }
 
                 if ($item->get_content())
                 {
-                    array_push($structure, 'content');
+                    $structure[] = (object) [
+                        'title' => 'content',
+                        'source' => 'content'
+                    ];
                 }
 
                 if ($item->get_author())
                 {
-                    array_push($structure, 'author');
+                    $structure[] = (object) [
+                        'title' => 'author',
+                        'source' => 'custom'
+                    ];
                 }
 
                 if ($item->get_date())
                 {
-                    array_push($structure, 'date');
-                }
-
-                if ($item->get_permalink())
-                {
-                    array_push($structure, 'permalink');
+                    $structure[] = (object) [
+                        'title' => 'date',
+                        'source' => 'custom'
+                    ];
                 }
 
             }
