@@ -3,6 +3,7 @@
 namespace Statamic\Addons\Anchorman\Commands;
 
 use SimplePie;
+use Statamic\Addons\Anchorman\Feed;
 use Illuminate\Support\Facades\Storage;
 use Statamic\API\Entry;
 use Statamic\Extend\Command;
@@ -42,13 +43,14 @@ class UpdateCommand extends Command
         $feeds_storage  = Storage::files('/site/storage/addons/Anchorman');
 
         foreach ($feeds_storage as $feed) {
-            $rem = str_replace('site/storage/addons/Anchorman/', '', $feed);
-            $info = $this->storage->getJson($rem);
-            $url = $info['url'];
-            $publish = $info['publish'][0];
+            $rem        = str_replace('site/storage/addons/Anchorman/', '', $feed);
+            $info       = $this->storage->getJson($rem);
+            $url        = $info['url'];
+            $publish    = $info['publish'][0];
+            $enabled    = $info['active'];
 
             $feed = new SimplePie();
-            $feed->set_cache_location(Pie::cache_location());
+            $feed->set_cache_location(Feed::cache_location());
             $feed->set_feed_url($url);
             $feed->init();
             $this->info('Updating ' . $feed->get_title());
@@ -56,39 +58,43 @@ class UpdateCommand extends Command
 
             foreach ($feed->get_items() as $item):
 
-                $slugged = slugify($item->get_title());
+                if ($enabled === true) {
 
-                if (Entry::slugExists($slugged, $publish)) {
+                    $slugged = slugify($item->get_title());
 
-                    // $this->info($item->get_title() . " <fg=red>already exists</>");
+                    if (Entry::slugExists($slugged, $publish)) {
 
-                } else {
+                        // $this->info($item->get_title() . " <fg=red>already exists</>");
 
-                    $bar = $this->output->createProgressBar($feed->get_item_quantity());
-                    $bar->start();
+                    } else {
 
-                    if ($info['status'] == 'publish') :
+                        $bar = $this->output->createProgressBar($feed->get_item_quantity());
+                        $bar->start();
 
-                        Entry::create($slugged)
-                            ->collection($publish)
-                            ->with(['title' => $item->get_title()])
-                            ->date($item->get_date('Y-m-d'))
-                            ->save();
+                        if ($info['status'] == 'publish') :
 
-                    else :
+                            Entry::create($slugged)
+                                ->collection($publish)
+                                ->with(['title' => $item->get_title()])
+                                ->date($item->get_date('Y-m-d'));
+                                // ->save();
 
-                        Entry::create($slugged)
-                            ->collection($publish)
-                            ->published(false)
-                            ->with(['title' => $item->get_title()])
-                            ->date($item->get_date('Y-m-d'))
-                            ->save();
+                        else :
 
-                    endif;
+                            Entry::create($slugged)
+                                ->collection($publish)
+                                ->published(false)
+                                ->with(['title' => $item->get_title()])
+                                ->date($item->get_date('Y-m-d'));
+                                // ->save();
 
-                    $i++;
-                    $bar->advance();
-                    $bar->finish();
+                        endif;
+
+                        $i++;
+                        $bar->advance();
+                        $bar->finish();
+
+                    }
 
                 }
 
