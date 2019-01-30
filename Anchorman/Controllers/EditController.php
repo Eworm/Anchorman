@@ -133,7 +133,8 @@ class EditController extends Controller
                 {
                     $structure[] = (object) [
                         'title' => 'title',
-                        'source' => 'field'
+                        'source' => 'field',
+                        'value' => ['title']
                     ];
                 }
 

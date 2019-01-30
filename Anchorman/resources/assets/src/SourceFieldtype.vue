@@ -1,6 +1,6 @@
 <template>
 
-    <div class="mb-2" v-for="item in structure">
+    <div class="mb-2">
 
         <label class="block">
             {{ item.title | capitalize }}
@@ -9,20 +9,20 @@
         <div class="flex">
 
             <div class="source-type-select pr-2">
-                <select-fieldtype :data.sync="item.source" :options="sourceTypeSelectOptions"></select-fieldtype>
+                <select-fieldtype :data.sync="source" :options="sourceTypeSelectOptions"></select-fieldtype>
             </div>
 
             <div class="flex-1">
-                <div v-if="item.source === 'inherit'" class="text-sm text-grey inherit-placeholder">
+                <div v-if="source === 'inherit'" class="text-sm text-grey inherit-placeholder">
                     {{ config.placeholder }}
                 </div>
 
-                <div v-if="item.source === 'field'" class="source-field-select">
+                <div v-if="source === 'field'" class="source-field-select">
                     <suggest-fieldtype :data.sync="sourceField" :config="suggestConfig" :suggestions-prop="suggestSuggestions"></suggest-fieldtype>
                 </div>
 
                 <component
-                    v-if="item.source === 'custom'"
+                    v-if="source === 'custom'"
                     :is="componentName"
                     :name="name"
                     :data.sync="customText"

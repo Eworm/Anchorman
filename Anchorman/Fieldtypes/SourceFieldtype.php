@@ -12,8 +12,13 @@ class SourceFieldtype extends Fieldtype
 
     public function preProcess($data)
     {
-        if (is_string($data) && Str::startsWith($data, 'anchorman:')) {
-            return ['source' => 'field', 'value' => explode('anchorman:', $data)[1]];
+
+        // if (is_string($data) && Str::startsWith($data, 'anchorman:')) {
+        //     return ['source' => 'field', 'value' => explode('anchorman:', $data)[1]];
+        // }
+        if (! $data && $this->getFieldConfig('inherit') === false) {
+            // dd($this);
+            return ['source' => 'field', 'value' => $this->getFieldConfig('field')['value']];
         }
 
         if ($data === false && $this->getFieldConfig('disableable') === true) {

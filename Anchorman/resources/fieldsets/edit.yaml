@@ -38,3 +38,4 @@ sections:
         inherit: false
         field:
           type: text
+          value: title
