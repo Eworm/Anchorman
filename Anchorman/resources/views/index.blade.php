@@ -20,6 +20,7 @@
                     <tr>
                         <th class="column-title">Title</th>
                         <th class="column-slug">Url</th>
+                        <th class="column-slug">Publishes to</th>
                         <th class="column-date">Updated</th>
                         <th class="column-active">Status</th>
                         <th class="column-actions"></th>
@@ -32,7 +33,7 @@
                         <tr>
 
                             <td class="cell-title first-cell">
-                                <a href="{{ route('addons.anchorman.edit', $feed->name) }}" title="Edit {{ $feed->title }}">
+                                <a href="{{ route('addons.anchorman.edit', $feed->name) }}">
                                     {{ $feed->title }}
                                 </a>
                             </td>
@@ -41,6 +42,10 @@
                                 <a href="{{ $feed->url }}" rel="external">
                                     {{ $feed->url }}
                                 </a>
+                            </td>
+
+                            <td class="cell-collection">
+                                {{ $feed->collection }}
                             </td>
 
                             <td class="cell-updated">

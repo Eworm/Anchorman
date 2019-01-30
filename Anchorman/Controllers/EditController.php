@@ -46,7 +46,8 @@ class EditController extends Controller
                 'name'      => slugify($info['title']),
                 'title'     => $info['title'],
                 'url'       => $info['url'],
-                'active'    => $info['active']
+                'active'    => $info['active'],
+                'collection'=> $info['publish'][0]
             ];
 
         }
