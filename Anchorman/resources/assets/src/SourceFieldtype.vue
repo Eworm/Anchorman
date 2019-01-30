@@ -9,7 +9,7 @@
         <div class="flex">
 
             <div class="source-type-select pr-2">
-                <select-fieldtype :data.sync="source" :options="sourceTypeSelectOptions"></select-fieldtype>
+                <select-fieldtype :data.sync="item.source" :options="sourceTypeSelectOptions"></select-fieldtype>
             </div>
 
             <div class="flex-1">

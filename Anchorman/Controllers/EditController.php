@@ -133,7 +133,7 @@ class EditController extends Controller
                 {
                     $structure[] = (object) [
                         'title' => 'title',
-                        'source' => 'title'
+                        'source' => 'field'
                     ];
                 }
 
@@ -149,7 +149,7 @@ class EditController extends Controller
                 {
                     $structure[] = (object) [
                         'title' => 'content',
-                        'source' => 'content'
+                        'source' => 'field'
                     ];
                 }
 
