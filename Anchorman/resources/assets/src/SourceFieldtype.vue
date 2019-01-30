@@ -15,7 +15,7 @@
             <div class="flex-1">
 
                 <div v-if="item.source === 'field'" class="source-field-select">
-                    <suggest-fieldtype :data.sync="sourceField" :config="suggestConfig" :suggestions-prop="suggestSuggestions"></suggest-fieldtype>
+                    <suggest-fieldtype :data.sync="[item.value]" :config="suggestConfig" :suggestions-prop="suggestSuggestions"></suggest-fieldtype>
                 </div>
 
                 <component
@@ -75,10 +75,12 @@ export default {
             let options = [];
 
             if (this.config.field !== false) {
+                // Adds the custom option to the fieldtype select
                 options.push({ text: 'Custom', value: 'custom' });
             }
 
             if (this.config.from_field !== false) {
+                // Removes the 'from field' option from the fieldtype select
                 options.unshift({ text: 'From Field', value: 'field' });
             }
 
@@ -132,18 +134,6 @@ export default {
     },
 
     ready() {
-        let types = this.config.allowed_fieldtypes || ['text', 'textarea', 'markdown', 'redactor'];
-        this.allowedFieldtypes = types.concat(this.config.merge_allowed_fieldtypes || []);
-
-        console.log(this);
-        if (this.data.source === 'field') {
-            this.sourceField = [this.data.value];
-        } else {
-            this.customText = this.data.value;
-        }
-
-        // Set source after so that the suggest fields don't load before they potentially have data.
-        this.source = this.data.source;
 
         this.$http.get(
             cp_url("addons/anchorman/get_item_structure"), {
@@ -154,6 +144,19 @@ export default {
                 this.structure = res;
             }
         )
+
+        let types = this.config.allowed_fieldtypes || ['text', 'textarea', 'markdown', 'redactor'];
+        this.allowedFieldtypes = types.concat(this.config.merge_allowed_fieldtypes || []);
+
+        console.log(this);
+        // if (this.data.source === 'field') {
+        //     this.sourceField = [this.data.value];
+        // } else {
+        //     this.customText = this.data.value;
+        // }
+
+        // Set source after so that the suggest fields don't load before they potentially have data.
+        this.source = this.data.source;
 
         this.bindChangeWatcher();
     }

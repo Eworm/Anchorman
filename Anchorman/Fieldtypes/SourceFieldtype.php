@@ -23,10 +23,10 @@ class SourceFieldtype extends Fieldtype
         if ($data === false && $this->getFieldConfig('disableable') === true) {
             return ['source' => 'disable', 'value' => null];
         }
-
-        if (! $data && $this->getFieldConfig('inherit') !== false) {
-            return ['source' => 'inherit', 'value' => null];
-        }
+        //
+        // if (! $data && $this->getFieldConfig('inherit') !== false) {
+        //     return ['source' => 'inherit', 'value' => null];
+        // }
 
         return ['source' => 'custom', 'value' => $this->fieldtype()->preProcess($data)];
     }
@@ -37,9 +37,9 @@ class SourceFieldtype extends Fieldtype
             return 'anchorman:' . $data['value'];
         }
 
-        if ($data['source'] === 'inherit') {
-            return null;
-        }
+        // if ($data['source'] === 'inherit') {
+        //     return null;
+        // }
 
         if ($data['source'] === 'disable') {
             return false;
