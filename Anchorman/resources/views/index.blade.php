@@ -38,7 +38,9 @@
                             </td>
 
                             <td class="cell-permalink">
-                                {{ $feed->url }}
+                                <a href="{{ $feed->url }}" rel="external">
+                                    {{ $feed->url }}
+                                </a>
                             </td>
 
                             <td class="cell-updated">
