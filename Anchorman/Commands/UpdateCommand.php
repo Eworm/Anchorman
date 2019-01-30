@@ -48,6 +48,14 @@ class UpdateCommand extends Command
             $url        = $info['url'];
             $publish    = $info['publish'][0];
             $enabled    = $info['active'];
+            $mapping    = $info['mapping'];
+
+            if (array_key_exists( 'title', $mapping )) {
+                $mapping_title = $mapping['title'];
+            }
+            if (array_key_exists( 'content', $mapping )) {
+                $mapping_content = $mapping['content'];
+            }
 
             $feed = new SimplePie();
             $feed->set_cache_location(Feed::cache_location());
@@ -75,7 +83,10 @@ class UpdateCommand extends Command
 
                             Entry::create($slugged)
                                 ->collection($publish)
-                                ->with(['title' => $item->get_title()])
+                                ->with([
+                                    $mapping_title => $item->get_title(),
+                                    $mapping_content => $item->get_content()
+                                ])
                                 ->date($item->get_date('Y-m-d'));
                                 // ->save();
 
@@ -84,7 +95,10 @@ class UpdateCommand extends Command
                             Entry::create($slugged)
                                 ->collection($publish)
                                 ->published(false)
-                                ->with(['title' => $item->get_title()])
+                                ->with([
+                                    $mapping_title => $item->get_title(),
+                                    $mapping_content => $item->get_content()
+                                ])
                                 ->date($item->get_date('Y-m-d'));
                                 // ->save();
 

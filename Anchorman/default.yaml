@@ -2,6 +2,3 @@ edit:
   active: true
   scheduling: 60
   status: publish
-
-defaults:
-  mapping: 'anchorman:mapping'
