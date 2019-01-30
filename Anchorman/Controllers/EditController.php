@@ -183,6 +183,7 @@ class EditController extends Controller
     public function store(Request $request)
     {
 
+        // dd($request);
         $feed = new SimplePie();
         $feed->set_cache_location(Feed::cache_location());
 
@@ -200,7 +201,7 @@ class EditController extends Controller
 
         if ($success)
         {
-
+            // dd($feed_vars);
             $this->storage->putJSON($feed_title, [
                 'url'           => $feed_vars['url'],
                 'publish'       => $feed_vars['publish'],
@@ -212,6 +213,10 @@ class EditController extends Controller
                 'language'      => $feed->get_language(),
                 'copyright'     => $feed->get_copyright(),
                 'permalink'     => $feed->get_permalink(),
+                'mapping'       => [
+                    "title" => $feed_vars['map_title'],
+                    "content" => $feed_vars['map_content']
+                ]
             ]);
 
         }
