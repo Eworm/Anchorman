@@ -17,7 +17,6 @@ class SourceFieldtype extends Fieldtype
         //     return ['source' => 'field', 'value' => explode('anchorman:', $data)[1]];
         // }
         if (! $data && $this->getFieldConfig('inherit') === false) {
-            // dd($this);
             return ['source' => 'field', 'value' => $this->getFieldConfig('field')['value']];
         }
 

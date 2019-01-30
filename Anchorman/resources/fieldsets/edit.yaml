@@ -35,7 +35,5 @@ sections:
         max_items: 1
       mapping_title:
         type: anchorman.source
-        inherit: false
         field:
           type: text
-          value: title

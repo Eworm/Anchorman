@@ -150,7 +150,8 @@ class EditController extends Controller
                 {
                     $structure[] = (object) [
                         'title' => 'content',
-                        'source' => 'field'
+                        'source' => 'field',
+                        'value' => ['content']
                     ];
                 }
 
@@ -162,21 +163,13 @@ class EditController extends Controller
                     ];
                 }
 
-                if ($item->get_date())
-                {
-                    $structure[] = (object) [
-                        'title' => 'date',
-                        'source' => 'custom'
-                    ];
-                }
-
             }
 
             return $structure;
         }
         else
         {
-        	echo $feed->error();
+        	return $feed->error();
         }
     }
 
