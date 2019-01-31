@@ -105,7 +105,7 @@ class EditController extends Controller
      *
      * @return mixed
      */
-    public function refresh_all()
+    public function refreshAll()
     {
         Please::call('anchorman:update');
     }
