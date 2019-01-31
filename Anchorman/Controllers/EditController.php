@@ -64,20 +64,21 @@ class EditController extends Controller
      */
      public function edit(Request $request)
      {
-         $fieldset  = $this->fieldset('edit');
+        $fieldset  = $this->fieldset('edit');
 
-         $data = $this->preProcessWithBlankFields(
+        $data = $this->preProcessWithBlankFields(
             $fieldset,
             $this->storage->getJson($request->feed)
         );
 
-         return $this->view('edit', [
-             'title'        => $data['title'],
-             'data'         => $data,
-             'fieldset'     => $fieldset->toPublishArray(),
-             'suggestions'  => $this->getSuggestions($fieldset),
-             'submitUrl'    => route('addons.anchorman.store'),
-         ]);
+        return $this->view('edit', [
+            'title'        => $data['title'],
+            'data'         => $data,
+            'fieldset'     => $fieldset->toPublishArray(),
+            'suggestions'  => $this->getSuggestions($fieldset),
+            'mapping'      => $this->get_item_structure($data['url']),
+            'submitUrl'    => route('addons.anchorman.store'),
+        ]);
      }
 
 
@@ -115,12 +116,12 @@ class EditController extends Controller
      *
      * @return mixed
      */
-    public function get_item_structure(Request $request)
+    public function get_item_structure($url)
     {
 
         $feed = new SimplePie();
         $feed->set_cache_location(Feed::cache_location());
-        $feed->set_feed_url($request->url);
+        $feed->set_feed_url($url);
         $success = $feed->init();
         $feed->handle_content_type();
         $structure = [];
@@ -143,7 +144,8 @@ class EditController extends Controller
                 {
                     $structure[] = (object) [
                         'title' => 'description',
-                        'source' => 'custom'
+                        'source' => 'custom',
+                        'value' => null
                     ];
                 }
 
@@ -160,7 +162,8 @@ class EditController extends Controller
                 {
                     $structure[] = (object) [
                         'title' => 'author',
-                        'source' => 'custom'
+                        'source' => 'custom',
+                        'value' => null
                     ];
                 }
 
@@ -215,7 +218,8 @@ class EditController extends Controller
                 'permalink'     => $feed->get_permalink(),
                 'mapping'       => [
                     "title" => $feed_vars['map_title'],
-                    "content" => $feed_vars['map_content']
+                    "content" => $feed_vars['map_content'],
+                    "description" => 'testfield'
                 ]
             ]);
 

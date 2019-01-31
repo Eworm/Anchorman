@@ -135,20 +135,22 @@ export default {
 
     ready() {
 
-        this.$http.get(
-            cp_url("addons/anchorman/get_item_structure"), {
-                url: Statamic.Publish.contentData.permalink
-            },
-            function(res) {
-                console.log(res);
-                this.structure = res;
-            }
-        )
+        // this.$http.get(
+        //     cp_url("addons/anchorman/get_item_structure"), {
+        //         url: Statamic.Publish.contentData.permalink
+        //     },
+        //     function(res) {
+        //         console.log(res);
+        //         this.structure = res;
+        //     }
+        // )
+
+        console.log(Statamic.Publish.mapping);
+        this.structure = Statamic.Publish.mapping;
 
         let types = this.config.allowed_fieldtypes || ['text', 'textarea', 'markdown', 'redactor'];
         this.allowedFieldtypes = types.concat(this.config.merge_allowed_fieldtypes || []);
 
-        console.log(this);
         // if (this.data.source === 'field') {
         //     this.sourceField = [this.data.value];
         // } else {
