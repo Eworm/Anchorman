@@ -76,7 +76,7 @@ class EditController extends Controller
             'data'         => $data,
             'fieldset'     => $fieldset->toPublishArray(),
             'suggestions'  => $this->getSuggestions($fieldset),
-            'mapping'      => $this->get_item_structure($data['url']),
+            'mapping'      => $this->getItemStructure($data['url']),
             'submitUrl'    => route('addons.anchorman.store'),
         ]);
      }
@@ -116,7 +116,7 @@ class EditController extends Controller
      *
      * @return mixed
      */
-    public function get_item_structure($url)
+    public function getItemStructure($url)
     {
 
         $feed = new SimplePie();
