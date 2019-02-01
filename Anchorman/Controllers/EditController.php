@@ -199,8 +199,8 @@ class EditController extends Controller
         if ($success)
         {
             $this->storage->putJSON($feed_title, [
-                'url'           => $feed_vars['url'],
-                'publish'       => $feed_vars['publish'],
+                'url'           => $request['fields']['url'],
+                'publish'       => $request['fields']['publish'],
                 'scheduling'    => $feed_vars['scheduling'],
                 'active'        => $feed_vars['active'],
                 'status'        => $feed_vars['status'],
@@ -209,7 +209,7 @@ class EditController extends Controller
                 'language'      => $feed->get_language(),
                 'copyright'     => $feed->get_copyright(),
                 'permalink'     => $feed->get_permalink(),
-                'mapping'       => $this->getItemStructure($feed_vars['url'])
+                'mapping'       => $this->getItemStructure($request['fields']['url'])
             ]);
 
         }
