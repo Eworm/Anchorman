@@ -135,16 +135,6 @@ export default {
 
     ready() {
 
-        // this.$http.get(
-        //     cp_url("addons/anchorman/get_item_structure"), {
-        //         url: Statamic.Publish.contentData.permalink
-        //     },
-        //     function(res) {
-        //         console.log(res);
-        //         this.structure = res;
-        //     }
-        // )
-
         console.log(Statamic.Publish.mapping);
         this.structure = Statamic.Publish.mapping;
 

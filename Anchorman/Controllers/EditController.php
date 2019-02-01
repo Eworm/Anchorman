@@ -121,6 +121,7 @@ class EditController extends Controller
 
         $feed = new SimplePie();
         $feed->set_cache_location(Feed::cache_location());
+
         $feed->set_feed_url($url);
         $success = $feed->init();
         $feed->handle_content_type();
@@ -211,14 +212,14 @@ class EditController extends Controller
                 'permalink'     => $feed->get_permalink(),
                 'mapping'       => $this->getItemStructure($request['fields']['url'])
             ]);
-
         }
 
         return [
             'success' => true,
-            'message' => 'Feed saved successfully.',
+            'message' => 'Feed created successfully.',
             'feed'    => $feed_title
         ];
+
     }
 
 
@@ -255,7 +256,6 @@ class EditController extends Controller
                 'permalink'     => $feed->get_permalink(),
                 'mapping'       => $feed_vars['mapping']
             ]);
-
         }
 
         return [
