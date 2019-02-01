@@ -93,7 +93,7 @@ class EditController extends Controller
 
         return $this->view('create', [
             'title'        => 'Create feed',
-            'data'         => '$info',
+            'data'         => $fieldset->toPublishArray(),
             'fieldset'     => $fieldset->toPublishArray(),
             'submitUrl'    => route('addons.anchorman.store'),
         ]);
@@ -179,24 +179,18 @@ class EditController extends Controller
 
 
     /**
-     * Maps to your route definition in routes.yaml
+     * Stores a new feed
      *
      * @return mixed
      */
     public function store(Request $request)
     {
 
-        // dd($request);
         $feed = new SimplePie();
         $feed->set_cache_location(Feed::cache_location());
 
-        if ($request->url) {
-            $feed->set_feed_url($request->url);
-            $feed_vars = Feed::feed_vars($request);
-        } else {
-            $feed->set_feed_url($request->fields['url']);
-            $feed_vars = Feed::feed_vars_edit($request);
-        }
+        $feed->set_feed_url($request['fields']['url']);
+        $feed_vars = Feed::feed_vars($request);
 
         $success = $feed->init();
         $feed->handle_content_type();
@@ -222,14 +216,14 @@ class EditController extends Controller
 
         return [
             'success' => true,
-            'message' => 'Feed updated successfully.',
+            'message' => 'Feed saved successfully.',
             'feed'    => $feed_title
         ];
     }
 
 
     /**
-     * Maps to your route definition in routes.yaml
+     * Saves data when updating a feed
      *
      * @return mixed
      */
@@ -239,13 +233,8 @@ class EditController extends Controller
         $feed = new SimplePie();
         $feed->set_cache_location(Feed::cache_location());
 
-        if ($request->url) {
-            $feed->set_feed_url($request->url);
-            $feed_vars = Feed::feed_vars($request);
-        } else {
-            $feed->set_feed_url($request->fields['url']);
-            $feed_vars = Feed::feed_vars_edit($request);
-        }
+        $feed->set_feed_url($request->fields['url']);
+        $feed_vars = Feed::feed_vars_edit($request);
 
         $success = $feed->init();
         $feed->handle_content_type();
@@ -253,7 +242,6 @@ class EditController extends Controller
 
         if ($success)
         {
-            // dd($feed_vars);
             $this->storage->putJSON($feed_title, [
                 'url'           => $feed_vars['url'],
                 'publish'       => $feed_vars['publish'],
