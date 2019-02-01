@@ -11,6 +11,9 @@ routes:
   post@store:
     as: addons.anchorman.store
     uses: EditController@store
+  post@update:
+    as: addons.anchorman.update
+    uses: EditController@update
   /refreshAll:
     as: addons.anchorman.refreshAll
     uses: EditController@refreshAll

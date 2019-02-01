@@ -76,8 +76,8 @@ class EditController extends Controller
             'data'         => $data,
             'fieldset'     => $fieldset->toPublishArray(),
             'suggestions'  => $this->getSuggestions($fieldset),
-            'mapping'      => $this->getItemStructure($data['url']),
-            'submitUrl'    => route('addons.anchorman.store'),
+            'mapping'      => $data['mapping'],
+            'submitUrl'    => route('addons.anchorman.update'),
         ]);
      }
 
@@ -204,6 +204,55 @@ class EditController extends Controller
 
         if ($success)
         {
+            $this->storage->putJSON($feed_title, [
+                'url'           => $feed_vars['url'],
+                'publish'       => $feed_vars['publish'],
+                'scheduling'    => $feed_vars['scheduling'],
+                'active'        => $feed_vars['active'],
+                'status'        => $feed_vars['status'],
+                'title'         => $feed->get_title(),
+                'description'   => $feed->get_description(),
+                'language'      => $feed->get_language(),
+                'copyright'     => $feed->get_copyright(),
+                'permalink'     => $feed->get_permalink(),
+                'mapping'       => $this->getItemStructure($feed_vars['url'])
+            ]);
+
+        }
+
+        return [
+            'success' => true,
+            'message' => 'Feed updated successfully.',
+            'feed'    => $feed_title
+        ];
+    }
+
+
+    /**
+     * Maps to your route definition in routes.yaml
+     *
+     * @return mixed
+     */
+    public function update(Request $request)
+    {
+
+        $feed = new SimplePie();
+        $feed->set_cache_location(Feed::cache_location());
+
+        if ($request->url) {
+            $feed->set_feed_url($request->url);
+            $feed_vars = Feed::feed_vars($request);
+        } else {
+            $feed->set_feed_url($request->fields['url']);
+            $feed_vars = Feed::feed_vars_edit($request);
+        }
+
+        $success = $feed->init();
+        $feed->handle_content_type();
+        $feed_title = slugify($feed->get_title());
+
+        if ($success)
+        {
             // dd($feed_vars);
             $this->storage->putJSON($feed_title, [
                 'url'           => $feed_vars['url'],
@@ -216,11 +265,7 @@ class EditController extends Controller
                 'language'      => $feed->get_language(),
                 'copyright'     => $feed->get_copyright(),
                 'permalink'     => $feed->get_permalink(),
-                'mapping'       => [
-                    "title" => $feed_vars['map_title'],
-                    "content" => $feed_vars['map_content'],
-                    "description" => 'testfield'
-                ]
+                'mapping'       => $feed_vars['mapping']
             ]);
 
         }
