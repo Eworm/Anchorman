@@ -76,7 +76,6 @@ class EditController extends Controller
             'data'         => $data,
             'fieldset'     => $fieldset->toPublishArray(),
             'suggestions'  => $this->getSuggestions($fieldset),
-            'mapping'      => $data['mapping'],
             'submitUrl'    => route('addons.anchorman.update'),
         ]);
      }
@@ -209,8 +208,7 @@ class EditController extends Controller
                 'description'   => $feed->get_description(),
                 'language'      => $feed->get_language(),
                 'copyright'     => $feed->get_copyright(),
-                'permalink'     => $feed->get_permalink(),
-                'mapping'       => $this->getItemStructure($request['fields']['url'])
+                'permalink'     => $feed->get_permalink()
             ]);
         }
 
@@ -253,8 +251,7 @@ class EditController extends Controller
                 'description'   => $feed->get_description(),
                 'language'      => $feed->get_language(),
                 'copyright'     => $feed->get_copyright(),
-                'permalink'     => $feed->get_permalink(),
-                'mapping'       => $feed_vars['mapping']
+                'permalink'     => $feed->get_permalink()
             ]);
         }
 

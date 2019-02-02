@@ -12,34 +12,30 @@ class SourceFieldtype extends Fieldtype
 
     public function preProcess($data)
     {
-
-        // if (is_string($data) && Str::startsWith($data, 'anchorman:')) {
-        //     return ['source' => 'field', 'value' => explode('anchorman:', $data)[1]];
-        // }
-        if (! $data && $this->getFieldConfig('inherit') === false) {
-            return ['source' => 'field', 'value' => $this->getFieldConfig('field')['value']];
+        if (is_string($data) && Str::startsWith($data, '@seo:')) {
+            return ['source' => 'field', 'value' => explode('@seo:', $data)[1]];
         }
 
         if ($data === false && $this->getFieldConfig('disableable') === true) {
             return ['source' => 'disable', 'value' => null];
         }
-        //
-        // if (! $data && $this->getFieldConfig('inherit') !== false) {
-        //     return ['source' => 'inherit', 'value' => null];
-        // }
 
-        return ['source' => 'custom', 'value' => '$this->fieldtype()->preProcess($data)'];
+        if (! $data && $this->getFieldConfig('inherit') !== false) {
+            return ['source' => 'inherit', 'value' => null];
+        }
+
+        return ['source' => 'custom', 'value' => $this->fieldtype()->preProcess($data)];
     }
 
     public function process($data)
     {
         if ($data['source'] === 'field') {
-            return 'anchorman:' . $data['value'];
+            return '@seo:' . $data['value'];
         }
 
-        // if ($data['source'] === 'inherit') {
-        //     return null;
-        // }
+        if ($data['source'] === 'inherit') {
+            return null;
+        }
 
         if ($data['source'] === 'disable') {
             return false;

@@ -33,7 +33,7 @@ sections:
       publish:
         type: collections
         max_items: 1
-      mapping_fieldtypes:
+      mapping_title:
         type: anchorman.source
         field:
           type: text

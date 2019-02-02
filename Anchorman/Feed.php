@@ -36,8 +36,7 @@ class Feed
             'publish'       => $request->fields['publish'],
             'scheduling'    => $request->fields['scheduling'],
             'active'        => $request->fields['active'],
-            'status'        => $request->fields['status'],
-            'mapping'       => $request->fields['mapping']
+            'status'        => $request->fields['status']
         );
     }
 
