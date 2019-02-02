@@ -40,7 +40,7 @@ class EditController extends Controller
         foreach ($feeds_storage as $feed) {
 
             $rem    = str_replace('site/storage/addons/Anchorman/', '', $feed);
-            $info   = $this->storage->getJson($rem);
+            $info   = $this->storage->getYaml($rem);
 
             $feeds[] = (object) [
                 'name'      => slugify($info['title']),
@@ -68,7 +68,7 @@ class EditController extends Controller
 
         $data = $this->preProcessWithBlankFields(
             $fieldset,
-            $this->storage->getJson($request->feed)
+            $this->storage->getYaml($request->feed)
         );
 
         return $this->view('edit', [
@@ -198,7 +198,7 @@ class EditController extends Controller
 
         if ($success)
         {
-            $this->storage->putJSON($feed_title, [
+            $this->storage->putYAML($feed_title, [
                 'url'           => $request['fields']['url'],
                 'publish'       => $request['fields']['publish'],
                 'scheduling'    => $feed_vars['scheduling'],
@@ -241,7 +241,7 @@ class EditController extends Controller
 
         if ($success)
         {
-            $this->storage->putJSON($feed_title, [
+            $this->storage->putYAML($feed_title, [
                 'url'           => $feed_vars['url'],
                 'publish'       => $feed_vars['publish'],
                 'scheduling'    => $feed_vars['scheduling'],
