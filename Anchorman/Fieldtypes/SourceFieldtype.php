@@ -28,7 +28,7 @@ class SourceFieldtype extends Fieldtype
         //     return ['source' => 'inherit', 'value' => null];
         // }
 
-        return ['source' => 'custom', 'value' => $this->fieldtype()->preProcess($data)];
+        return ['source' => 'custom', 'value' => '$this->fieldtype()->preProcess($data)'];
     }
 
     public function process($data)
