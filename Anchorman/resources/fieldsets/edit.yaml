@@ -37,3 +37,15 @@ sections:
         type: anchorman.source
         field:
           type: text
+      mapping_description:
+        type: anchorman.source
+        field:
+          type: text
+      mapping_content:
+        type: anchorman.source
+        field:
+          type: text
+      mapping_author:
+        type: anchorman.source
+        field:
+          type: text
