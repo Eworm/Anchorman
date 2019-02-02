@@ -39,7 +39,7 @@ class AnchormanListener extends Listener
 
         $vars = (new TagData)
             ->with(Settings::load()->get('defaults'))
-            ->with($data->getWithCascade('seo', []))
+            ->with($data->getWithCascade('anchorman', []))
             ->withCurrent($data)
             ->get();
 

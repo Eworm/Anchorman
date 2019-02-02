@@ -95,15 +95,15 @@ export default {
         suggestConfig() {
             return {
                 type: 'suggest',
-                mode: 'seo_pro',
+                mode: 'anchorman',
                 max_items: 1,
                 create: true,
-                placeholder: translate('addons.SeoPro::messages.source_suggest_placeholder')
+                placeholder: translate('addons.Anchorman::messages.source_suggest_placeholder')
             }
         },
 
         suggestSuggestions() {
-            return SeoPro.fieldSuggestions.filter(item => this.allowedFieldtypes.includes(item.type));
+            return Anchorman.fieldSuggestions.filter(item => this.allowedFieldtypes.includes(item.type));
         },
 
         fieldConfig() {

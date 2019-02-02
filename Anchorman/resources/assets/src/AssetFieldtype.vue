@@ -1,10 +1,10 @@
 <template>
 
-    <div class="seo-asset-fieldtype">
+    <div class="anchorman-asset-fieldtype">
         <div v-if="!container" class="no-container text-sm">
             <i class="icon icon-warning"></i>
             {{ translate('cp.no_asset_container_specified')}}
-            <a :href="cp_url('addons/seo-pro/settings')" class="ml-1">{{ translate('cp.edit') }}</a>
+            <a :href="cp_url('addons/anchorman/settings')" class="ml-1">{{ translate('cp.edit') }}</a>
         </div>
 
         <assets-fieldtype v-if="container" :data.sync="data" :config="fieldConfig"></assets-fieldtype>
@@ -15,17 +15,17 @@
 
 <style>
 
-    .seo-asset-fieldtype .assets-fieldtype .manage-assets {
+    .anchorman-asset-fieldtype .assets-fieldtype .manage-assets {
         border: none;
         background: none;
         padding: 0;
     }
 
-    .seo-asset-fieldtype .assets-fieldtype .drag-notification + .manage-assets {
+    .anchorman-asset-fieldtype .assets-fieldtype .drag-notification + .manage-assets {
         opacity: 0;
     }
 
-    .seo-asset-fieldtype .no-container {
+    .anchorman-asset-fieldtype .no-container {
         padding: 5px;
     }
 
@@ -40,7 +40,7 @@ export default {
     computed: {
 
         container() {
-            const container = SeoPro.assetContainer;
+            const container = Anchorman.assetContainer;
             if (container == '') return false;
             return container;
         },
