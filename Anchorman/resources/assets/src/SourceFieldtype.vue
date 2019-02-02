@@ -1,10 +1,10 @@
 <template>
 
-    <sourcemap v-for="item in structure"
+    <anchorman-sourcemap-fieldtype v-for="item in structure"
             :title="item.title"
             :source="item.source"
             :value="item.value"
-    ></sourcemap>
+    ></anchorman-sourcemap-fieldtype>
 
 </template>
 
