@@ -49,3 +49,8 @@ sections:
         type: anchorman.source
         field:
           type: text
+
+  rules:
+    fields:
+      fields_section:
+        type: section
