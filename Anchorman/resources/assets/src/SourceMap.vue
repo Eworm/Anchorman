@@ -21,8 +21,8 @@
                 <component
                     v-if="source === 'custom'"
                     :is="componentName"
-                    :name="name"
-                    :data.sync="customText"
+                    :name="title"
+                    :data.sync="[value]"
                     :config="fieldConfig"
                     :leave-alert="true">
                 </component>
@@ -65,21 +65,20 @@ export default {
 
     data() {
         return {
-            // source: null,
-            // customText: null,
-            // sourceField: null,
             // autoBindChangeWatcher: false,
             // changeWatcherWatchDeep: false,
-            // structure: [],
-            // allowedFieldtypes: []
         }
     },
 
     computed: {
 
         componentName() {
-            console.log(this.source + '-fieldtype');
-            return this.source + '-fieldtype';
+            console.log(this);
+            // console.log(this.source.replace('.', '-') + '-fieldtype');
+            return this.config.field.type.replace('.', '-') + '-fieldtype';
+            // return this.source.replace('.', '-') + '-fieldtype';
+            // console.log(this.source + '-fieldtype');
+            // return 'text-fieldtype';
         },
 
         sourceTypeSelectOptions() {
@@ -122,6 +121,7 @@ export default {
         },
 
         fieldConfig() {
+            console.log(this);
             return Object.assign(this.config.field, { placeholder: this.config.placeholder });
         }
 
