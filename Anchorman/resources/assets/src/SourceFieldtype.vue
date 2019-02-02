@@ -7,9 +7,6 @@
         </div>
 
         <div class="flex-1">
-            <div v-if="source === 'inherit'" class="text-sm text-grey inherit-placeholder">
-                {{ config.placeholder }}
-            </div>
 
             <div v-if="source === 'field'" class="source-field-select">
                 <suggest-fieldtype :data.sync="sourceField" :config="suggestConfig" :suggestions-prop="suggestSuggestions"></suggest-fieldtype>
@@ -33,10 +30,6 @@
 
     .source-type-select {
         width: 20rem;
-    }
-
-    .inherit-placeholder {
-        padding-top: 5px;
     }
 
     .source-field-select .selectize-dropdown,
@@ -79,10 +72,6 @@ export default {
 
             if (this.config.from_field !== false) {
                 options.unshift({ text: 'From Field', value: 'field' });
-            }
-
-            if (this.config.inherit !== false) {
-                options.unshift({ text: 'Inherit', value: 'inherit' });
             }
 
             if (this.config.disableable) {
