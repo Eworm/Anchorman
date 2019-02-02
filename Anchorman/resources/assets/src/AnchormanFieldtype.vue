@@ -11,12 +11,12 @@
 
 <style>
 
-.seo_pro-fieldtype > .field-inner > label {
+.anchorman-fieldtype > .field-inner > label {
     display: none !important;
 }
 
-.seo_pro-fieldtype,
-.seo_pro-fieldtype .publish-fields {
+.anchorman-fieldtype,
+.anchorman-fieldtype .publish-fields {
     padding: 0 !important;
 }
 
