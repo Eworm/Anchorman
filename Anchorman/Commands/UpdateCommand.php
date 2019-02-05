@@ -44,18 +44,18 @@ class UpdateCommand extends Command
 
         foreach ($feeds_storage as $feed) {
             $rem        = str_replace('site/storage/addons/Anchorman/', '', $feed);
-            $info       = $this->storage->getJson($rem);
+            $info       = $this->storage->getYaml($rem);
             $url        = $info['url'];
             $publish    = $info['publish'][0];
             $enabled    = $info['active'];
-            $mapping    = $info['mapping'];
-
-            if (array_key_exists( 'title', $mapping )) {
-                $mapping_title = $mapping['title'];
-            }
-            if (array_key_exists( 'content', $mapping )) {
-                $mapping_content = $mapping['content'];
-            }
+            // $mapping    = $info['mapping'];
+            //
+            // if (array_key_exists( 'title', $mapping )) {
+            //     $mapping_title = $mapping['title'];
+            // }
+            // if (array_key_exists( 'content', $mapping )) {
+            //     $mapping_content = $mapping['content'];
+            // }
 
             $feed = new SimplePie();
             $feed->set_cache_location(Feed::cache_location());
@@ -84,11 +84,13 @@ class UpdateCommand extends Command
                             Entry::create($slugged)
                                 ->collection($publish)
                                 ->with([
-                                    $mapping_title => $item->get_title(),
-                                    $mapping_content => $item->get_content()
+                                    $info['mapping_title']['value'] => $item->get_title(),
+                                    $info['mapping_content']['value'] => $item->get_content(),
+                                    $info['mapping_description']['value'] => $item->get_description(),
+                                    $info['mapping_author']['value'] => $item->get_author()
                                 ])
-                                ->date($item->get_date('Y-m-d'));
-                                // ->save();
+                                ->date($item->get_date('Y-m-d'))
+                                ->save();
 
                         else :
 
@@ -96,11 +98,13 @@ class UpdateCommand extends Command
                                 ->collection($publish)
                                 ->published(false)
                                 ->with([
-                                    $mapping_title => $item->get_title(),
-                                    $mapping_content => $item->get_content()
+                                    $info['mapping_title']['value'] => $item->get_title(),
+                                    $info['mapping_content']['value'] => $item->get_content(),
+                                    $info['mapping_description']['value'] => $item->get_description(),
+                                    $info['mapping_author']['value'] => $item->get_author()
                                 ])
-                                ->date($item->get_date('Y-m-d'));
-                                // ->save();
+                                ->date($item->get_date('Y-m-d'))
+                                ->save();
 
                         endif;
 
