@@ -34,7 +34,7 @@ class EditController extends Controller
         $feeds          = [];
 
         if (!$feeds_storage) {
-            return redirect()->route('addons.anchorman.create');
+            // return redirect()->route('addons.anchorman.create');
         }
 
         foreach ($feeds_storage as $feed) {
@@ -201,16 +201,18 @@ class EditController extends Controller
         if ($success)
         {
             $this->storage->putYAML($feed_title, [
-                'url'           => $request['fields']['url'],
-                'publish'       => $request['fields']['publish'],
-                'scheduling'    => $feed_vars['scheduling'],
-                'active'        => $feed_vars['active'],
-                'status'        => $feed_vars['status'],
-                'title'         => $feed->get_title(),
-                'description'   => $feed->get_description(),
-                'language'      => $feed->get_language(),
-                'copyright'     => $feed->get_copyright(),
-                'permalink'     => $feed->get_permalink()
+                'url'                   => $request['fields']['url'],
+                'publish'               => $request['fields']['publish'],
+                'scheduling'            => $feed_vars['scheduling'],
+                'active'                => $feed_vars['active'],
+                'status'                => $feed_vars['status'],
+                'title'                 => $feed->get_title(),
+                'description'           => $feed->get_description(),
+                'language'              => $feed->get_language(),
+                'copyright'             => $feed->get_copyright(),
+                'permalink'             => $feed->get_permalink(),
+                'mapping_title'         => 'title',
+                'mapping_content'       => 'content'
             ]);
 
             return [
@@ -246,20 +248,20 @@ class EditController extends Controller
         {
             // dd($feed_vars);
             $this->storage->putYAML($feed_title, [
-                'url'           => $feed_vars['url'],
-                'publish'       => $feed_vars['publish'],
-                'scheduling'    => $feed_vars['scheduling'],
-                'active'        => $feed_vars['active'],
-                'status'        => $feed_vars['status'],
-                'mapping_title'        => $feed_vars['mapping_title'],
-                'mapping_description'        => $feed_vars['mapping_description'],
+                'url'                   => $feed_vars['url'],
+                'publish'               => $feed_vars['publish'],
+                'scheduling'            => $feed_vars['scheduling'],
+                'active'                => $feed_vars['active'],
+                'status'                => $feed_vars['status'],
+                'mapping_title'         => $feed_vars['mapping_title'],
+                'mapping_description'   => $feed_vars['mapping_description'],
                 'mapping_author'        => $feed_vars['mapping_author'],
-                'mapping_content'        => $feed_vars['mapping_content'],
-                'title'         => $feed->get_title(),
-                'description'   => $feed->get_description(),
-                'language'      => $feed->get_language(),
-                'copyright'     => $feed->get_copyright(),
-                'permalink'     => $feed->get_permalink()
+                'mapping_content'       => $feed_vars['mapping_content'],
+                'title'                 => $feed->get_title(),
+                'description'           => $feed->get_description(),
+                'language'              => $feed->get_language(),
+                'copyright'             => $feed->get_copyright(),
+                'permalink'             => $feed->get_permalink()
             ]);
         }
 
