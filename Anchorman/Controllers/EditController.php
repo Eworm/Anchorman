@@ -65,11 +65,13 @@ class EditController extends Controller
      public function edit(Request $request)
      {
         $fieldset  = $this->fieldset('edit');
+        // dd($fieldset);
 
         $data = $this->preProcessWithBlankFields(
             $fieldset,
             $this->storage->getYaml($request->feed)
         );
+        // dd($data);
 
         return $this->view('edit', [
             'title'        => $data['title'],
@@ -210,13 +212,14 @@ class EditController extends Controller
                 'copyright'     => $feed->get_copyright(),
                 'permalink'     => $feed->get_permalink()
             ]);
+
+            return [
+                'success' => true,
+                'message' => 'Feed created successfully.',
+                'feed'    => $feed_title
+            ];
         }
 
-        return [
-            'success' => true,
-            'message' => 'Feed created successfully.',
-            'feed'    => $feed_title
-        ];
 
     }
 
@@ -228,7 +231,7 @@ class EditController extends Controller
      */
     public function update(Request $request)
     {
-
+        // dd($request);
         $feed = new SimplePie();
         $feed->set_cache_location(Feed::cache_location());
 
@@ -241,12 +244,17 @@ class EditController extends Controller
 
         if ($success)
         {
+            // dd($feed_vars);
             $this->storage->putYAML($feed_title, [
                 'url'           => $feed_vars['url'],
                 'publish'       => $feed_vars['publish'],
                 'scheduling'    => $feed_vars['scheduling'],
                 'active'        => $feed_vars['active'],
                 'status'        => $feed_vars['status'],
+                'mapping_title'        => $feed_vars['mapping_title'],
+                'mapping_description'        => $feed_vars['mapping_description'],
+                'mapping_author'        => $feed_vars['mapping_author'],
+                'mapping_content'        => $feed_vars['mapping_content'],
                 'title'         => $feed->get_title(),
                 'description'   => $feed->get_description(),
                 'language'      => $feed->get_language(),

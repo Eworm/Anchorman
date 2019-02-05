@@ -36,7 +36,11 @@ class Feed
             'publish'       => $request->fields['publish'],
             'scheduling'    => $request->fields['scheduling'],
             'active'        => $request->fields['active'],
-            'status'        => $request->fields['status']
+            'status'        => $request->fields['status'],
+            'mapping_title'     => $request->fields['mapping_title'],
+            'mapping_description'     => $request->fields['mapping_description'],
+            'mapping_content'     => $request->fields['mapping_content'],
+            'mapping_author'     => $request->fields['mapping_author'],
         );
     }
 
