@@ -2,3 +2,6 @@ edit:
   active: true
   scheduling: 60
   status: publish
+  mapping_title:
+    source: field
+    value: title

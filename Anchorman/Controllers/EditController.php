@@ -211,8 +211,10 @@ class EditController extends Controller
                 'language'              => $feed->get_language(),
                 'copyright'             => $feed->get_copyright(),
                 'permalink'             => $feed->get_permalink(),
-                'mapping_title'         => 'title',
-                'mapping_content'       => 'content'
+                'mapping_title'         => $feed_vars['mapping_title'],
+                'mapping_content'       => $feed_vars['mapping_content'],
+                'mapping_description'   => $feed_vars['mapping_description'],
+                'mapping_author'        => $feed_vars['mapping_author']
             ]);
 
             return [
