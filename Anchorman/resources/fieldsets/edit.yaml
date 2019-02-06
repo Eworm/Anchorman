@@ -47,11 +47,21 @@ sections:
           type: text
       mapping_author:
         type: anchorman.source
-        # allowed_fieldtypes:
-          # - users
         field:
           type: users
           max_items: 1
+      mapping_thumbnail:
+        type: anchorman.source
+        allowed_fieldtypes:
+          - assets
+        field:
+          type: anchorman.asset
+      mapping_taxonomies:
+        type: anchorman.source
+        allowed_fieldtypes:
+          - taxonomy
+        field:
+          type: text
   rules:
     fields:
       fields_section:

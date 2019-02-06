@@ -24,7 +24,9 @@ class Feed
             'mapping_title'         => ['source' => 'field', 'value' => 'title'],
             'mapping_description'   => ['source' => 'custom', 'value' => ''],
             'mapping_content'       => ['source' => 'custom', 'value' => ''],
-            'mapping_author'        => ['source' => 'custom', 'value' => '']
+            'mapping_author'        => ['source' => 'custom', 'value' => ''],
+            'mapping_thumbnail'     => ['source' => 'field', 'value' => ''],
+            'mapping_taxonomies'    => ['source' => 'field', 'value' => '']
         );
     }
 
@@ -44,7 +46,9 @@ class Feed
             'mapping_title'         => $request->fields['mapping_title'],
             'mapping_description'   => $request->fields['mapping_description'],
             'mapping_content'       => $request->fields['mapping_content'],
-            'mapping_author'        => $request->fields['mapping_author']
+            'mapping_author'        => $request->fields['mapping_author'],
+            'mapping_thumbnail'     => $request->fields['mapping_thumbnail'],
+            'mapping_taxonomies'    => $request->fields['mapping_taxonomies']
         );
     }
 
