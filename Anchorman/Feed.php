@@ -16,15 +16,15 @@ class Feed
     public static function feed_vars(Request $request)
     {
         return array(
-            'url'           => $request->url,
-            'publish'       => $request->publish,
-            'scheduling'    => '60',
-            'active'        => true,
-            'status'        => 'publish',
+            'url'                   => $request->url,
+            'publish'               => $request->publish,
+            'scheduling'            => '60',
+            'active'                => true,
+            'status'                => 'publish',
             'mapping_title'         => ['source' => 'field', 'value' => 'title'],
             'mapping_description'   => ['source' => 'custom', 'value' => ''],
             'mapping_content'       => ['source' => 'custom', 'value' => ''],
-            'mapping_author'        => ['source' => 'custom', 'value' => ''],
+            'mapping_author'        => ['source' => 'custom', 'value' => '']
         );
     }
 
@@ -44,7 +44,7 @@ class Feed
             'mapping_title'         => $request->fields['mapping_title'],
             'mapping_description'   => $request->fields['mapping_description'],
             'mapping_content'       => $request->fields['mapping_content'],
-            'mapping_author'        => $request->fields['mapping_author'],
+            'mapping_author'        => $request->fields['mapping_author']
         );
     }
 

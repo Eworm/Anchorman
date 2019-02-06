@@ -71,8 +71,8 @@ class EditController extends Controller
             $fieldset,
             $this->storage->getYaml($request->feed)
         );
-        // dd($data);
 
+        // dd($fieldset);
         return $this->view('edit', [
             'title'        => $data['title'],
             'data'         => $data,
@@ -167,6 +167,12 @@ class EditController extends Controller
                         'source' => 'custom',
                         'value' => null
                     ];
+                }
+
+                if ($enclosure = $item->get_enclosure())
+                {
+                    // $enclosure->get_medium();
+                    // $enclosure->get_thumbnail();
                 }
 
             }

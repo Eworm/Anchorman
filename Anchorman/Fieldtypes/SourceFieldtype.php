@@ -13,21 +13,23 @@ class SourceFieldtype extends Fieldtype
     public function preProcess($data)
     {
 
+        // if (is_string($data) && Str::startsWith($data, '@seo:')) {
         if ($data['source'] === 'field') {
             return ['source' => 'field', 'value' => $data['value']];
         }
 
+        // if ($data === false && $this->getFieldConfig('disableable') === true) {
         if ($data === false && $this->getFieldConfig('disableable') === true) {
             return ['source' => 'disable', 'value' => null];
         }
 
-        return ['source' => 'custom', 'value' => $this->fieldtype()->preProcess($data)['value']];
+        return ['source' => 'custom', 'value' => $this->fieldtype()->preProcess($data)];
     }
 
     public function process($data)
     {
         if ($data['source'] === 'field') {
-            return '@anchorman:' . $data['value'];
+            return $data['value'];
         }
 
         if ($data['source'] === 'disable') {

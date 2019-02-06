@@ -47,8 +47,11 @@ sections:
           type: text
       mapping_author:
         type: anchorman.source
+        # allowed_fieldtypes:
+          # - users
         field:
-          type: text
+          type: users
+          max_items: 1
   rules:
     fields:
       fields_section:

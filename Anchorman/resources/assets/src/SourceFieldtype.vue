@@ -125,7 +125,6 @@ export default {
 
     ready() {
 
-        console.log(this.data.source);
 
         let types = this.config.allowed_fieldtypes || ['text', 'textarea', 'markdown', 'redactor'];
         this.allowedFieldtypes = types.concat(this.config.merge_allowed_fieldtypes || []);
