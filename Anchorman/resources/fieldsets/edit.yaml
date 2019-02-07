@@ -55,7 +55,7 @@ sections:
         allowed_fieldtypes:
           - assets
         field:
-          type: anchorman.asset
+          type: text
       mapping_taxonomies:
         type: anchorman.source
         allowed_fieldtypes:
