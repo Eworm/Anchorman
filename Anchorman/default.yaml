@@ -5,3 +5,13 @@ edit:
   mapping_title:
     source: field
     value: title
+  mapping_description:
+    source: custom
+  mapping_content:
+    source: custom
+  mapping_author:
+    source: custom
+  mapping_thumbnail:
+    source: field
+  mapping_taxonomies:
+    source: field

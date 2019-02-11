@@ -22,11 +22,12 @@ class Feed
             'active'                => true,
             'status'                => 'publish',
             'mapping_title'         => ['source' => 'field', 'value' => 'title'],
-            'mapping_description'   => ['source' => 'custom', 'value' => ''],
-            'mapping_content'       => ['source' => 'custom', 'value' => ''],
+            'mapping_description'   => ['source' => 'field', 'value' => ''],
+            'mapping_content'       => ['source' => 'field', 'value' => ''],
             'mapping_author'        => ['source' => 'custom', 'value' => ''],
             'mapping_thumbnail'     => ['source' => 'field', 'value' => ''],
-            'mapping_taxonomies'    => ['source' => 'field', 'value' => '']
+            'mapping_taxonomies'    => ['source' => 'field', 'value' => ''],
+            'mapping_permalink'     => ['source' => 'field', 'value' => '']
         );
     }
 
@@ -48,7 +49,8 @@ class Feed
             'mapping_content'       => $request->fields['mapping_content'],
             'mapping_author'        => $request->fields['mapping_author'],
             'mapping_thumbnail'     => $request->fields['mapping_thumbnail'],
-            'mapping_taxonomies'    => $request->fields['mapping_taxonomies']
+            'mapping_taxonomies'    => $request->fields['mapping_taxonomies'],
+            'mapping_permalink'     => $request->fields['mapping_permalink']
         );
     }
 

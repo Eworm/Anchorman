@@ -62,6 +62,10 @@ sections:
           - taxonomy
         field:
           type: text
+      mapping_permalink:
+        type: anchorman.source
+        field:
+          type: text
   rules:
     fields:
       fields_section:

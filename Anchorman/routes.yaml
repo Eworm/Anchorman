@@ -17,6 +17,3 @@ routes:
   /refreshAll:
     as: addons.anchorman.refreshAll
     uses: EditController@refreshAll
-  /get_item_structure:
-    as: addons.anchorman.getItemStructure
-    uses: EditController@getItemStructure

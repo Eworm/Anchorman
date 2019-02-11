@@ -222,7 +222,8 @@ class EditController extends Controller
                 'mapping_description'   => $feed_vars['mapping_description'],
                 'mapping_author'        => $feed_vars['mapping_author'],
                 'mapping_thumbnail'     => $feed_vars['mapping_thumbnail'],
-                'mapping_taxonomies'    => $feed_vars['mapping_taxonomies']
+                'mapping_taxonomies'    => $feed_vars['mapping_taxonomies'],
+                'mapping_permalink'    => $feed_vars['mapping_permalink']
             ]);
 
             return [
@@ -263,17 +264,18 @@ class EditController extends Controller
                 'scheduling'            => $feed_vars['scheduling'],
                 'active'                => $feed_vars['active'],
                 'status'                => $feed_vars['status'],
+                'title'                 => $feed->get_title(),
+                'description'           => $feed->get_description(),
+                'language'              => $feed->get_language(),
+                'copyright'             => $feed->get_copyright(),
+                'permalink'             => $feed->get_permalink(),
                 'mapping_title'         => $feed_vars['mapping_title'],
                 'mapping_description'   => $feed_vars['mapping_description'],
                 'mapping_author'        => $feed_vars['mapping_author'],
                 'mapping_content'       => $feed_vars['mapping_content'],
                 'mapping_thumbnail'     => $feed_vars['mapping_thumbnail'],
                 'mapping_taxonomies'    => $feed_vars['mapping_taxonomies'],
-                'title'                 => $feed->get_title(),
-                'description'           => $feed->get_description(),
-                'language'              => $feed->get_language(),
-                'copyright'             => $feed->get_copyright(),
-                'permalink'             => $feed->get_permalink()
+                'mapping_permalink'     => $feed_vars['mapping_permalink']
             ]);
         }
 

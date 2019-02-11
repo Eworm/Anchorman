@@ -21,7 +21,7 @@
                         <th class="column-title">Title</th>
                         <th class="column-slug">Url</th>
                         <th class="column-slug">Publishes to</th>
-                        <th class="column-date">Updated</th>
+                        <th class="column-date">Last Update</th>
                         <th class="column-active">Status</th>
                         <th class="column-actions"></th>
                     </tr>
@@ -49,7 +49,7 @@
                             </td>
 
                             <td class="cell-updated">
-                                Last checked 1 uur ago
+                                1 uur ago
                             </td>
 
                             <td class="cell-status">
