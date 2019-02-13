@@ -1,12 +1,12 @@
 <template>
 
-    <div class="flex">
+    <div class="flex items-center" v-if="source">
 
         <div class="source-type-select pr-2">
             <select-fieldtype :data.sync="source" :options="sourceTypeSelectOptions"></select-fieldtype>
         </div>
 
-        <div class="flex-1">
+        <div class="flex-1 items-center">
 
             <div v-if="source === 'field'" class="source-field-select">
                 <suggest-fieldtype :data.sync="sourceField" :config="suggestConfig" :suggestions-prop="suggestSuggestions"></suggest-fieldtype>
@@ -20,6 +20,13 @@
                 :config="fieldConfig"
                 :leave-alert="true">
             </component>
+
+            <div v-if="source === 'unavailable'">
+                <small class="help-block mb-0">
+                    This field is unavailable in the feed
+                </small>
+            </div>
+
         </div>
     </div>
 
@@ -66,16 +73,23 @@ export default {
         sourceTypeSelectOptions() {
             let options = [];
 
-            if (this.config.field !== false) {
-                options.push({ text: 'Custom', value: 'custom' });
-            }
+            if (this.data.disabled === true) {
 
-            if (this.config.from_field !== false) {
-                options.unshift({ text: 'From Field', value: 'field' });
-            }
+                options.push({ text: 'Unavailable', value: 'unavailable' });
 
-            if (this.config.disableable) {
-                options.push({ text: 'Disable', value: 'disable' });
+            } else {
+
+                if (this.config.field !== false) {
+                    options.push({ text: 'Custom', value: 'custom' });
+                }
+
+                if (this.config.from_field !== false) {
+                    options.unshift({ text: 'From Field', value: 'field' });
+                }
+
+                if (this.config.disableable) {
+                    options.push({ text: 'Disable', value: 'disable' });
+                }
             }
 
             return options;
@@ -106,10 +120,12 @@ export default {
         source(val) {
             this.data.source = val;
 
-            if (val === 'field') {
-                this.data.value = Array.isArray(this.sourceField) ? this.sourceField[0] : this.sourceField;
-            } else {
-                this.data.value = this.customText;
+            if (val != undefined) {
+                if (val === 'field') {
+                    this.data.value = Array.isArray(this.sourceField) ? this.sourceField[0] : this.sourceField;
+                } else {
+                    this.data.value = this.customText;
+                }
             }
         },
 
@@ -125,20 +141,28 @@ export default {
 
     ready() {
 
-
         let types = this.config.allowed_fieldtypes || ['text', 'textarea', 'markdown', 'redactor'];
         this.allowedFieldtypes = types.concat(this.config.merge_allowed_fieldtypes || []);
 
-        if (this.data.source === 'field') {
-            this.sourceField = [this.data.value];
-        } else {
-            this.customText = this.data.value;
+        console.log(this);
+
+        if (this.data != undefined) {
+
+            if (this.data.source === 'field') {
+                this.sourceField = [this.data.value];
+            } else if (this.data.disabled === true) {
+                this.customText = null;
+            } else {
+                this.customText = this.data.value;
+            }
+
+            // Set source after so that the suggest fields don't load before they potentially have data.
+            this.source = this.data.source;
+
+            // console.log(this.source);
+
+            this.bindChangeWatcher();
         }
-
-        // Set source after so that the suggest fields don't load before they potentially have data.
-        this.source = this.data.source;
-
-        this.bindChangeWatcher();
     }
 
 }

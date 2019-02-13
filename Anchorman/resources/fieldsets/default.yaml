@@ -37,33 +37,32 @@ sections:
         type: anchorman.source
         field:
           type: text
+      mapping_description:
+        type: anchorman.source
+        field:
+          type: text
       mapping_content:
         type: anchorman.source
-        disableable: true
         field:
           type: text
       mapping_author:
         type: anchorman.source
-        disableable: true
         field:
           type: users
           max_items: 1
       mapping_thumbnail:
         type: anchorman.source
-        disableable: true
         allowed_fieldtypes:
           - assets
         field:
           type: text
       mapping_taxonomies:
-        disableable: true
         type: anchorman.source
         allowed_fieldtypes:
           - taxonomy
         field:
           type: text
       mapping_permalink:
-        disableable: true
         type: anchorman.source
         field:
           type: text

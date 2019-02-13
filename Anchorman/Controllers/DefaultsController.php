@@ -30,7 +30,7 @@ class DefaultsController extends Controller
             'data' => $data,
             'fieldset' => $fieldset->toPublishArray(),
             'suggestions' => $this->getSuggestions($fieldset),
-            'submitUrl' => route('anchorman.defaults.update'),
+            'submitUrl' => route('addons.anchorman.update'),
         ]);
     }
 
@@ -45,7 +45,7 @@ class DefaultsController extends Controller
 
     protected function fieldset()
     {
-        $contents = File::get($this->getDirectory().'/resources/fieldsets/defaults.yaml');
+        $contents = File::get($this->getDirectory().'/resources/fieldsets/default.yaml');
         $fieldset = Fieldset::create('defaults', YAML::parse($contents));
         return $this->translateFieldset($fieldset);
     }

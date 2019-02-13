@@ -72,6 +72,9 @@ class EditController extends Controller
             $this->storage->getYaml($request->feed)
         );
 
+        $data = $this->getItemStructure($data);
+        // dd($data);
+
         // dd($fieldset);
         return $this->view('edit', [
             'title'        => $data['title'],
@@ -117,56 +120,38 @@ class EditController extends Controller
      *
      * @return mixed
      */
-    public function getItemStructure($url)
+    public function getItemStructure($data)
     {
-
         $feed = new SimplePie();
         $feed->set_cache_location(Feed::cache_location());
 
-        $feed->set_feed_url($url);
+        $feed->set_feed_url($data['url']);
         $success = $feed->init();
         $feed->handle_content_type();
-        $structure = [];
+
+        // dd($data);
 
         if ($success)
         {
             if ($item = $feed->get_item(0))
             {
 
-                if ($item->get_title())
+                if (!$item->get_content())
                 {
-                    $structure[] = (object) [
-                        'title' => 'title',
-                        'source' => 'field',
-                        'value' => ['title']
-                    ];
+                    // unset($data['mapping_content']);
                 }
 
-                if ($item->get_description())
+                if (!$item->get_author())
                 {
-                    $structure[] = (object) [
-                        'title' => 'description',
-                        'source' => 'custom',
-                        'value' => null
-                    ];
+                    // unset($data['mapping_author']);
+                    // $data['mapping_author']['disabled'] = 'unavailable';
                 }
 
-                if ($item->get_content())
+                if (!$item->get_category())
                 {
-                    $structure[] = (object) [
-                        'title' => 'content',
-                        'source' => 'field',
-                        'value' => ['content']
-                    ];
-                }
-
-                if ($item->get_author())
-                {
-                    $structure[] = (object) [
-                        'title' => 'author',
-                        'source' => 'custom',
-                        'value' => null
-                    ];
+                    // unset($data['mapping_taxonomies']);
+                    $data['mapping_taxonomies']['source'] = 'unavailable';
+                    $data['mapping_taxonomies']['disabled'] = true;
                 }
 
                 if ($enclosure = $item->get_enclosure())
@@ -176,8 +161,7 @@ class EditController extends Controller
                 }
 
             }
-
-            return $structure;
+            return $data;
         }
         else
         {
@@ -213,17 +197,10 @@ class EditController extends Controller
                 'active'                => $feed_vars['active'],
                 'status'                => $feed_vars['status'],
                 'title'                 => $feed->get_title(),
-                'description'           => $feed->get_description(),
                 'language'              => $feed->get_language(),
                 'copyright'             => $feed->get_copyright(),
                 'permalink'             => $feed->get_permalink(),
-                'mapping_title'         => $feed_vars['mapping_title'],
-                'mapping_content'       => $feed_vars['mapping_content'],
-                'mapping_description'   => $feed_vars['mapping_description'],
-                'mapping_author'        => $feed_vars['mapping_author'],
-                'mapping_thumbnail'     => $feed_vars['mapping_thumbnail'],
-                'mapping_taxonomies'    => $feed_vars['mapping_taxonomies'],
-                'mapping_permalink'    => $feed_vars['mapping_permalink']
+                'mapping_title'         => $feed_vars['mapping_title']
             ]);
 
             return [
@@ -265,12 +242,11 @@ class EditController extends Controller
                 'active'                => $feed_vars['active'],
                 'status'                => $feed_vars['status'],
                 'title'                 => $feed->get_title(),
-                'description'           => $feed->get_description(),
+                'description'           => $feed->get_content(),
                 'language'              => $feed->get_language(),
                 'copyright'             => $feed->get_copyright(),
                 'permalink'             => $feed->get_permalink(),
                 'mapping_title'         => $feed_vars['mapping_title'],
-                'mapping_description'   => $feed_vars['mapping_description'],
                 'mapping_author'        => $feed_vars['mapping_author'],
                 'mapping_content'       => $feed_vars['mapping_content'],
                 'mapping_thumbnail'     => $feed_vars['mapping_thumbnail'],

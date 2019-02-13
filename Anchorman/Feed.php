@@ -21,13 +21,7 @@ class Feed
             'scheduling'            => '60',
             'active'                => true,
             'status'                => 'publish',
-            'mapping_title'         => ['source' => 'field', 'value' => 'title'],
-            'mapping_description'   => ['source' => 'field', 'value' => ''],
-            'mapping_content'       => ['source' => 'field', 'value' => ''],
-            'mapping_author'        => ['source' => 'custom', 'value' => ''],
-            'mapping_thumbnail'     => ['source' => 'field', 'value' => ''],
-            'mapping_taxonomies'    => ['source' => 'field', 'value' => ''],
-            'mapping_permalink'     => ['source' => 'field', 'value' => '']
+            'mapping_title'         => ['source' => 'field', 'value' => 'title']
         );
     }
 
@@ -38,6 +32,7 @@ class Feed
      */
     public static function feed_vars_edit(Request $request)
     {
+        // dd($request);
         return array(
             'url'                   => $request->fields['url'],
             'publish'               => $request->fields['publish'],
@@ -45,7 +40,6 @@ class Feed
             'active'                => $request->fields['active'],
             'status'                => $request->fields['status'],
             'mapping_title'         => $request->fields['mapping_title'],
-            'mapping_description'   => $request->fields['mapping_description'],
             'mapping_content'       => $request->fields['mapping_content'],
             'mapping_author'        => $request->fields['mapping_author'],
             'mapping_thumbnail'     => $request->fields['mapping_thumbnail'],
