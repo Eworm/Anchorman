@@ -60,6 +60,15 @@ class UpdateCommand extends Command
 
                 if ($enabled === true) {
 
+                    $with = [];
+                    $with[$info['mapping_title']['value']] = $item->get_title();
+                    if (isset($info['mapping_content'])) {
+                        $with[$info['mapping_content']['value']] = $item->get_content();
+                    }
+                    if (isset($info['mapping_taxonomies'])) {
+                        $with[$info['mapping_taxonomies']['value']] = $item->get_category();
+                    }
+
                     $slugged = slugify($item->get_title());
 
                     if (Entry::slugExists($slugged, $publish)) {
@@ -75,28 +84,18 @@ class UpdateCommand extends Command
 
                             Entry::create($slugged)
                                 ->collection($publish)
-                                ->with([
-                                    $info['mapping_title']['value'] => $item->get_title(),
-                                    $info['mapping_content']['value'] => $item->get_content(),
-                                    $info['mapping_description']['value'] => $item->get_description(),
-                                    $info['mapping_author']['value'] => $item->get_author()
-                                ])
-                                ->date($item->get_date('Y-m-d'))
-                                ->save();
+                                ->with($with)
+                                ->date($item->get_date('Y-m-d'));
+                                // ->save();
 
                         else :
 
                             Entry::create($slugged)
                                 ->collection($publish)
                                 ->published(false)
-                                ->with([
-                                    $info['mapping_title']['value'] => $item->get_title(),
-                                    $info['mapping_content']['value'] => $item->get_content(),
-                                    $info['mapping_description']['value'] => $item->get_description(),
-                                    $info['mapping_author']['value'] => $item->get_author()
-                                ])
-                                ->date($item->get_date('Y-m-d'))
-                                ->save();
+                                ->with($with)
+                                ->date($item->get_date('Y-m-d'));
+                                // ->save();
 
                         endif;
 
