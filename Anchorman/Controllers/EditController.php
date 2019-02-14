@@ -136,20 +136,14 @@ class EditController extends Controller
             if ($item = $feed->get_item(0))
             {
 
-                if (!$item->get_content())
+                if (!$item->get_content() || !$item->get_description())
                 {
-                    // unset($data['mapping_content']);
-                }
-
-                if (!$item->get_author())
-                {
-                    // unset($data['mapping_author']);
-                    // $data['mapping_author']['disabled'] = 'unavailable';
+                    $data['mapping_content']['source'] = 'unavailable';
+                    $data['mapping_content']['disabled'] = true;
                 }
 
                 if (!$item->get_category())
                 {
-                    // unset($data['mapping_taxonomies']);
                     $data['mapping_taxonomies']['source'] = 'unavailable';
                     $data['mapping_taxonomies']['disabled'] = true;
                 }
