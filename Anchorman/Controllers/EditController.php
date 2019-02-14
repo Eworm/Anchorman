@@ -34,7 +34,7 @@ class EditController extends Controller
         $feeds          = [];
 
         if (!$feeds_storage) {
-            // return redirect()->route('addons.anchorman.create');
+            return redirect()->route('addons.anchorman.create');
         }
 
         foreach ($feeds_storage as $feed) {
