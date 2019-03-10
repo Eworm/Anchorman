@@ -228,7 +228,6 @@ class EditController extends Controller
 
         if ($success)
         {
-            // dd($feed_vars);
             $this->storage->putYAML($feed_title, [
                 'url'                   => $feed_vars['url'],
                 'publish'               => $feed_vars['publish'],
@@ -241,7 +240,7 @@ class EditController extends Controller
                 'copyright'             => $feed->get_copyright(),
                 'permalink'             => $feed->get_permalink(),
                 'mapping_title'         => $feed_vars['mapping_title'],
-                'mapping_author'        => $feed_vars['mapping_author'],
+                // 'mapping_author'        => $feed_vars['mapping_author'],
                 'mapping_content'       => $feed_vars['mapping_content'],
                 'mapping_thumbnail'     => $feed_vars['mapping_thumbnail'],
                 'mapping_taxonomies'    => $feed_vars['mapping_taxonomies'],

@@ -42,12 +42,12 @@ sections:
         disableable: true
         field:
           type: text
-      mapping_author:
-        type: anchorman.source
-        disableable: true
-        field:
-          type: users
-          max_items: 1
+      # mapping_author:
+      #   type: anchorman.source
+      #   disableable: true
+      #   field:
+      #     type: users
+      #     max_items: 1
       mapping_thumbnail:
         type: anchorman.source
         disableable: true
@@ -55,19 +55,27 @@ sections:
           - assets
         field:
           type: text
-      mapping_taxonomies:
-        disableable: true
-        type: anchorman.source
-        allowed_fieldtypes:
-          - taxonomy
-        field:
-          type: text
+      # mapping_taxonomies:
+      #   disableable: true
+      #   type: anchorman.source
+      #   allowed_fieldtypes:
+      #     - taxonomy
+      #   field:
+      #     type: text
       mapping_permalink:
         disableable: true
         type: anchorman.source
         field:
           type: text
+  authors:
+    fields:
+      authors_section:
+        type: section
+  taxonomies:
+    fields:
+      taxonomies_section:
+        type: section
   rules:
     fields:
-      fields_section:
+      rules_section:
         type: section
