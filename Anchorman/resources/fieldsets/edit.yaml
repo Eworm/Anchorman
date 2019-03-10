@@ -27,6 +27,18 @@ sections:
           - None
         show_when:
           login: true
+      query:
+        type: toggle
+      query_grid:
+        type: grid
+        show_when:
+          query: true
+        add_row: Query
+        fields:
+          name:
+            type: text
+          value:
+            type: text
       active:
         type: toggle
       scheduling:
@@ -63,12 +75,6 @@ sections:
         disableable: true
         field:
           type: text
-      # mapping_author:
-      #   type: anchorman.source
-      #   disableable: true
-      #   field:
-      #     type: users
-      #     max_items: 1
       mapping_thumbnail:
         type: anchorman.source
         disableable: true
@@ -76,13 +82,6 @@ sections:
           - assets
         field:
           type: text
-      # mapping_taxonomies:
-      #   disableable: true
-      #   type: anchorman.source
-      #   allowed_fieldtypes:
-      #     - taxonomy
-      #   field:
-      #     type: text
       mapping_permalink:
         disableable: true
         type: anchorman.source
@@ -92,20 +91,22 @@ sections:
     fields:
       authors_section:
         type: section
-      author_assign:
-        type: radio
-        options:
-          - Assign to
-          - Based on mapping
       mapping_author:
         type: users
         max_items: 1
-        show_when:
-          author_assign: Assign to
   taxonomies:
     fields:
       taxonomies_section:
         type: section
+      mapping_taxonomies:
+        disableable: true
+        type: anchorman.source
+        allowed_fieldtypes:
+          - taxonomy
+        field:
+          type: text
+      add_taxonomies:
+        type: taxonomy
   rules:
     fields:
       rules_section:
