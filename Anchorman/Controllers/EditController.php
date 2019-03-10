@@ -215,7 +215,7 @@ class EditController extends Controller
      */
     public function update(Request $request)
     {
-        dd($request);
+        // dd($request);
         $feed = new SimplePie();
         $feed->set_cache_location(Feed::cache_location());
 
@@ -231,7 +231,7 @@ class EditController extends Controller
             $this->storage->putYAML($feed_title, [
                 'active'                => $feed_vars['active'],
                 'copyright'             => $feed->get_copyright(),
-                'description'           => $feed->get_content(),
+                // 'description'           => $feed->get_content(),
                 'language'              => $feed->get_language(),
                 'mapping_author'        => $feed_vars['mapping_author'],
                 'mapping_content'       => $feed_vars['mapping_content'],

@@ -16,12 +16,12 @@ class Feed
     public static function feed_vars(Request $request)
     {
         return array(
-            'url'                   => $request->url,
+            'active'                => true,
+            'mapping_title'         => ['source' => 'field', 'value' => 'title'],
             'publish'               => $request->publish,
             'scheduling'            => '60',
-            'active'                => true,
             'status'                => 'publish',
-            'mapping_title'         => ['source' => 'field', 'value' => 'title']
+            'url'                   => $request->url
         );
     }
 
@@ -32,19 +32,18 @@ class Feed
      */
     public static function feed_vars_edit(Request $request)
     {
-        // dd($request);
         return array(
-            'url'                   => $request->fields['url'],
-            'publish'               => $request->fields['publish'],
-            'scheduling'            => $request->fields['scheduling'],
             'active'                => $request->fields['active'],
-            'status'                => $request->fields['status'],
             'mapping_title'         => $request->fields['mapping_title'],
             'mapping_content'       => $request->fields['mapping_content'],
             'mapping_author'        => $request->fields['mapping_author'],
             'mapping_thumbnail'     => $request->fields['mapping_thumbnail'],
             'mapping_taxonomies'    => $request->fields['mapping_taxonomies'],
-            'mapping_permalink'     => $request->fields['mapping_permalink']
+            'mapping_permalink'     => $request->fields['mapping_permalink'],
+            'publish'               => $request->fields['publish'],
+            'scheduling'            => $request->fields['scheduling'],
+            'status'                => $request->fields['status'],
+            'url'                   => $request->fields['url']
         );
     }
 
