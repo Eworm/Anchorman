@@ -34,12 +34,13 @@ class Feed
     {
         return array(
             'active'                => $request->fields['active'],
-            'mapping_title'         => $request->fields['mapping_title'],
-            'mapping_content'       => $request->fields['mapping_content'],
+            'add_taxonomies'        => $request->fields['add_taxonomies'],
             'mapping_author'        => $request->fields['mapping_author'],
-            'mapping_thumbnail'     => $request->fields['mapping_thumbnail'],
-            'mapping_taxonomies'    => $request->fields['mapping_taxonomies'],
+            'mapping_content'       => $request->fields['mapping_content'],
             'mapping_permalink'     => $request->fields['mapping_permalink'],
+            'mapping_taxonomies'    => $request->fields['mapping_taxonomies'],
+            'mapping_thumbnail'     => $request->fields['mapping_thumbnail'],
+            'mapping_title'         => $request->fields['mapping_title'],
             'publish'               => $request->fields['publish'],
             'scheduling'            => $request->fields['scheduling'],
             'status'                => $request->fields['status'],

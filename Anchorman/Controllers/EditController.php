@@ -230,6 +230,7 @@ class EditController extends Controller
         {
             $this->storage->putYAML($feed_title, [
                 'active'                => $feed_vars['active'],
+                'add_taxonomies'        => $feed_vars['add_taxonomies'],
                 'copyright'             => $feed->get_copyright(),
                 // 'description'           => $feed->get_content(),
                 'language'              => $feed->get_language(),
