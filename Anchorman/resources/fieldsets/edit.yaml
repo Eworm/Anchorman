@@ -6,6 +6,27 @@ sections:
       url:
         type: text
         mode: url
+      login:
+        type: toggle
+      login_username:
+        type: text
+        width: 33
+        show_when:
+          login: true
+      login_password:
+        type: text
+        width: 33
+        show_when:
+          login: true
+      login_method:
+        type: select
+        width: 33
+        options:
+          - Basic
+          - Digest
+          - None
+        show_when:
+          login: true
       active:
         type: toggle
       scheduling:
@@ -71,6 +92,16 @@ sections:
     fields:
       authors_section:
         type: section
+      author_assign:
+        type: radio
+        options:
+          - Assign to
+          - Based on mapping
+      mapping_author:
+        type: users
+        max_items: 1
+        show_when:
+          author_assign: Assign to
   taxonomies:
     fields:
       taxonomies_section:
