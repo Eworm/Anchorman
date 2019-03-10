@@ -215,7 +215,7 @@ class EditController extends Controller
      */
     public function update(Request $request)
     {
-        // dd($request);
+        dd($request);
         $feed = new SimplePie();
         $feed->set_cache_location(Feed::cache_location());
 
