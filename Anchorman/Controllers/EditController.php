@@ -43,11 +43,11 @@ class EditController extends Controller
             $info   = $this->storage->getYaml($rem);
 
             $feeds[] = (object) [
+                'active'    => $info['active'],
+                'collection'=> $info['publish'][0],
                 'name'      => slugify($info['title']),
                 'title'     => $info['title'],
-                'url'       => $info['url'],
-                'active'    => $info['active'],
-                'collection'=> $info['publish'][0]
+                'url'       => $info['url']
             ];
 
         }
@@ -77,11 +77,11 @@ class EditController extends Controller
 
         // dd($fieldset);
         return $this->view('edit', [
-            'title'        => $data['title'],
             'data'         => $data,
             'fieldset'     => $fieldset->toPublishArray(),
-            'suggestions'  => $this->getSuggestions($fieldset),
             'submitUrl'    => route('addons.anchorman.update'),
+            'suggestions'  => $this->getSuggestions($fieldset),
+            'title'        => $data['title'],
         ]);
      }
 
@@ -96,10 +96,10 @@ class EditController extends Controller
         $fieldset  = $this->fieldset('create');
 
         return $this->view('create', [
-            'title'        => 'Create feed',
             'data'         => $fieldset->toPublishArray(),
             'fieldset'     => $fieldset->toPublishArray(),
             'submitUrl'    => route('addons.anchorman.store'),
+            'title'        => 'Create feed',
         ]);
     }
 
@@ -185,16 +185,16 @@ class EditController extends Controller
         if ($success)
         {
             $this->storage->putYAML($feed_title, [
-                'url'                   => $request['fields']['url'],
+                'active'                => $feed_vars['active'],
+                'copyright'             => $feed->get_copyright(),
+                'language'              => $feed->get_language(),
+                'mapping_title'         => $feed_vars['mapping_title'],
+                'permalink'             => $feed->get_permalink(),
                 'publish'               => $request['fields']['publish'],
                 'scheduling'            => $feed_vars['scheduling'],
-                'active'                => $feed_vars['active'],
                 'status'                => $feed_vars['status'],
                 'title'                 => $feed->get_title(),
-                'language'              => $feed->get_language(),
-                'copyright'             => $feed->get_copyright(),
-                'permalink'             => $feed->get_permalink(),
-                'mapping_title'         => $feed_vars['mapping_title']
+                'url'                   => $request['fields']['url']
             ]);
 
             return [
@@ -229,22 +229,22 @@ class EditController extends Controller
         if ($success)
         {
             $this->storage->putYAML($feed_title, [
-                'url'                   => $feed_vars['url'],
-                'publish'               => $feed_vars['publish'],
-                'scheduling'            => $feed_vars['scheduling'],
                 'active'                => $feed_vars['active'],
-                'status'                => $feed_vars['status'],
-                'title'                 => $feed->get_title(),
+                'copyright'             => $feed->get_copyright(),
                 'description'           => $feed->get_content(),
                 'language'              => $feed->get_language(),
-                'copyright'             => $feed->get_copyright(),
-                'permalink'             => $feed->get_permalink(),
-                'mapping_title'         => $feed_vars['mapping_title'],
-                // 'mapping_author'        => $feed_vars['mapping_author'],
+                'mapping_author'        => $feed_vars['mapping_author'],
                 'mapping_content'       => $feed_vars['mapping_content'],
-                'mapping_thumbnail'     => $feed_vars['mapping_thumbnail'],
+                'mapping_permalink'     => $feed_vars['mapping_permalink'],
                 'mapping_taxonomies'    => $feed_vars['mapping_taxonomies'],
-                'mapping_permalink'     => $feed_vars['mapping_permalink']
+                'mapping_thumbnail'     => $feed_vars['mapping_thumbnail'],
+                'mapping_title'         => $feed_vars['mapping_title'],
+                'permalink'             => $feed->get_permalink(),
+                'publish'               => $feed_vars['publish'],
+                'scheduling'            => $feed_vars['scheduling'],
+                'status'                => $feed_vars['status'],
+                'title'                 => $feed->get_title(),
+                'url'                   => $feed_vars['url']
             ]);
         }
 
