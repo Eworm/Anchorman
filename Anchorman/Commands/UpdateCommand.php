@@ -6,6 +6,8 @@ use SimplePie;
 use Statamic\Addons\Anchorman\Feed;
 use Illuminate\Support\Facades\Storage;
 use Statamic\API\Entry;
+use Statamic\API\Term;
+use Statamic\API\Taxonomy;
 use Statamic\Extend\Command;
 
 class UpdateCommand extends Command
@@ -56,6 +58,18 @@ class UpdateCommand extends Command
             $this->info('Updating ' . $feed->get_title());
             $i = 0;
 
+            //
+            if (isset($info['add_tags'])) {
+                $tags = $info['add_tags'];
+                foreach ($tags as $term) {
+                    $this->info('Adding tag: ' . $term);
+                    Term::create(slugify($term))
+                        ->taxonomy('tags')
+                        ->save();
+                }
+            }
+
+            //
             foreach ($feed->get_items() as $item):
 
                 if ($enabled === true) {
@@ -63,17 +77,26 @@ class UpdateCommand extends Command
                     $with = [];
                     $with[$info['mapping_title']['value']] = $item->get_title();
                     if (isset($info['mapping_content'])) {
-                        $with[$info['mapping_content']['value']] = $item->get_content();
+                        // $with[$info['mapping_content']['value']] = $item->get_content();
                     }
                     if (isset($info['mapping_taxonomies'])) {
-                        $with[$info['mapping_taxonomies']['value']] = $item->get_category();
+                        // $with[$info['mapping_taxonomies']['value']] = $item->get_category();
                     }
+                    if (isset($info['add_tags'])) {
+                        $tags = $info['add_tags'];
+                        $newtags = [];
+                        foreach ($tags as $term) {
+                            array_push($newtags, $term);
+                        }
+                        $with[$info['add_tags']] = $newtags;
+                    }
+                    $this->info(var_dump($with));
 
                     $slugged = slugify($item->get_title());
 
                     if (Entry::slugExists($slugged, $publish)) {
 
-                        // $this->info($item->get_title() . " <fg=red>already exists</>");
+                        $this->info($item->get_title() . " <fg=red>already exists</>");
 
                     } else {
 

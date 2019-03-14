@@ -102,11 +102,17 @@ sections:
         disableable: true
         type: anchorman.source
         allowed_fieldtypes:
-          - taxonomy
+          - tags
         field:
           type: text
-      add_taxonomies:
-        type: taxonomy
+      # add_taxonomies:
+      #   type: anchorman.source
+      #   allowed_fieldtypes:
+      #     - taxonomy
+      #   field:
+      #     type: text
+      add_tags:
+        type: list
   rules:
     fields:
       rules_section:

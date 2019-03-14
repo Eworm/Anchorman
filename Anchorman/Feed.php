@@ -35,6 +35,7 @@ class Feed
         return array(
             'active'                => $request->fields['active'],
             'add_taxonomies'        => $request->fields['add_taxonomies'],
+            'add_tags'              => $request->fields['add_tags'],
             'mapping_author'        => $request->fields['mapping_author'],
             'mapping_content'       => $request->fields['mapping_content'],
             'mapping_permalink'     => $request->fields['mapping_permalink'],
