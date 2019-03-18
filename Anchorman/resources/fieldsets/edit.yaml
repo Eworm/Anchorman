@@ -105,12 +105,10 @@ sections:
           - tags
         field:
           type: text
-      # add_taxonomies:
-      #   type: anchorman.source
-      #   allowed_fieldtypes:
-      #     - taxonomy
-      #   field:
-      #     type: text
+      add_taxonomies:
+        type: suggest
+        mode: Anchorman
+        max_items: 1
       add_tags:
         type: list
   rules:
