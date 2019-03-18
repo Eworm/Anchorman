@@ -50,8 +50,23 @@ class UpdateCommand extends Command
             $url        = $info['url'];
             $publish    = $info['publish'][0];
             $enabled    = $info['active'];
+
             if (isset($info['add_taxonomies'])) {
-                $taxonomy = $info['add_taxonomies'][0][0];
+                $taxonomy = $info['add_taxonomies'][0];
+            }
+
+            if (isset($info['query_grid'])) {
+                $queries = $info['query_grid'];
+                $newquery = [];
+                foreach ($queries as $query) {
+                    $newquery[$query['name']] = $query['value'];
+                }
+                if (strpos($url, '?') !== false) {
+                    $url = $url . '&amp;' . http_build_query($newquery, '', '&amp;');
+                } else {
+                    $url = $url . '?' . http_build_query($newquery, '', '&amp;');
+                }
+                $this->info($url);
             }
 
             $feed = new SimplePie();
@@ -65,7 +80,7 @@ class UpdateCommand extends Command
             if (isset($info['add_tags'])) {
                 $tags = $info['add_tags'];
                 foreach ($tags as $term) {
-                    $this->info('Adding "' . $term . '" to "' . $taxonomy . '"');
+                    // $this->info('Adding "' . $term . '" to "' . $taxonomy . '"');
                     Term::create(slugify($term))
                         ->taxonomy($taxonomy)
                         ->save();
@@ -113,8 +128,8 @@ class UpdateCommand extends Command
                             Entry::create($slugged)
                                 ->collection($publish)
                                 ->with($with)
-                                ->date($item->get_date('Y-m-d'))
-                                ->save();
+                                ->date($item->get_date('Y-m-d'));
+                                // ->save();
 
                         else :
 
@@ -122,8 +137,8 @@ class UpdateCommand extends Command
                                 ->collection($publish)
                                 ->published(false)
                                 ->with($with)
-                                ->date($item->get_date('Y-m-d'))
-                                ->save();
+                                ->date($item->get_date('Y-m-d'));
+                                // ->save();
 
                         endif;
 
