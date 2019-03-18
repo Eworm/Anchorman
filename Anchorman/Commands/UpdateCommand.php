@@ -50,6 +50,7 @@ class UpdateCommand extends Command
             $url        = $info['url'];
             $publish    = $info['publish'][0];
             $enabled    = $info['active'];
+            $taxonomy   = $info['add_taxonomies'][0][0];
 
             $feed = new SimplePie();
             $feed->set_cache_location(Feed::cache_location());
@@ -58,30 +59,33 @@ class UpdateCommand extends Command
             $this->info('Updating ' . $feed->get_title());
             $i = 0;
 
-            //
+            // Add custom terms to the chosen taxonomy
             if (isset($info['add_tags'])) {
                 $tags = $info['add_tags'];
                 foreach ($tags as $term) {
                     $this->info('Adding tag: ' . $term);
                     Term::create(slugify($term))
-                        ->taxonomy('tags')
+                        ->taxonomy($taxonomy)
                         ->save();
                 }
             }
 
-            //
+            // Add items to the chosen collection
             foreach ($feed->get_items() as $item):
 
                 if ($enabled === true) {
 
                     $with = [];
                     $with[$info['mapping_title']['value']] = $item->get_title();
+
                     if (isset($info['mapping_content'])) {
                         // $with[$info['mapping_content']['value']] = $item->get_content();
                     }
+
                     if (isset($info['mapping_taxonomies'])) {
                         // $with[$info['mapping_taxonomies']['value']] = $item->get_category();
                     }
+
                     if (isset($info['add_tags'])) {
                         $tags = $info['add_tags'];
                         $newtags = [];
@@ -90,6 +94,7 @@ class UpdateCommand extends Command
                         }
                         $with[$info['add_tags']] = $newtags;
                     }
+
                     $this->info(var_dump($with));
 
                     $slugged = slugify($item->get_title());
