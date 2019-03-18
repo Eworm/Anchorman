@@ -169,9 +169,7 @@ class EditController extends Controller
 
         $feed = new SimplePie();
         $feed->set_cache_location(Feed::cache_location());
-
         $feed->set_feed_url($request['fields']['url']);
-        $feed_vars = Feed::feed_vars($request);
 
         $success = $feed->init();
         $feed->handle_content_type();
@@ -180,14 +178,14 @@ class EditController extends Controller
         if ($success)
         {
             $this->storage->putYAML($feed_title, [
-                'active'                => $feed_vars['active'],
+                'active'                => $request->fields['active'],
                 'copyright'             => $feed->get_copyright(),
                 'language'              => $feed->get_language(),
-                'mapping_title'         => $feed_vars['mapping_title'],
+                'mapping_title'         => $request->fields['mapping_title'],
                 'permalink'             => $feed->get_permalink(),
                 'publish'               => $request['fields']['publish'],
-                'scheduling'            => $feed_vars['scheduling'],
-                'status'                => $feed_vars['status'],
+                'scheduling'            => $request->fields['scheduling'],
+                'status'                => $request->fields['status'],
                 'title'                 => $feed->get_title(),
                 'url'                   => $request['fields']['url']
             ]);
@@ -212,9 +210,7 @@ class EditController extends Controller
     {
         $feed = new SimplePie();
         $feed->set_cache_location(Feed::cache_location());
-
         $feed->set_feed_url($request->fields['url']);
-        $feed_vars = Feed::feed_vars_edit($request);
 
         $success = $feed->init();
         $feed->handle_content_type();
@@ -223,24 +219,24 @@ class EditController extends Controller
         if ($success)
         {
             $this->storage->putYAML($feed_title, [
-                'active'                => $feed_vars['active'],
-                'add_taxonomies'        => $feed_vars['add_taxonomies'],
-                'add_tags'              => $feed_vars['add_tags'],
+                'active'                => $request->fields['active'],
+                'add_taxonomies'        => $request->fields['add_taxonomies'],
+                'add_tags'              => $request->fields['add_tags'],
                 'copyright'             => $feed->get_copyright(),
                 // 'description'           => $feed->get_content(),
                 'language'              => $feed->get_language(),
-                'mapping_author'        => $feed_vars['mapping_author'],
-                'mapping_content'       => $feed_vars['mapping_content'],
-                'mapping_permalink'     => $feed_vars['mapping_permalink'],
-                'mapping_taxonomies'    => $feed_vars['mapping_taxonomies'],
-                'mapping_thumbnail'     => $feed_vars['mapping_thumbnail'],
-                'mapping_title'         => $feed_vars['mapping_title'],
+                'mapping_author'        => $request->fields['mapping_author'],
+                'mapping_content'       => $request->fields['mapping_content']['value'],
+                'mapping_permalink'     => $request->fields['mapping_permalink']['value'],
+                'mapping_taxonomies'    => $request->fields['mapping_taxonomies']['value'],
+                'mapping_thumbnail'     => $request->fields['mapping_thumbnail']['value'],
+                'mapping_title'         => $request->fields['mapping_title']['value'],
                 'permalink'             => $feed->get_permalink(),
-                'publish'               => $feed_vars['publish'],
-                'scheduling'            => $feed_vars['scheduling'],
-                'status'                => $feed_vars['status'],
+                'publish'               => $request->fields['publish'],
+                'scheduling'            => $request->fields['scheduling'],
+                'status'                => $request->fields['status'],
                 'title'                 => $feed->get_title(),
-                'url'                   => $feed_vars['url']
+                'url'                   => $request->fields['url']
             ]);
         }
 
