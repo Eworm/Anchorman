@@ -21,12 +21,16 @@ class SourceFieldtype extends Fieldtype
             return ['source' => 'disable', 'value' => null];
         }
 
-        return ['source' => 'custom', 'value' => $this->fieldtype()->preProcess($data)];
+        return ['source' => 'custom', 'value' => $data['value']];
     }
 
     public function process($data)
     {
         if ($data['source'] === 'field') {
+            return $data['value'];
+        }
+
+        if ($data['source'] === 'custom') {
             return $data['value'];
         }
 

@@ -218,26 +218,16 @@ class EditController extends Controller
 
         if ($success)
         {
-            $this->storage->putYAML($feed_title, [
-                'active'                => $request->fields['active'],
-                'add_taxonomies'        => $request->fields['add_taxonomies'],
-                'add_tags'              => $request->fields['add_tags'],
-                'copyright'             => $feed->get_copyright(),
-                // 'description'           => $feed->get_content(),
-                'language'              => $feed->get_language(),
-                'mapping_author'        => $request->fields['mapping_author'],
-                'mapping_content'       => $request->fields['mapping_content']['value'],
-                'mapping_permalink'     => $request->fields['mapping_permalink']['value'],
-                'mapping_taxonomies'    => $request->fields['mapping_taxonomies']['value'],
-                'mapping_thumbnail'     => $request->fields['mapping_thumbnail']['value'],
-                'mapping_title'         => $request->fields['mapping_title']['value'],
-                'permalink'             => $feed->get_permalink(),
-                'publish'               => $request->fields['publish'],
-                'scheduling'            => $request->fields['scheduling'],
-                'status'                => $request->fields['status'],
-                'title'                 => $feed->get_title(),
-                'url'                   => $request->fields['url']
-            ]);
+            $feed_params = [
+                $request->fields,
+                'copyright'=> $feed->get_copyright(),
+                // 'description' => $feed->get_content(),
+                'permalink' => $feed->get_permalink(),
+                'language' => $feed->get_language(),
+                'title' => $feed->get_title()
+            ];
+
+            $this->storage->putYAML($feed_title, $feed_params[0]);
         }
 
         return [
