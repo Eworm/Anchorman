@@ -65,7 +65,6 @@ class EditController extends Controller
      public function edit(Request $request)
      {
         $fieldset  = $this->fieldset('edit');
-        // dd($fieldset);
 
         $data = $this->preProcessWithBlankFields(
             $fieldset,
@@ -73,9 +72,7 @@ class EditController extends Controller
         );
 
         $data = $this->getItemStructure($data);
-        // dd($data);
 
-        // dd($fieldset);
         return $this->view('edit', [
             'data'         => $data,
             'fieldset'     => $fieldset->toPublishArray(),
@@ -128,8 +125,6 @@ class EditController extends Controller
         $feed->set_feed_url($data['url']);
         $success = $feed->init();
         $feed->handle_content_type();
-
-        // dd($data);
 
         if ($success)
         {
@@ -215,7 +210,6 @@ class EditController extends Controller
      */
     public function update(Request $request)
     {
-        // dd($request);
         $feed = new SimplePie();
         $feed->set_cache_location(Feed::cache_location());
 
