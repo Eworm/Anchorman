@@ -99,11 +99,11 @@ class UpdateCommand extends Command
 
                     $slugged = slugify($item->get_title());
 
-                    // if (Entry::slugExists($slugged, $publish)) {
-                    //
-                    //     $this->info($item->get_title() . " <fg=red>already exists</>");
-                    //
-                    // } else {
+                    if (Entry::slugExists($slugged, $publish)) {
+
+                        $this->info($item->get_title() . " <fg=red>already exists</>");
+
+                    } else {
 
                         $bar = $this->output->createProgressBar($feed->get_item_quantity());
                         $bar->start();
@@ -131,7 +131,7 @@ class UpdateCommand extends Command
                         $bar->advance();
                         $bar->finish();
 
-                    // }
+                    }
 
                 }
 
