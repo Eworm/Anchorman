@@ -66,7 +66,7 @@ class UpdateCommand extends Command
                 } else {
                     $url = $url . '?' . http_build_query($newquery, '', '&amp;');
                 }
-                $this->info($url);
+                // $this->info($url);
             }
 
             $feed = new SimplePie();
@@ -80,7 +80,7 @@ class UpdateCommand extends Command
             if (isset($info['add_tags'])) {
                 $tags = $info['add_tags'];
                 foreach ($tags as $term) {
-                    // $this->info('Adding "' . $term . '" to "' . $taxonomy . '"');
+                    $this->info('Adding "' . $term . '" to "' . $taxonomy . '".');
                     Term::create(slugify($term))
                         ->taxonomy($taxonomy)
                         ->save();
@@ -96,7 +96,8 @@ class UpdateCommand extends Command
                     $with[$info['mapping_title']['value']] = $item->get_title();
 
                     if (isset($info['mapping_content'])) {
-                        // $with[$info['mapping_content']['value']] = $item->get_content();
+                        $with[$info['mapping_content']['value']] = $item->get_content();
+                        // $this->info(var_dump($item->get_content()));
                     }
 
                     if (isset($info['mapping_taxonomies'])) {
@@ -120,8 +121,8 @@ class UpdateCommand extends Command
 
                     } else {
 
-                        $bar = $this->output->createProgressBar($feed->get_item_quantity());
-                        $bar->start();
+                        // $bar = $this->output->createProgressBar($feed->get_item_quantity());
+                        // $bar->start();
 
                         if ($info['status'] == 'publish') :
 
@@ -143,8 +144,8 @@ class UpdateCommand extends Command
                         endif;
 
                         $i++;
-                        $bar->advance();
-                        $bar->finish();
+                        // $bar->advance();
+                        // $bar->finish();
 
                     }
 
@@ -154,11 +155,11 @@ class UpdateCommand extends Command
 
             if ($i == 0) :
 
-                $this->info("Update complete. No new articles");
+                $this->info("No new articles.");
 
             else :
 
-                $this->info("\nUpdate complete. I found " . $i . " new articles and added them to " . $publish);
+                $this->info("\nUpdate complete. I found " . $i . " new articles and added them to " . $publish . ".");
 
             endif;
             $this->info("\n");
