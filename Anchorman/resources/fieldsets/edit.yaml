@@ -6,27 +6,6 @@ sections:
       url:
         type: text
         mode: url
-      login:
-        type: toggle
-      login_username:
-        type: text
-        width: 33
-        show_when:
-          login: true
-      login_password:
-        type: text
-        width: 33
-        show_when:
-          login: true
-      login_method:
-        type: select
-        width: 33
-        options:
-          - Basic
-          - Digest
-          - None
-        show_when:
-          login: true
       query:
         type: toggle
       query_grid:
