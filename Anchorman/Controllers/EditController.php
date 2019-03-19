@@ -132,6 +132,7 @@ class EditController extends Controller
         $success = $feed->init();
         $feed->handle_content_type();
 
+
         if ($success)
         {
             if ($item = $feed->get_item(0))
@@ -143,16 +144,10 @@ class EditController extends Controller
                     $data['mapping_content']['disabled'] = true;
                 }
 
-                if (!$item->get_category())
+                if (!$item->get_categories())
                 {
                     $data['mapping_taxonomies']['source'] = 'unavailable';
                     $data['mapping_taxonomies']['disabled'] = true;
-                }
-
-                if ($enclosure = $item->get_enclosure())
-                {
-                    // $enclosure->get_medium();
-                    // $enclosure->get_thumbnail();
                 }
 
             }
