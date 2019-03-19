@@ -97,7 +97,6 @@ class UpdateCommand extends Command
 
                     if (isset($info['mapping_content'])) {
                         $with[$info['mapping_content']['value']] = $item->get_content();
-                        // $this->info(var_dump($item->get_content()));
                     }
 
                     if (isset($info['mapping_taxonomies'])) {
@@ -112,6 +111,8 @@ class UpdateCommand extends Command
                         }
                         $with[$taxonomy] = $newtags;
                     }
+
+                    $this->info(var_dump($with));
 
                     $slugged = slugify($item->get_title());
 
