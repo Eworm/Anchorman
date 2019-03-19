@@ -98,8 +98,12 @@ class UpdateCommand extends Command
                         $with[$info['mapping_content']['value']] = $item->get_content();
                     }
 
-                    if (isset($info['mapping_taxonomies'])) {
-                        $with[$info['mapping_taxonomies']['value']] = $item->get_category();
+                    if (isset($info['mapping_content'])) {
+                        $with[$info['mapping_content']['value']] = $item->get_content();
+                    }
+
+                    if (isset($info['mapping_thumbnail'])) {
+                        $with[$info['mapping_thumbnail']['value']] = $item->get_category();
                     }
 
                     if (isset($info['add_tags']) && isset($info['add_taxonomies'])) {

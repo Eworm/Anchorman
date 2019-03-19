@@ -178,14 +178,14 @@ class EditController extends Controller
         if ($success)
         {
             $this->storage->putYAML($feed_title, [
-                'active'                => $request->fields['active'],
+                'active'                => true,
                 'copyright'             => $feed->get_copyright(),
                 'language'              => $feed->get_language(),
-                'mapping_title'         => $request->fields['mapping_title'],
+                'mapping_title'         => ['source' => 'field', 'value' => 'title'],
                 'permalink'             => $feed->get_permalink(),
                 'publish'               => $request['fields']['publish'],
-                'scheduling'            => $request->fields['scheduling'],
-                'status'                => $request->fields['status'],
+                'scheduling'            => 60,
+                'status'                => 'publish',
                 'title'                 => $feed->get_title(),
                 'url'                   => $request['fields']['url']
             ]);
@@ -221,7 +221,6 @@ class EditController extends Controller
             $feed_params = [
                 $request->fields,
                 'copyright'=> $feed->get_copyright(),
-                // 'description' => $feed->get_content(),
                 'permalink' => $feed->get_permalink(),
                 'language' => $feed->get_language(),
                 'title' => $feed->get_title()
