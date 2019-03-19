@@ -66,7 +66,6 @@ class UpdateCommand extends Command
                 } else {
                     $url = $url . '?' . http_build_query($newquery, '', '&amp;');
                 }
-                // $this->info($url);
             }
 
             $feed = new SimplePie();
@@ -111,8 +110,6 @@ class UpdateCommand extends Command
                         }
                         $with[$taxonomy] = $newtags;
                     }
-
-                    $this->info(var_dump($with));
 
                     $slugged = slugify($item->get_title());
 
