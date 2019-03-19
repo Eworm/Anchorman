@@ -100,7 +100,7 @@ class UpdateCommand extends Command
                     }
 
                     if (isset($info['mapping_taxonomies'])) {
-                        // $with[$info['mapping_taxonomies']['value']] = $item->get_category();
+                        $with[$info['mapping_taxonomies']['value']] = $item->get_category();
                     }
 
                     if (isset($info['add_tags']) && isset($info['add_taxonomies'])) {
@@ -122,16 +122,13 @@ class UpdateCommand extends Command
 
                     } else {
 
-                        // $bar = $this->output->createProgressBar($feed->get_item_quantity());
-                        // $bar->start();
-
                         if ($info['status'] == 'publish') :
 
                             Entry::create($slugged)
                                 ->collection($publish)
                                 ->with($with)
-                                ->date($item->get_date('Y-m-d'));
-                                // ->save();
+                                ->date($item->get_date('Y-m-d'))
+                                ->save();
 
                         else :
 
@@ -139,14 +136,12 @@ class UpdateCommand extends Command
                                 ->collection($publish)
                                 ->published(false)
                                 ->with($with)
-                                ->date($item->get_date('Y-m-d'));
-                                // ->save();
+                                ->date($item->get_date('Y-m-d'))
+                                ->save();
 
                         endif;
 
                         $i++;
-                        // $bar->advance();
-                        // $bar->finish();
 
                     }
 
