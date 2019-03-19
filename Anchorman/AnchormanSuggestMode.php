@@ -12,14 +12,11 @@ class AnchormanSuggestMode extends AbstractMode
         $taxonomies_suggest = [];
 
         foreach ($taxonomies as $tax) {
-
             $taxonomies_suggest[] = (object) [
                 'value' => $tax,
                 'text' => $tax
             ];
-
         }
-
         return $taxonomies_suggest;
 
     }

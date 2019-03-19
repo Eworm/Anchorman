@@ -54,13 +54,6 @@ sections:
         disableable: true
         field:
           type: text
-      mapping_thumbnail:
-        type: anchorman.source
-        disableable: true
-        allowed_fieldtypes:
-          - assets
-        field:
-          type: text
       mapping_permalink:
         disableable: true
         type: anchorman.source
@@ -90,6 +83,17 @@ sections:
         max_items: 1
       add_tags:
         type: list
+  images:
+    fields:
+      images_section:
+        type: section
+      mapping_thumbnail:
+        type: anchorman.source
+        disableable: true
+        allowed_fieldtypes:
+          - assets
+        field:
+          type: text
   rules:
     fields:
       rules_section:
