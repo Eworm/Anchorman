@@ -40,15 +40,21 @@ class EditController extends Controller
         foreach ($feeds_storage as $feed) {
 
             $rem    = str_replace('site/storage/addons/Anchorman/', '', $feed);
-            $info   = $this->storage->getYaml($rem);
 
-            $feeds[] = (object) [
-                'active'    => $info['active'],
-                'collection'=> $info['publish'][0],
-                'name'      => slugify($info['title']),
-                'title'     => $info['title'],
-                'url'       => $info['url']
-            ];
+            $ignore = array( 'cgi-bin', '.', '..','._' );
+            if (!in_array($rem, $ignore) and substr($rem, 0, 1) != '.') {
+
+                $info   = $this->storage->getYaml($rem);
+
+                $feeds[] = (object) [
+                    'active'    => $info['active'],
+                    'collection'=> $info['publish'][0],
+                    'name'      => slugify($info['title']),
+                    'title'     => $info['title'],
+                    'url'       => $info['url']
+                ];
+
+            }
 
         }
 
