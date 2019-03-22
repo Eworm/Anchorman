@@ -92,6 +92,11 @@ sections:
     fields:
       images_section:
         type: section
+      images_container:
+        type: suggest
+        mode: anchorman
+        max_items: 1
+        width: 33
       mapping_thumbnail:
         type: anchorman.source
         disableable: true
