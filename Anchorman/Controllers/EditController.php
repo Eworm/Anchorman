@@ -175,6 +175,8 @@ class EditController extends Controller
 
         if ($success)
         {
+            // dd($request->fields);
+            
             $feed_params = [
                 $request->fields,
                 'copyright'=> $feed->get_copyright(),

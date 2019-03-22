@@ -98,25 +98,44 @@ class UpdateCommand extends Command
                     $slugged = slugify($item->get_title());
 
                     if (isset($info['mapping_description']) && $item->get_description()) {
-                        $with[$info['mapping_description']['value']] = $item->get_description();
+                        if ($info['mapping_description']['source'] != 'disable' && $info['mapping_description']['value'] != null) {
+                            $with[$info['mapping_description']['value']] = $item->get_description();
+                        }
                     }
 
                     if (isset($info['mapping_content']) && $item->get_content()) {
-                        $with[$info['mapping_content']['value']] = $item->get_content();
+                        if ($info['mapping_content']['source'] != 'disable' && $info['mapping_content']['value'] != null) {
+                            $with[$info['mapping_content']['value']] = $item->get_content();
+                        }
                     }
 
                     if (isset($info['mapping_permalink']) && $item->get_permalink()) {
-                        $with[$info['mapping_permalink']['value']] = $item->get_permalink();
+                        if ($info['mapping_permalink']['source'] != 'disable' && $info['mapping_permalink']['value'] != null) {
+                            $with[$info['mapping_permalink']['value']] = $item->get_permalink();
+                        }
                     }
 
                     if (isset($info['mapping_author']) && $item->get_author()) {
-                        $with[$info['mapping_author']['value']] = $item->get_author();
+                        if ($info['mapping_author']['source'] != 'disable' && $info['mapping_author']['value'] != null) {
+                            $with[$info['mapping_author']['value']] = $item->get_author();
+                        }
                     }
 
                     if ($enclosure = $item->get_enclosure()) {
-                        if (isset($info['mapping_thumbnail']) && $enclosure->get_thumbnail()) {
-                            $with[$info['mapping_thumbnail']['value']] = $enclosure->get_thumbnail();
+                        if ($info['mapping_thumbnail']['source'] != 'disable' && $info['mapping_thumbnail']['value'] != null) {
+                            if (isset($info['mapping_thumbnail']) && $enclosure->get_thumbnail()) {
+                                $with[$info['mapping_thumbnail']['value']] = $enclosure->get_thumbnail();
+                            }
                         }
+                    }
+
+                    if (isset($info['add_tags']) && isset($info['add_taxonomies'])) {
+                        $tags = $info['add_tags'];
+                        $newtags = [];
+                        foreach ($tags as $term) {
+                            array_push($newtags, $term);
+                        }
+                        $with[$taxonomy] = $newtags;
                     }
 
                     if (Entry::slugExists($slugged, $publish)) {
@@ -130,8 +149,8 @@ class UpdateCommand extends Command
                             Entry::create($slugged)
                                 ->collection($publish)
                                 ->with($with)
-                                ->date($item->get_date('Y-m-d'));
-                                // ->save();
+                                ->date($item->get_date('Y-m-d'))
+                                ->save();
 
                         else :
 
@@ -139,8 +158,8 @@ class UpdateCommand extends Command
                                 ->collection($publish)
                                 ->published(false)
                                 ->with($with)
-                                ->date($item->get_date('Y-m-d'));
-                                // ->save();
+                                ->date($item->get_date('Y-m-d'))
+                                ->save();
 
                         endif;
 
