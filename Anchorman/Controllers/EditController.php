@@ -77,8 +77,6 @@ class EditController extends Controller
             $this->storage->getYaml($request->feed)
         );
 
-        $data = $this->getItemStructure($data);
-
         return $this->view('edit', [
             'data'         => $data,
             'fieldset'     => $fieldset->toPublishArray(),
@@ -115,31 +113,6 @@ class EditController extends Controller
     public function refreshAll()
     {
         Please::call('anchorman:update');
-    }
-
-
-    /**
-     * Get a feed structure
-     *
-     * @return mixed
-     */
-    public function getItemStructure($data)
-    {
-        $feed = new SimplePie();
-        $feed->set_cache_location(Feed::cache_location());
-
-        $feed->set_feed_url($data['url']);
-        $success = $feed->init();
-        $feed->handle_content_type();
-
-        if ($success)
-        {
-            return $data;
-        }
-        else
-        {
-            return $feed->error();
-        }
     }
 
 
