@@ -138,6 +138,8 @@ class EditController extends Controller
             if ($item = $feed->get_item(0))
             {
 
+                // dd($item->get_description());
+
                 if (!$item->get_content() || !$item->get_description())
                 {
                     $data['mapping_content']['source'] = 'unavailable';
@@ -148,6 +150,12 @@ class EditController extends Controller
                 {
                     $data['mapping_taxonomies']['source'] = 'unavailable';
                     $data['mapping_taxonomies']['disabled'] = true;
+                }
+
+                if ($item->get_enclosure()->get_thumbnail() == null)
+                {
+                    $data['mapping_thumbnail']['source'] = 'unavailable';
+                    $data['mapping_thumbnail']['disabled'] = true;
                 }
 
             }
