@@ -17,6 +17,10 @@ class SourceFieldtype extends Fieldtype
             return ['source' => 'field', 'value' => $data['value']];
         }
 
+        if ($data['source'] === 'disable') {
+            return ['source' => 'disable', 'value' => $data['value']];
+        }
+
         if ($data === false && $this->getFieldConfig('disableable') === true) {
             return ['source' => 'disable', 'value' => null];
         }
