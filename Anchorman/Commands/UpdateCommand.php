@@ -74,6 +74,7 @@ class UpdateCommand extends Command
                 }
             }
 
+            // Add custom queries
             if (isset($info['query_grid'])) {
                 $queries = $info['query_grid'];
                 $newquery = [];
@@ -94,9 +95,7 @@ class UpdateCommand extends Command
 
                     $with = [];
                     $with[$info['mapping_title']['value']] = $item->get_title();
-
-
-
+                    
                     $slugged = slugify($item->get_title());
 
                     if (Entry::slugExists($slugged, $publish)) {
