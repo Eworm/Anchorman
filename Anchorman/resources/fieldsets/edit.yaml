@@ -111,20 +111,20 @@ sections:
           - assets
         field:
           type: text
-  rules:
-    fields:
-      rules_section:
-        type: section
-      rules_grid:
-        type: grid
-        add_row: Rule
-        fields:
-          name:
-            type: select
-            options:
-              - OR
-              - AND
-              - ORNOT
-              - ANDNOR
-          value:
-            type: text
+  # rules:
+  #   fields:
+  #     rules_section:
+  #       type: section
+  #     rules_grid:
+  #       type: grid
+  #       add_row: Rule
+  #       fields:
+  #         name:
+  #           type: select
+  #           options:
+  #             - OR
+  #             - AND
+  #             - ORNOT
+  #             - ANDNOR
+  #         value:
+  #           type: text
