@@ -127,18 +127,12 @@ class UpdateCommand extends Command
                         $enclosure_type = $enclosure->get_type();
                         $enclosure_link = $enclosure->get_link();
 
-                        // $this->info($enclosure_type);
-                        // $this->info($enclosure_link);
-
                         if ($enclosure_type == 'image/jpeg') {
-                            $this->grabImage($enclosure_link);
+                            $with[$info['mapping_thumbnail']['value']] = $this->grabImage($enclosure_link);
                         }
-
 
                         if ($info['mapping_thumbnail']['source'] != 'disable' && $info['mapping_thumbnail']['value'] != null) {
                             if (isset($info['mapping_thumbnail']) && $enclosure->get_thumbnail()) {
-                                // $with[$info['mapping_thumbnail']['value']] = $enclosure->get_thumbnail();
-                                // $this->grabImage($enclosure->get_thumbnail());
                             }
                         }
                     }
@@ -160,20 +154,24 @@ class UpdateCommand extends Command
 
                         if ($info['status'] == 'publish') :
 
+                            $this->info('Adding "' . $item->get_title() . '"');
+
                             Entry::create($slugged)
                                 ->collection($publish)
                                 ->with($with)
-                                ->date($item->get_date('Y-m-d'));
-                                // ->save();
+                                ->date($item->get_date('Y-m-d'))
+                                ->save();
 
                         else :
+
+                            $this->info('Adding "' . $item->get_title() . '" <fg=red>(draft)</>');
 
                             Entry::create($slugged)
                                 ->collection($publish)
                                 ->published(false)
                                 ->with($with)
-                                ->date($item->get_date('Y-m-d'));
-                                // ->save();
+                                ->date($item->get_date('Y-m-d'))
+                                ->save();
 
                         endif;
 
@@ -200,6 +198,7 @@ class UpdateCommand extends Command
 
     public function grabImage($url)
     {
+        $basename = basename($url);
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
@@ -208,7 +207,10 @@ class UpdateCommand extends Command
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
         $data = curl_exec($ch);
-        File::disk('local')->put('assets/feed/' . basename($url), $data);
+
+        $this->info('Adding "' . $basename . '"');
+        File::disk('local')->put('assets/feed/' . $basename, $data);
         curl_close ($ch);
+        return '/assets/feed/' . $basename;
     }
 }
