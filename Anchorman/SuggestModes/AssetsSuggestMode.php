@@ -14,7 +14,7 @@ class AssetsSuggestMode extends AbstractMode
 
         foreach ($containersArray as $container) {
             $containers_suggest[] = (object) [
-                'value' => $container->data()['url'],
+                'value' => $container->data()['path'],
                 'text' => $container->data()['title']
             ];
         }

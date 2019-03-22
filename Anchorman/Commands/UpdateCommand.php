@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Statamic\API\Entry;
 use Statamic\API\Term;
 use Statamic\API\Taxonomy;
+use Statamic\API\AssetContainer;
 // use Statamic\API\Asset;
 use Statamic\API\File;
 use Statamic\Extend\Command;
@@ -52,6 +53,9 @@ class UpdateCommand extends Command
             $url        = $info['url'];
             $publish    = $info['publish'][0];
             $enabled    = $info['active'];
+            if (isset($info['images_container'])) {
+                $assetcontainer = $info['images_container'][0];
+            }
 
             $feed = new SimplePie();
             $feed->set_cache_location(Feed::cache_location());
@@ -128,7 +132,7 @@ class UpdateCommand extends Command
                         $enclosure_link = $enclosure->get_link();
 
                         if ($enclosure_type == 'image/jpeg') {
-                            $with[$info['mapping_thumbnail']['value']] = $this->grabImage($enclosure_link);
+                            $with[$info['mapping_thumbnail']['value']] = $this->grabImage($enclosure_link, $assetcontainer);
                         }
 
                         if ($info['mapping_thumbnail']['source'] != 'disable' && $info['mapping_thumbnail']['value'] != null) {
@@ -196,8 +200,9 @@ class UpdateCommand extends Command
         }
     }
 
-    public function grabImage($url)
+    public function grabImage($url, $path)
     {
+        $container = AssetContainer::wherePath($path);
         $basename = basename($url);
         $ch = curl_init();
 
@@ -216,8 +221,8 @@ class UpdateCommand extends Command
         $data = curl_exec($ch);
 
         $this->info('Adding "' . $basename . '"');
-        File::disk('local')->put('assets/feed/' . $basename, $data);
+        File::disk('local')->put($container->data()['path'] . '/' . $basename, $data);
         curl_close ($ch);
-        return '/assets/feed/' . $basename;
+        return $container->data()['url'] . '/' . $basename;
     }
 }
