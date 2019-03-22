@@ -6,18 +6,6 @@ sections:
       url:
         type: text
         mode: url
-      query:
-        type: toggle
-      query_grid:
-        type: grid
-        show_when:
-          query: true
-        add_row: Query
-        fields:
-          name:
-            type: text
-          value:
-            type: text
       active:
         type: toggle
       scheduling:
@@ -30,6 +18,18 @@ sections:
         options:
           publish: Publish immediately
           draft: Save as draft
+      query:
+        type: toggle
+      query_grid:
+        type: grid
+        show_when:
+          query: true
+        add_row: Query
+        fields:
+          name:
+            type: text
+          value:
+            type: text
       title:
         type: hidden
       description:
