@@ -53,6 +53,9 @@ class UpdateCommand extends Command
             $url        = $info['url'];
             $publish    = $info['publish'][0];
             $enabled    = $info['active'];
+            if (isset($info['mapping_author'])) {
+                $author = $info['mapping_author'][0];
+            }
             if (isset($info['images_container'])) {
                 $assetcontainer = $info['images_container'][0];
             }
@@ -121,9 +124,9 @@ class UpdateCommand extends Command
                         }
                     }
 
-                    if (isset($info['mapping_author']) && $item->get_author()) {
-                        if ($info['mapping_author']['source'] != 'disable' && $info['mapping_author']['value'] != null) {
-                            $with[$info['mapping_author']['value']] = $item->get_author();
+                    if (isset($info['mapping_authors'])) {
+                        if ($info['mapping_authors']['source'] != 'disable' && $info['mapping_authors']['value'] != null) {
+                            $with[$info['mapping_authors']['value']] = $author;
                         }
                     }
 

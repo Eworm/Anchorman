@@ -68,6 +68,13 @@ sections:
     fields:
       authors_section:
         type: section
+      mapping_authors:
+        disableable: true
+        type: anchorman.source
+        allowed_fieldtypes:
+          - users
+        field:
+          type: text
       mapping_author:
         type: users
         max_items: 1
