@@ -1,0 +1,24 @@
+<?php namespace Statamic\Addons\Anchorman\SuggestModes;
+
+use Statamic\API\AssetContainer;
+use Statamic\Addons\Suggest\Modes\AbstractMode;
+
+class AssetsSuggestMode extends AbstractMode
+{
+    public function suggestions()
+    {
+
+        $containers = AssetContainer::all();
+        $containersArray = $containers->toArray();
+        $containers_suggest = [];
+
+        foreach ($containersArray as $container) {
+            $containers_suggest[] = (object) [
+                'value' => $container->data()['url'],
+                'text' => $container->data()['title']
+            ];
+        }
+        return $containers_suggest;
+
+    }
+}

@@ -1,4 +1,4 @@
-<?php namespace Statamic\Addons\Anchorman;
+<?php namespace Statamic\Addons\Anchorman\SuggestModes;
 
 use Statamic\API\Taxonomy;
 use Statamic\Addons\Suggest\Modes\AbstractMode;

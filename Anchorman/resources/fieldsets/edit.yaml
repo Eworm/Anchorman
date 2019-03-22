@@ -94,7 +94,7 @@ sections:
         type: section
       images_container:
         type: suggest
-        mode: anchorman
+        mode: Anchorman.Assets
         max_items: 1
         width: 33
       mapping_thumbnail:
