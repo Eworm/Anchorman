@@ -11,7 +11,7 @@ sections:
       scheduling:
         type: text
         mode: number
-        width: 50
+        width: 25
       status:
         type: radio
         inline: true
@@ -45,6 +45,7 @@ sections:
       publish:
         type: collections
         max_items: 1
+        width: 50
       mapping_title:
         type: anchorman.source
         field:
@@ -75,9 +76,16 @@ sections:
           - users
         field:
           type: text
+      create_user:
+        type: radio
+        options:
+          create: Create new user
+          assign: Assign to existing user
       mapping_author:
-        type: users
-        max_items: 1
+          type: users
+          max_items: 1
+          show_when:
+            create_user: assign
   taxonomies:
     fields:
       taxonomies_section:
@@ -93,24 +101,31 @@ sections:
         type: suggest
         mode: Anchorman
         max_items: 1
+        width: 50
       add_tags:
         type: list
+        show_when:
+          add_taxonomies: not null
   images:
     fields:
       images_section:
         type: section
+      mapping_thumbnail:
+        type: anchorman.source
+        disableable: true
+        allowed_fieldtypes:
+        - assets
+          field:
+            type: text
+      save_images:
+        type: toggle
       images_container:
         type: suggest
         mode: Anchorman.Assets
         max_items: 1
         width: 33
-      mapping_thumbnail:
-        type: anchorman.source
-        disableable: true
-        allowed_fieldtypes:
-          - assets
-        field:
-          type: text
+        show_when:
+          save_images: true
   # rules:
   #   fields:
   #     rules_section:
