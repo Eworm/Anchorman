@@ -201,11 +201,18 @@ class UpdateCommand extends Command
         $basename = basename($url);
         $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        // Required to be false
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        //Required for http(s)
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+        // curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
+        // curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        // Required to be true
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
         $data = curl_exec($ch);
 
         $this->info('Adding "' . $basename . '"');
