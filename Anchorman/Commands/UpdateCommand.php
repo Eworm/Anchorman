@@ -128,8 +128,8 @@ class UpdateCommand extends Command
                             Entry::create($slugged)
                                 ->collection($publish)
                                 ->with($with)
-                                ->date($item->get_date('Y-m-d'))
-                                ->save();
+                                ->date($item->get_date('Y-m-d'));
+                                // ->save();
 
                         else :
 
@@ -137,8 +137,8 @@ class UpdateCommand extends Command
                                 ->collection($publish)
                                 ->published(false)
                                 ->with($with)
-                                ->date($item->get_date('Y-m-d'))
-                                ->save();
+                                ->date($item->get_date('Y-m-d'));
+                                // ->save();
 
                         endif;
 
@@ -156,7 +156,7 @@ class UpdateCommand extends Command
 
             else :
 
-                $this->info("\nUpdate complete. I found " . $i . " new articles and added them to " . $publish . ".");
+                $this->info("Update complete. I found " . $i . " new articles and added them to " . $publish . ".");
 
             endif;
             $this->info("\n");
