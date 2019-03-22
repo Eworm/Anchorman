@@ -132,42 +132,13 @@ class EditController extends Controller
         $success = $feed->init();
         $feed->handle_content_type();
 
-
         if ($success)
         {
-            if ($item = $feed->get_item(0))
-            {
-
-                if (!$item->get_description())
-                {
-                    $data['mapping_description']['source'] = 'unavailable';
-                    $data['mapping_description']['disabled'] = true;
-                }
-
-                if (!$item->get_content())
-                {
-                    $data['mapping_content']['source'] = 'unavailable';
-                    $data['mapping_content']['disabled'] = true;
-                }
-
-                if (!$item->get_categories())
-                {
-                    $data['mapping_taxonomies']['source'] = 'unavailable';
-                    $data['mapping_taxonomies']['disabled'] = true;
-                }
-
-                if ($item->get_enclosure()->get_thumbnail() == null)
-                {
-                    $data['mapping_thumbnail']['source'] = 'unavailable';
-                    $data['mapping_thumbnail']['disabled'] = true;
-                }
-
-            }
             return $data;
         }
         else
         {
-        	return $feed->error();
+            return $feed->error();
         }
     }
 
