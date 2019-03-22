@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 use Statamic\API\Entry;
 use Statamic\API\Term;
 use Statamic\API\Taxonomy;
+// use Statamic\API\Asset;
+use Statamic\API\File;
 use Statamic\Extend\Command;
 
 class UpdateCommand extends Command
@@ -122,9 +124,21 @@ class UpdateCommand extends Command
                     }
 
                     if ($enclosure = $item->get_enclosure()) {
+                        $enclosure_type = $enclosure->get_type();
+                        $enclosure_link = $enclosure->get_link();
+
+                        // $this->info($enclosure_type);
+                        // $this->info($enclosure_link);
+
+                        if ($enclosure_type == 'image/jpeg') {
+                            $this->grabImage($enclosure_link);
+                        }
+
+
                         if ($info['mapping_thumbnail']['source'] != 'disable' && $info['mapping_thumbnail']['value'] != null) {
                             if (isset($info['mapping_thumbnail']) && $enclosure->get_thumbnail()) {
-                                $with[$info['mapping_thumbnail']['value']] = $enclosure->get_thumbnail();
+                                // $with[$info['mapping_thumbnail']['value']] = $enclosure->get_thumbnail();
+                                // $this->grabImage($enclosure->get_thumbnail());
                             }
                         }
                     }
@@ -149,8 +163,8 @@ class UpdateCommand extends Command
                             Entry::create($slugged)
                                 ->collection($publish)
                                 ->with($with)
-                                ->date($item->get_date('Y-m-d'))
-                                ->save();
+                                ->date($item->get_date('Y-m-d'));
+                                // ->save();
 
                         else :
 
@@ -158,8 +172,8 @@ class UpdateCommand extends Command
                                 ->collection($publish)
                                 ->published(false)
                                 ->with($with)
-                                ->date($item->get_date('Y-m-d'))
-                                ->save();
+                                ->date($item->get_date('Y-m-d'));
+                                // ->save();
 
                         endif;
 
@@ -182,5 +196,19 @@ class UpdateCommand extends Command
             endif;
             $this->info("\n");
         }
+    }
+
+    public function grabImage($url)
+    {
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        $data = curl_exec($ch);
+        File::disk('local')->put('assets/feed/' . basename($url), $data);
+        curl_close ($ch);
     }
 }
