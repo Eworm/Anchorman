@@ -51,8 +51,27 @@ class UpdateCommand extends Command
             $publish    = $info['publish'][0];
             $enabled    = $info['active'];
 
+            $feed = new SimplePie();
+            $feed->set_cache_location(Feed::cache_location());
+            $feed->set_feed_url($url);
+            $feed->init();
+            $this->info('Updating ' . $feed->get_title());
+            $i = 0;
+
+            // Get the chosen taxonomy
             if (isset($info['add_taxonomies'])) {
                 $taxonomy = $info['add_taxonomies'][0];
+            }
+
+            // Add custom terms to the chosen taxonomy
+            if (isset($info['add_tags'])) {
+                $tags = $info['add_tags'];
+                foreach ($tags as $term) {
+                    $this->info('Adding "' . $term . '" to "' . $taxonomy . '".');
+                    Term::create(slugify($term))
+                        ->taxonomy($taxonomy)
+                        ->save();
+                }
             }
 
             if (isset($info['query_grid'])) {
@@ -68,24 +87,6 @@ class UpdateCommand extends Command
                 }
             }
 
-            $feed = new SimplePie();
-            $feed->set_cache_location(Feed::cache_location());
-            $feed->set_feed_url($url);
-            $feed->init();
-            $this->info('Updating ' . $feed->get_title());
-            $i = 0;
-
-            // Add custom terms to the chosen taxonomy
-            if (isset($info['add_tags'])) {
-                $tags = $info['add_tags'];
-                foreach ($tags as $term) {
-                    $this->info('Adding "' . $term . '" to "' . $taxonomy . '".');
-                    Term::create(slugify($term))
-                        ->taxonomy($taxonomy)
-                        ->save();
-                }
-            }
-
             // Add items to the chosen collection
             foreach ($feed->get_items() as $item):
 
@@ -94,26 +95,7 @@ class UpdateCommand extends Command
                     $with = [];
                     $with[$info['mapping_title']['value']] = $item->get_title();
 
-                    if (isset($info['mapping_description'])) {
-                        $with[$info['mapping_description']['value']] = $item->get_description();
-                    }
 
-                    if (isset($info['mapping_content'])) {
-                        $with[$info['mapping_content']['value']] = $item->get_content();
-                    }
-
-                    if (isset($info['mapping_thumbnail'])) {
-                        $with[$info['mapping_thumbnail']['value']] = $item->get_category();
-                    }
-
-                    if (isset($info['add_tags']) && isset($info['add_taxonomies'])) {
-                        $tags = $info['add_tags'];
-                        $newtags = [];
-                        foreach ($tags as $term) {
-                            array_push($newtags, $term);
-                        }
-                        $with[$taxonomy] = $newtags;
-                    }
 
                     $slugged = slugify($item->get_title());
 
