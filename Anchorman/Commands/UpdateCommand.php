@@ -95,8 +95,29 @@ class UpdateCommand extends Command
 
                     $with = [];
                     $with[$info['mapping_title']['value']] = $item->get_title();
-                    
                     $slugged = slugify($item->get_title());
+
+                    if (isset($info['mapping_description']) && $item->get_description()) {
+                        $with[$info['mapping_description']['value']] = $item->get_description();
+                    }
+
+                    if (isset($info['mapping_content']) && $item->get_content()) {
+                        $with[$info['mapping_content']['value']] = $item->get_content();
+                    }
+
+                    if (isset($info['mapping_permalink']) && $item->get_permalink()) {
+                        $with[$info['mapping_permalink']['value']] = $item->get_permalink();
+                    }
+
+                    if (isset($info['mapping_author']) && $item->get_author()) {
+                        $with[$info['mapping_author']['value']] = $item->get_author();
+                    }
+
+                    if ($enclosure = $item->get_enclosure()) {
+                        if (isset($info['mapping_thumbnail']) && $enclosure->get_thumbnail()) {
+                            $with[$info['mapping_thumbnail']['value']] = $enclosure->get_thumbnail();
+                        }
+                    }
 
                     if (Entry::slugExists($slugged, $publish)) {
 
