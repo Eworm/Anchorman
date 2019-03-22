@@ -12,7 +12,6 @@ class SourceFieldtype extends Fieldtype
 
     public function preProcess($data)
     {
-
         if ($data['source'] === 'field') {
             return ['source' => 'field', 'value' => $data['value']];
         }
