@@ -49,6 +49,11 @@ sections:
         type: anchorman.source
         field:
           type: text
+      mapping_description:
+        type: anchorman.source
+        disableable: true
+        field:
+          type: text
       mapping_content:
         type: anchorman.source
         disableable: true

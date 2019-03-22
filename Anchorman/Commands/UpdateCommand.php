@@ -94,8 +94,8 @@ class UpdateCommand extends Command
                     $with = [];
                     $with[$info['mapping_title']['value']] = $item->get_title();
 
-                    if (isset($info['mapping_content'])) {
-                        $with[$info['mapping_content']['value']] = $item->get_content();
+                    if (isset($info['mapping_description'])) {
+                        $with[$info['mapping_description']['value']] = $item->get_description();
                     }
 
                     if (isset($info['mapping_content'])) {

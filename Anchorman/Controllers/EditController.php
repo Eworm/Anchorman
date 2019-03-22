@@ -138,9 +138,13 @@ class EditController extends Controller
             if ($item = $feed->get_item(0))
             {
 
-                // dd($item->get_description());
+                if (!$item->get_description())
+                {
+                    $data['mapping_description']['source'] = 'unavailable';
+                    $data['mapping_description']['disabled'] = true;
+                }
 
-                if (!$item->get_content() || !$item->get_description())
+                if (!$item->get_content())
                 {
                     $data['mapping_content']['source'] = 'unavailable';
                     $data['mapping_content']['disabled'] = true;
