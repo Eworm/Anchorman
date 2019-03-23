@@ -2,13 +2,11 @@
 
 return [
 
-    'general_settings' => 'General settings',
-    'general_settings_instruct' => "Let's start easy.",
+    'settings_section' => 'General settings',
+    'settings_section_instruct' => "Let's start easy.",
 
-    'url' => 'Url',
-    'url_instruct' => "The url of the rss feed.",
+    'url' => 'The feed URL',
 
-    'publish' => 'Collection',
-    'publish_instruct' => 'Pick a collection for new articles.',
+    'publish_to' => 'Choose a collection for new articles',
 
 ];

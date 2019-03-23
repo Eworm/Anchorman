@@ -1,7 +1,7 @@
 sections:
   settings:
     fields:
-      general_settings:
+      settings_section:
         type: section
       url:
         type: text

@@ -22,25 +22,25 @@ return [
     'content_section' => 'Content',
     'content_section_instruct' => 'Where should the feed content go?',
 
-    'publish_to' => 'The collection for new articles',
+    'publish_to' => 'Choose a collection for new articles',
 
     'content_title' => 'Article title',
-    'content_title_instruct' => 'Choose the name of a field or add a custom name.',
+    'content_title_instruct' => 'Choose an existing field or add a custom fieldtype name.',
 
     'content_description' => 'Article description',
-    'content_description_instruct' => 'Choose the name of a field, add a custom name, or disable saving the description.',
+    'content_description_instruct' => 'Choose an existing field, add a custom fieldtype name, or disable saving the description.',
 
     'content_content' => 'Article content',
-    'content_content_instruct' => 'Choose the name of a field, add a custom name, or disable saving the content.',
+    'content_content_instruct' => 'Choose an existing field, add a custom fieldtype name, or disable saving the content.',
 
     'content_permalink' => 'Article permalink',
-    'content_permalink_instruct' => 'Choose the name of a field, add a custom name, or disable saving the permalink.',
+    'content_permalink_instruct' => 'Choose an existing field, add a custom fieldtype name, or disable saving the permalink.',
 
     'authors_section' => 'Authors',
     'authors_section_instruct' => 'Options for article authors.',
 
     'content_authors' => 'Article authors',
-    'content_authors_instruct' => 'Choose the name of a field, add a custom name, or disable saving the author.',
+    'content_authors_instruct' => 'Choose an existing field, add a custom fieldtype name, or disable saving the author.',
 
     'author_options' => 'Article authors',
     'author_options_instruct' => 'Save the article author as a new user or attribute new articles to an existing one.',
@@ -52,7 +52,7 @@ return [
     'taxonomies_section_instruct' => 'Options for article categories.',
 
     'content_taxonomies' => 'Article categories',
-    'content_taxonomies_instruct' => 'Choose the name of a field, add a custom name, or disable saving categories.',
+    'content_taxonomies_instruct' => 'Choose an existing field, add a custom fieldtype name, or disable saving categories.',
 
     'custom_taxonomies' => 'Custom term taxonomy',
     'custom_taxonomies_instruct' => 'Which taxonomy should I use for custom terms?',
@@ -64,7 +64,7 @@ return [
     'images_section_instruct' => 'Options for article images.',
 
     'content_thumbnail' => 'Article thumbnail',
-    'content_thumbnail_instruct' => 'Choose the name of a field, add a custom name, or disable saving the thumbnail.',
+    'content_thumbnail_instruct' => 'Choose an existing field, add a custom fieldtype name, or disable saving the thumbnail.',
 
     'save_images' => 'Save thumbnails',
     'save_images_instruct' => 'Enable to download article thumbnails.',
