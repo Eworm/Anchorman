@@ -154,10 +154,10 @@ class UpdateCommand extends Command
                         $enclosure_type = $enclosure->get_type();
                         $enclosure_link = $enclosure->get_link();
 
-                        if (isset($info['content_thumbnail']) && $enclosure->get_thumbnail()) {
+                        if (isset($info['content_thumbnail'])) {
                             if ($info['content_thumbnail']['source'] != 'disable' && $info['content_thumbnail']['value'] != null) {
-                                if ($enclosure_type == 'image/jpeg') {
-                                    if ($save_images == true) {
+                                if ($enclosure_type == 'image/jpeg' || $enclosure_type == 'image/png' || $enclosure_type == 'image/gif') {
+                                    if ($save_images) {
                                         $with[$info['content_thumbnail']['value']] = $this->grabImage($enclosure_link, $assetcontainer);
                                     } else {
                                         $with[$info['content_thumbnail']['value']] = $enclosure_link;
