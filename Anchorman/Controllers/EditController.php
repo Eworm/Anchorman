@@ -136,7 +136,7 @@ class EditController extends Controller
         {
             $this->storage->putYAML($feed_title, [
                 'active'                => true,
-                'content_title'         => ['source' => 'field', 'value' => 'title'],
+                'item_title'         => ['source' => 'field', 'value' => 'title'],
                 'feed_copyright'        => $feed->get_copyright(),
                 'feed_language'         => $feed->get_language(),
                 'feed_permalink'        => $feed->get_permalink(),

@@ -48,21 +48,21 @@ sections:
         type: collections
         max_items: 1
         width: 50
-      content_title:
+      item_title:
         type: anchorman.source
         field:
           type: text
-      content_description:
-        type: anchorman.source
-        disableable: true
-        field:
-          type: text
-      content_content:
+      item_description:
         type: anchorman.source
         disableable: true
         field:
           type: text
-      content_permalink:
+      item_content:
+        type: anchorman.source
+        disableable: true
+        field:
+          type: text
+      item_permalink:
         disableable: true
         type: anchorman.source
         field:
@@ -71,7 +71,7 @@ sections:
     fields:
       authors_section:
         type: section
-      content_authors:
+      item_authors:
         disableable: true
         type: anchorman.source
         allowed_fieldtypes:
@@ -83,7 +83,7 @@ sections:
         options:
           create: Create new user
           assign: Assign to existing user
-      content_author:
+      item_author:
           type: users
           max_items: 1
           show_when:
@@ -92,7 +92,7 @@ sections:
     fields:
       taxonomies_section:
         type: section
-      content_taxonomies:
+      item_taxonomies:
         disableable: true
         type: anchorman.source
         allowed_fieldtypes:
@@ -104,7 +104,7 @@ sections:
         mode: Anchorman
         max_items: 1
         width: 50
-      custom_tags:
+      custom_terms:
         type: list
         show_when:
           custom_taxonomies: not null
@@ -112,7 +112,7 @@ sections:
     fields:
       images_section:
         type: section
-      content_thumbnail:
+      item_thumbnail:
         type: anchorman.source
         disableable: true
         allowed_fieldtypes:

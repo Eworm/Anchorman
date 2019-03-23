@@ -58,8 +58,8 @@ class UpdateCommand extends Command
                 $author_options = $info['author_options'];
             }
 
-            if (isset($info['content_author'])) {
-                $author = $info['content_author'][0];
+            if (isset($info['item_author'])) {
+                $author = $info['item_author'][0];
             }
 
             if (isset($info['images_container'])) {
@@ -83,8 +83,8 @@ class UpdateCommand extends Command
             }
 
             // Add custom terms to the chosen taxonomy
-            if (isset($info['custom_tags'])) {
-                $tags = $info['custom_tags'];
+            if (isset($info['custom_terms'])) {
+                $tags = $info['custom_terms'];
                 foreach ($tags as $term) {
                     $this->info('Adding "' . $term . '" to "' . $taxonomy . '".');
                     Term::create(slugify($term))
@@ -113,29 +113,29 @@ class UpdateCommand extends Command
                 if ($enabled === true) {
 
                     $with = [];
-                    $with[$info['content_title']['value']] = $item->get_title();
+                    $with[$info['item_title']['value']] = $item->get_title();
                     $slugged = slugify($item->get_title());
 
-                    if (isset($info['content_description']) && $item->get_description()) {
-                        if ($info['content_description']['source'] != 'disable' && $info['content_description']['value'] != null) {
-                            $with[$info['content_description']['value']] = $item->get_description();
+                    if (isset($info['item_description']) && $item->get_description()) {
+                        if ($info['item_description']['source'] != 'disable' && $info['item_description']['value'] != null) {
+                            $with[$info['item_description']['value']] = $item->get_description();
                         }
                     }
 
-                    if (isset($info['content_content']) && $item->get_content()) {
-                        if ($info['content_content']['source'] != 'disable' && $info['content_content']['value'] != null) {
-                            $with[$info['content_content']['value']] = $item->get_content();
+                    if (isset($info['item_content']) && $item->get_content()) {
+                        if ($info['item_content']['source'] != 'disable' && $info['item_content']['value'] != null) {
+                            $with[$info['item_content']['value']] = $item->get_content();
                         }
                     }
 
-                    if (isset($info['content_permalink']) && $item->get_permalink()) {
-                        if ($info['content_permalink']['source'] != 'disable' && $info['content_permalink']['value'] != null) {
-                            $with[$info['content_permalink']['value']] = $item->get_permalink();
+                    if (isset($info['item_permalink']) && $item->get_permalink()) {
+                        if ($info['item_permalink']['source'] != 'disable' && $info['item_permalink']['value'] != null) {
+                            $with[$info['item_permalink']['value']] = $item->get_permalink();
                         }
                     }
 
-                    if (isset($info['content_authors'])) {
-                        if ($info['content_authors']['source'] != 'disable' && $info['content_authors']['value'] != null) {
+                    if (isset($info['item_authors'])) {
+                        if ($info['item_authors']['source'] != 'disable' && $info['item_authors']['value'] != null) {
                             if ($author_options == 'create') {
                                 if ($author = $feed->get_author()) {
                                     // Create new user
@@ -145,7 +145,7 @@ class UpdateCommand extends Command
                                 }
                             } else {
                                 // Assign to existing user
-                                $with[$info['content_authors']['value']] = $author;
+                                $with[$info['item_authors']['value']] = $author;
                             }
                         }
                     }
@@ -154,21 +154,21 @@ class UpdateCommand extends Command
                         $enclosure_type = $enclosure->get_type();
                         $enclosure_link = $enclosure->get_link();
 
-                        if (isset($info['content_thumbnail'])) {
-                            if ($info['content_thumbnail']['source'] != 'disable' && $info['content_thumbnail']['value'] != null) {
+                        if (isset($info['item_thumbnail'])) {
+                            if ($info['item_thumbnail']['source'] != 'disable' && $info['item_thumbnail']['value'] != null) {
                                 if ($enclosure_type == 'image/jpeg' || $enclosure_type == 'image/png' || $enclosure_type == 'image/gif') {
                                     if ($save_images) {
-                                        $with[$info['content_thumbnail']['value']] = $this->grabImage($enclosure_link, $assetcontainer);
+                                        $with[$info['item_thumbnail']['value']] = $this->grabImage($enclosure_link, $assetcontainer);
                                     } else {
-                                        $with[$info['content_thumbnail']['value']] = $enclosure_link;
+                                        $with[$info['item_thumbnail']['value']] = $enclosure_link;
                                     }
                                 }
                             }
                         }
                     }
 
-                    if (isset($info['custom_tags']) && isset($info['custom_taxonomies'])) {
-                        $tags = $info['custom_tags'];
+                    if (isset($info['custom_terms']) && isset($info['custom_taxonomies'])) {
+                        $tags = $info['custom_terms'];
                         $newtags = [];
                         foreach ($tags as $term) {
                             array_push($newtags, $term);

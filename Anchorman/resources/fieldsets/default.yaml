@@ -33,36 +33,36 @@ sections:
       publish:
         type: collections
         max_items: 1
-      content_title:
+      item_title:
         type: anchorman.source
         field:
           type: text
-      content_description:
+      item_description:
         type: anchorman.source
         field:
           type: text
-      content_content:
+      item_content:
         type: anchorman.source
         field:
           type: text
-      # content_author:
+      # item_author:
       #   type: anchorman.source
       #   field:
       #     type: users
       #     max_items: 1
-      content_thumbnail:
+      item_thumbnail:
         type: anchorman.source
         allowed_fieldtypes:
           - assets
         field:
           type: text
-      # content_taxonomies:
+      # item_taxonomies:
       #   type: anchorman.source
       #   allowed_fieldtypes:
       #     - taxonomy
       #   field:
       #     type: text
-      content_permalink:
+      item_permalink:
         type: anchorman.source
         field:
           type: text
