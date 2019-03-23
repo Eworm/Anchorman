@@ -1,6 +1,6 @@
 # Anchorman is a RSS/Atom syndicator for Statamic.
 
-It allows you to automatically populate collections with articles from different feeds.
+Anchorman allows you to automatically populate collections with articles from different RSS/Atom feeds.
 
 ## Anchorman is a commercial addon
 You can use it for free while in development, but requires a license to use on a live site. Learn more or buy a license on [The Statamic Marketplace](https://statamic.com/marketplace/addons/anchorman)!
