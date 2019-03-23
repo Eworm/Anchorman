@@ -211,6 +211,8 @@ class UpdateCommand extends Command
 
                 }
 
+                sleep(3);
+
             endforeach;
 
             if ($i == 0) :
