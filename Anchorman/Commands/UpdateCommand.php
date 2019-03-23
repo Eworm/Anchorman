@@ -51,10 +51,10 @@ class UpdateCommand extends Command
             $rem        = str_replace('site/storage/addons/Anchorman/', '', $feed);
             $info       = $this->storage->getYaml($rem);
             $url        = $info['url'];
-            $publish    = $info['publish'][0];
+            $publish    = $info['publish_to'][0];
             $enabled    = $info['active'];
-            if (isset($info['mapping_author'])) {
-                $author = $info['mapping_author'][0];
+            if (isset($info['content_author'])) {
+                $author = $info['content_author'][0];
             }
             if (isset($info['images_container'])) {
                 $assetcontainer = $info['images_container'][0];
@@ -68,13 +68,13 @@ class UpdateCommand extends Command
             $i = 0;
 
             // Get the chosen taxonomy
-            if (isset($info['add_taxonomies'])) {
-                $taxonomy = $info['add_taxonomies'][0];
+            if (isset($info['custom_taxonomies'])) {
+                $taxonomy = $info['custom_taxonomies'][0];
             }
 
             // Add custom terms to the chosen taxonomy
-            if (isset($info['add_tags'])) {
-                $tags = $info['add_tags'];
+            if (isset($info['custom_tags'])) {
+                $tags = $info['custom_tags'];
                 foreach ($tags as $term) {
                     $this->info('Adding "' . $term . '" to "' . $taxonomy . '".');
                     Term::create(slugify($term))
@@ -103,30 +103,30 @@ class UpdateCommand extends Command
                 if ($enabled === true) {
 
                     $with = [];
-                    $with[$info['mapping_title']['value']] = $item->get_title();
+                    $with[$info['content_title']['value']] = $item->get_title();
                     $slugged = slugify($item->get_title());
 
-                    if (isset($info['mapping_description']) && $item->get_description()) {
-                        if ($info['mapping_description']['source'] != 'disable' && $info['mapping_description']['value'] != null) {
-                            $with[$info['mapping_description']['value']] = $item->get_description();
+                    if (isset($info['content_description']) && $item->get_description()) {
+                        if ($info['content_description']['source'] != 'disable' && $info['content_description']['value'] != null) {
+                            $with[$info['content_description']['value']] = $item->get_description();
                         }
                     }
 
-                    if (isset($info['mapping_content']) && $item->get_content()) {
-                        if ($info['mapping_content']['source'] != 'disable' && $info['mapping_content']['value'] != null) {
-                            $with[$info['mapping_content']['value']] = $item->get_content();
+                    if (isset($info['content_content']) && $item->get_content()) {
+                        if ($info['content_content']['source'] != 'disable' && $info['content_content']['value'] != null) {
+                            $with[$info['content_content']['value']] = $item->get_content();
                         }
                     }
 
-                    if (isset($info['mapping_permalink']) && $item->get_permalink()) {
-                        if ($info['mapping_permalink']['source'] != 'disable' && $info['mapping_permalink']['value'] != null) {
-                            $with[$info['mapping_permalink']['value']] = $item->get_permalink();
+                    if (isset($info['content_permalink']) && $item->get_permalink()) {
+                        if ($info['content_permalink']['source'] != 'disable' && $info['content_permalink']['value'] != null) {
+                            $with[$info['content_permalink']['value']] = $item->get_permalink();
                         }
                     }
 
-                    if (isset($info['mapping_authors'])) {
-                        if ($info['mapping_authors']['source'] != 'disable' && $info['mapping_authors']['value'] != null) {
-                            $with[$info['mapping_authors']['value']] = $author;
+                    if (isset($info['content_authors'])) {
+                        if ($info['content_authors']['source'] != 'disable' && $info['content_authors']['value'] != null) {
+                            $with[$info['content_authors']['value']] = $author;
                         }
                     }
 
@@ -135,17 +135,17 @@ class UpdateCommand extends Command
                         $enclosure_link = $enclosure->get_link();
 
                         if ($enclosure_type == 'image/jpeg') {
-                            $with[$info['mapping_thumbnail']['value']] = $this->grabImage($enclosure_link, $assetcontainer);
+                            $with[$info['content_thumbnail']['value']] = $this->grabImage($enclosure_link, $assetcontainer);
                         }
 
-                        if ($info['mapping_thumbnail']['source'] != 'disable' && $info['mapping_thumbnail']['value'] != null) {
-                            if (isset($info['mapping_thumbnail']) && $enclosure->get_thumbnail()) {
+                        if ($info['content_thumbnail']['source'] != 'disable' && $info['content_thumbnail']['value'] != null) {
+                            if (isset($info['content_thumbnail']) && $enclosure->get_thumbnail()) {
                             }
                         }
                     }
 
-                    if (isset($info['add_tags']) && isset($info['add_taxonomies'])) {
-                        $tags = $info['add_tags'];
+                    if (isset($info['custom_tags']) && isset($info['custom_taxonomies'])) {
+                        $tags = $info['custom_tags'];
                         $newtags = [];
                         foreach ($tags as $term) {
                             array_push($newtags, $term);

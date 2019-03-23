@@ -28,41 +28,41 @@ sections:
         type: hidden
   mapping:
     fields:
-      mapping_section:
+      content_section:
         type: section
       publish:
         type: collections
         max_items: 1
-      mapping_title:
+      content_title:
         type: anchorman.source
         field:
           type: text
-      mapping_description:
+      content_description:
         type: anchorman.source
         field:
           type: text
-      mapping_content:
+      content_content:
         type: anchorman.source
         field:
           type: text
-      # mapping_author:
+      # content_author:
       #   type: anchorman.source
       #   field:
       #     type: users
       #     max_items: 1
-      mapping_thumbnail:
+      content_thumbnail:
         type: anchorman.source
         allowed_fieldtypes:
           - assets
         field:
           type: text
-      # mapping_taxonomies:
+      # content_taxonomies:
       #   type: anchorman.source
       #   allowed_fieldtypes:
       #     - taxonomy
       #   field:
       #     type: text
-      mapping_permalink:
+      content_permalink:
         type: anchorman.source
         field:
           type: text

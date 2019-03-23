@@ -48,7 +48,7 @@ class EditController extends Controller
 
                 $feeds[] = (object) [
                     'active'    => $info['active'],
-                    'collection'=> $info['publish'][0],
+                    'collection'=> $info['publish_to'][0],
                     'name'      => slugify($info['title']),
                     'title'     => $info['title'],
                     'url'       => $info['url']
@@ -136,14 +136,14 @@ class EditController extends Controller
         {
             $this->storage->putYAML($feed_title, [
                 'active'                => true,
-                'copyright'             => $feed->get_copyright(),
-                'language'              => $feed->get_language(),
-                'mapping_title'         => ['source' => 'field', 'value' => 'title'],
-                'permalink'             => $feed->get_permalink(),
-                'publish'               => $request['fields']['publish'],
+                'content_title'         => ['source' => 'field', 'value' => 'title'],
+                'feed_copyright'        => $feed->get_copyright(),
+                'feed_language'         => $feed->get_language(),
+                'feed_permalink'        => $feed->get_permalink(),
+                'feed_title'            => $feed->get_title(),
+                'publish_to'            => $request['fields']['publish_to'],
                 'scheduling'            => 60,
                 'status'                => 'publish',
-                'title'                 => $feed->get_title(),
                 'url'                   => $request['fields']['url']
             ]);
 
@@ -175,16 +175,13 @@ class EditController extends Controller
 
         if ($success)
         {
-            // dd($request->fields);
-            
             $feed_params = [
                 $request->fields,
-                'copyright'=> $feed->get_copyright(),
-                'permalink' => $feed->get_permalink(),
-                'language' => $feed->get_language(),
-                'title' => $feed->get_title()
+                'feed_copyright'=> $feed->get_copyright(),
+                'feed_permalink' => $feed->get_permalink(),
+                'feed_language' => $feed->get_language(),
+                'feed_title' => $feed->get_title()
             ];
-
             $this->storage->putYAML($feed_title, $feed_params[0]);
         }
 

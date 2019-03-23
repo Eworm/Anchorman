@@ -30,37 +30,39 @@ sections:
             type: text
           value:
             type: text
-      title:
+      feed_title:
         type: hidden
-      description:
+      feed_description:
         type: hidden
-      language:
+      feed_language:
         type: hidden
-      copyright:
+      feed_copyright:
         type: hidden
-  mapping:
+      feed_permalink:
+        type: hidden
+  content:
     fields:
-      mapping_section:
+      content_section:
         type: section
-      publish:
+      publish_to:
         type: collections
         max_items: 1
         width: 50
-      mapping_title:
+      content_title:
         type: anchorman.source
         field:
           type: text
-      mapping_description:
-        type: anchorman.source
-        disableable: true
-        field:
-          type: text
-      mapping_content:
+      content_description:
         type: anchorman.source
         disableable: true
         field:
           type: text
-      mapping_permalink:
+      content_content:
+        type: anchorman.source
+        disableable: true
+        field:
+          type: text
+      content_permalink:
         disableable: true
         type: anchorman.source
         field:
@@ -69,48 +71,48 @@ sections:
     fields:
       authors_section:
         type: section
-      mapping_authors:
+      content_authors:
         disableable: true
         type: anchorman.source
         allowed_fieldtypes:
           - users
         field:
           type: text
-      create_user:
+      author_options:
         type: radio
         options:
           create: Create new user
           assign: Assign to existing user
-      mapping_author:
+      content_author:
           type: users
           max_items: 1
           show_when:
-            create_user: assign
+            author_options: assign
   taxonomies:
     fields:
       taxonomies_section:
         type: section
-      mapping_taxonomies:
+      content_taxonomies:
         disableable: true
         type: anchorman.source
         allowed_fieldtypes:
           - tags
         field:
           type: text
-      add_taxonomies:
+      custom_taxonomies:
         type: suggest
         mode: Anchorman
         max_items: 1
         width: 50
-      add_tags:
+      custom_tags:
         type: list
         show_when:
-          add_taxonomies: not null
+          custom_taxonomies: not null
   images:
     fields:
       images_section:
         type: section
-      mapping_thumbnail:
+      content_thumbnail:
         type: anchorman.source
         disableable: true
         allowed_fieldtypes:
@@ -126,20 +128,3 @@ sections:
         width: 33
         show_when:
           save_images: true
-  # rules:
-  #   fields:
-  #     rules_section:
-  #       type: section
-  #     rules_grid:
-  #       type: grid
-  #       add_row: Rule
-  #       fields:
-  #         name:
-  #           type: select
-  #           options:
-  #             - OR
-  #             - AND
-  #             - ORNOT
-  #             - ANDNOR
-  #         value:
-  #           type: text
