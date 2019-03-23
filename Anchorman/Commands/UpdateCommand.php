@@ -9,8 +9,8 @@ use Statamic\API\Entry;
 use Statamic\API\Term;
 use Statamic\API\Taxonomy;
 use Statamic\API\AssetContainer;
-// use Statamic\API\Asset;
 use Statamic\API\File;
+use Statamic\API\User;
 use Statamic\Extend\Command;
 
 class UpdateCommand extends Command
@@ -53,6 +53,10 @@ class UpdateCommand extends Command
             $url        = $info['url'];
             $publish    = $info['publish_to'][0];
             $enabled    = $info['active'];
+
+            if (isset($info['author_options'])) {
+                $author_options = $info['author_options'];
+            }
 
             if (isset($info['content_author'])) {
                 $author = $info['content_author'][0];
@@ -132,7 +136,17 @@ class UpdateCommand extends Command
 
                     if (isset($info['content_authors'])) {
                         if ($info['content_authors']['source'] != 'disable' && $info['content_authors']['value'] != null) {
-                            $with[$info['content_authors']['value']] = $author;
+                            if ($author_options == 'create') {
+                                if ($author = $feed->get_author()) {
+                                    // Create new user
+                                    User::create($author->get_name())
+                                        ->username(slugify($author->get_name()))
+                                        ->save();
+                                }
+                            } else {
+                                // Assign to existing user
+                                $with[$info['content_authors']['value']] = $author;
+                            }
                         }
                     }
 
