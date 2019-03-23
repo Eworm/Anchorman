@@ -16,7 +16,7 @@ sections:
         type: radio
         inline: true
         options:
-          publish: Publish immediately
+          publish: Publish
           draft: Save as draft
       query:
         type: toggle
