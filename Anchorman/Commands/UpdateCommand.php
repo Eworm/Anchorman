@@ -53,11 +53,17 @@ class UpdateCommand extends Command
             $url        = $info['url'];
             $publish    = $info['publish_to'][0];
             $enabled    = $info['active'];
+
             if (isset($info['content_author'])) {
                 $author = $info['content_author'][0];
             }
+
             if (isset($info['images_container'])) {
                 $assetcontainer = $info['images_container'][0];
+            }
+
+            if (isset($info['save_images'])) {
+                $save_images = $info['save_images'];
             }
 
             $feed = new SimplePie();
@@ -134,12 +140,15 @@ class UpdateCommand extends Command
                         $enclosure_type = $enclosure->get_type();
                         $enclosure_link = $enclosure->get_link();
 
-                        if ($enclosure_type == 'image/jpeg') {
-                            $with[$info['content_thumbnail']['value']] = $this->grabImage($enclosure_link, $assetcontainer);
-                        }
-
-                        if ($info['content_thumbnail']['source'] != 'disable' && $info['content_thumbnail']['value'] != null) {
-                            if (isset($info['content_thumbnail']) && $enclosure->get_thumbnail()) {
+                        if (isset($info['content_thumbnail']) && $enclosure->get_thumbnail()) {
+                            if ($info['content_thumbnail']['source'] != 'disable' && $info['content_thumbnail']['value'] != null) {
+                                if ($enclosure_type == 'image/jpeg') {
+                                    if ($save_images == true) {
+                                        $with[$info['content_thumbnail']['value']] = $this->grabImage($enclosure_link, $assetcontainer);
+                                    } else {
+                                        $with[$info['content_thumbnail']['value']] = $enclosure_link;
+                                    }
+                                }
                             }
                         }
                     }
