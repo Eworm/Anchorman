@@ -2,11 +2,12 @@
 
 @section('content')
 
-<amlist inline-template>
-
     <div class="flex items-center mb-3">
-        <h1 class="flex-1">Your feeds</h1>
-        <a href="{{ route('addons.menu_editor.create') }}" class="btn btn-primary">Create feed</a>
+        <h1 class="flex-1">All feeds</h1>
+        <div class="controls flex flex-wrap justify-center md:block items-center w-full md:w-auto">
+            <a href="#" @click="refreshAll" class="btn btn-default">Refresh all</a>
+            <a href="{{ route('addons.anchorman.create') }}" class="btn btn-primary ml-1 mt-1 md:mt-0">Create feed</a>
+        </div>
     </div>
 
     <div class="card flush dossier">
@@ -17,9 +18,11 @@
 
                 <thead>
                     <tr>
-                        <th class="column-title">Name</th>
-                        <th class="column-slug">Feed</th>
-                        <th class="column-date">Updated</th>
+                        <th class="column-title">Title</th>
+                        <th class="column-slug">Url</th>
+                        <th class="column-slug">Publishes to</th>
+                        <th class="column-date">Last Update</th>
+                        <th class="column-active">Status</th>
                         <th class="column-actions"></th>
                     </tr>
                 </thead>
@@ -30,17 +33,31 @@
                         <tr>
 
                             <td class="cell-title first-cell">
-                                <a href="{{ route('addons.menu_editor.edit', $feed->name) }}" title="Edit {{ $feed->title }}">
+                                <a href="{{ route('addons.anchorman.edit', $feed->name) }}">
                                     {{ $feed->title }}
                                 </a>
                             </td>
 
                             <td class="cell-permalink">
-                                {{ $feed->permalink }}
+                                <a href="{{ $feed->url }}" rel="external" target="_blank">
+                                    {{ $feed->url }}
+                                </a>
+                            </td>
+
+                            <td class="cell-collection">
+                                {{ $feed->collection }}
                             </td>
 
                             <td class="cell-updated">
-                                Last checked 1 uur ago
+                                1 uur ago
+                            </td>
+
+                            <td class="cell-status">
+                                @if ($feed->active)
+                                    Enabled
+                                @else
+                                    <span class="red">Disabled</span>
+                                @endif
                             </td>
 
                             <td class="column-actions">
@@ -50,7 +67,7 @@
                                     <button type="button" class="btn-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="icon icon-dots-three-vertical"></i>
                                     </button>
-                                    
+
                                     <ul class="dropdown-menu">
                                         <li class="warning" @click="deleteFeed('{{ $feed->title }}')">
                                             <a href="#" title="Delete this feed">Delete</a>
@@ -72,7 +89,5 @@
         </div>
 
     </div>
-
-</amlist>
 
 @endsection

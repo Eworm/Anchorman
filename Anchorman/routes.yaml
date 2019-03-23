@@ -1,13 +1,19 @@
 routes:
   /:
-    as: addons.menu_editor
-    uses: index
+    as: addons.anchorman
+    uses: EditController@index
   /edit/{feed}:
-    as: addons.menu_editor.edit
-    uses: edit
+    as: addons.anchorman.edit
+    uses: EditController@edit
   /create:
-    as: addons.menu_editor.create
-    uses: create
+    as: addons.anchorman.create
+    uses: EditController@create
   post@store:
-    as: addons.menu_editor.store
-    uses: store
+    as: addons.anchorman.store
+    uses: EditController@store
+  post@update:
+    as: addons.anchorman.update
+    uses: EditController@update
+  /refreshAll:
+    as: addons.anchorman.refreshAll
+    uses: EditController@refreshAll

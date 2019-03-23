@@ -1,4 +1,130 @@
-fields:
-  feed_collection:
-    type: collections
-    max_items: 1
+sections:
+  settings:
+    fields:
+      settings_section:
+        type: section
+      url:
+        type: text
+        mode: url
+      active:
+        type: toggle
+      scheduling:
+        type: text
+        mode: number
+        width: 25
+      status:
+        type: radio
+        inline: true
+        options:
+          publish: Publish
+          draft: Save as draft
+      query:
+        type: toggle
+      query_grid:
+        type: grid
+        show_when:
+          query: true
+        add_row: Query
+        fields:
+          name:
+            type: text
+          value:
+            type: text
+      feed_title:
+        type: hidden
+      feed_description:
+        type: hidden
+      feed_language:
+        type: hidden
+      feed_copyright:
+        type: hidden
+      feed_permalink:
+        type: hidden
+  content:
+    fields:
+      content_section:
+        type: section
+      publish_to:
+        type: collections
+        max_items: 1
+        width: 50
+      item_title:
+        type: anchorman.source
+        field:
+          type: text
+      item_description:
+        type: anchorman.source
+        disableable: true
+        field:
+          type: text
+      item_content:
+        type: anchorman.source
+        disableable: true
+        field:
+          type: text
+      item_permalink:
+        disableable: true
+        type: anchorman.source
+        field:
+          type: text
+  authors:
+    fields:
+      authors_section:
+        type: section
+      item_authors:
+        disableable: true
+        type: anchorman.source
+        allowed_fieldtypes:
+          - users
+        field:
+          type: text
+      author_options:
+        type: radio
+        options:
+          create: Create new user
+          assign: Assign to existing user
+      item_author:
+          type: users
+          max_items: 1
+          show_when:
+            author_options: assign
+  taxonomies:
+    fields:
+      taxonomies_section:
+        type: section
+      item_taxonomies:
+        disableable: true
+        type: anchorman.source
+        allowed_fieldtypes:
+          - tags
+        field:
+          type: text
+      custom_taxonomies:
+        type: suggest
+        mode: Anchorman
+        max_items: 1
+        width: 50
+      custom_terms:
+        type: list
+        show_when:
+          custom_taxonomies: not null
+  images:
+    fields:
+      images_section:
+        type: section
+      item_thumbnail:
+        type: anchorman.source
+        disableable: true
+        allowed_fieldtypes:
+          - assets
+        field:
+            type: text
+      save_images:
+        type: toggle
+      images_container:
+        type: suggest
+        mode: Anchorman.Assets
+        max_items: 1
+        width: 33
+        show_when:
+          save_images: true

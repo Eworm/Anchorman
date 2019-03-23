@@ -1,0 +1,80 @@
+sections:
+  settings:
+    fields:
+      settings_section:
+        type: section
+      url:
+        type: text
+        mode: url
+      active:
+        type: toggle
+      scheduling:
+        type: text
+        mode: number
+        width: 50
+      status:
+        type: radio
+        inline: true
+        options:
+          publish: Publish immediately
+          draft: Save as draft
+      title:
+        type: hidden
+      description:
+        type: hidden
+      language:
+        type: hidden
+      copyright:
+        type: hidden
+  mapping:
+    fields:
+      content_section:
+        type: section
+      publish:
+        type: collections
+        max_items: 1
+      item_title:
+        type: anchorman.source
+        field:
+          type: text
+      item_description:
+        type: anchorman.source
+        field:
+          type: text
+      item_content:
+        type: anchorman.source
+        field:
+          type: text
+      # item_author:
+      #   type: anchorman.source
+      #   field:
+      #     type: users
+      #     max_items: 1
+      item_thumbnail:
+        type: anchorman.source
+        allowed_fieldtypes:
+          - assets
+        field:
+          type: text
+      # item_taxonomies:
+      #   type: anchorman.source
+      #   allowed_fieldtypes:
+      #     - taxonomy
+      #   field:
+      #     type: text
+      item_permalink:
+        type: anchorman.source
+        field:
+          type: text
+  authors:
+    fields:
+      authors_section:
+        type: section
+  taxonomies:
+    fields:
+      taxonomies_section:
+        type: section
+  rules:
+    fields:
+      rules_section:
+        type: section
