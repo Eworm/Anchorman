@@ -248,7 +248,7 @@ class UpdateCommand extends Command
         curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
         $data = curl_exec($ch);
 
-        $this->info('Adding "' . $basename . '"');
+        $this->info('Saving "' . $basename . '"');
         File::disk('local')->put($container->data()['path'] . '/' . $basename, $data);
         curl_close ($ch);
         return $container->data()['url'] . '/' . $basename;
