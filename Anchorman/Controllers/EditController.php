@@ -49,8 +49,8 @@ class EditController extends Controller
                 $feeds[] = (object) [
                     'active'    => $info['active'],
                     'collection'=> $info['publish_to'][0],
-                    'name'      => slugify($info['title']),
-                    'title'     => $info['title'],
+                    'name'      => slugify($info['feed_title']),
+                    'title'     => $info['feed_title'],
                     'url'       => $info['url']
                 ];
 
@@ -82,7 +82,7 @@ class EditController extends Controller
             'fieldset'     => $fieldset->toPublishArray(),
             'submitUrl'    => route('addons.anchorman.update'),
             'suggestions'  => $this->getSuggestions($fieldset),
-            'title'        => $data['title'],
+            'title'        => $data['feed_title'],
         ]);
      }
 

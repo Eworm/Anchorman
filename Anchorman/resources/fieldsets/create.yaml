@@ -6,6 +6,6 @@ sections:
       url:
         type: text
         mode: url
-      publish:
+      publish_to:
         type: collections
         max_items: 1

@@ -116,8 +116,8 @@ sections:
         type: anchorman.source
         disableable: true
         allowed_fieldtypes:
-        - assets
-          field:
+          - assets
+        field:
             type: text
       save_images:
         type: toggle
