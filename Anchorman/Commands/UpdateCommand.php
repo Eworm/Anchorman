@@ -94,10 +94,19 @@ class UpdateCommand extends Command
                 if (isset($info['custom_terms'])) {
                     $tags = $info['custom_terms'];
                     foreach ($tags as $term) {
-                        $this->info('Adding "' . $term . '" to "' . $taxonomy . '".');
-                        Term::create(slugify($term))
-                            ->taxonomy($taxonomy)
-                            ->save();
+
+                        if (!Term::slugExists(slugify($term), $taxonomy)) {
+
+                            $this->info('Adding "' . $term . '" to "' . $taxonomy . '".');
+                            Term::create(slugify($term))
+                                ->taxonomy($taxonomy)
+                                ->save();
+
+                        } else {
+
+                            $this->info('"' . $term . '" <fg=red>already exists</>');
+
+                        }
                     }
                 }
 
