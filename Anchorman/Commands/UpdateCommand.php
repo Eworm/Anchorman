@@ -122,6 +122,7 @@ class UpdateCommand extends Command
 
                         $with = [];
                         $with[$info['item_title']['value']] = $item->get_title();
+                        $with['item_pubdate'] = $item->get_date();
                         $slugged = slugify($item->get_title());
 
                         if (isset($info['item_description']) && $item->get_description()) {
