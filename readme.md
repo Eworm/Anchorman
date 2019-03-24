@@ -11,3 +11,5 @@ You can use it for free while in development, but requires a license to use on a
 * Add custom queries and terms to each entry
 * Add authors as new users or attribute new articles to an existing user
 * Save images to an assetcontainer of your choice
+
+_Missing features? Found a bug? [Let me know](mailto:wout@woutmager.nl)!_
