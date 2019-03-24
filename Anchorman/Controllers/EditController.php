@@ -47,7 +47,7 @@ class EditController extends Controller
                 $info = $this->storage->getYaml($rem);
                 if (isset($info['updated'])) {
                     $timediff = (time() - $info['updated']) / 60;
-                    $updated = number_format($timediff, 1) . ' minutes ago';
+                    $updated = number_format($timediff, 0) . ' minutes ago';
                 } else {
                     $updated = 'No updates yet';
                 }
