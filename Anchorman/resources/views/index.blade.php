@@ -7,7 +7,7 @@
         <div class="flex items-center mb-3">
             <h1 class="flex-1">All feeds</h1>
             <div class="controls flex flex-wrap justify-center md:block items-center w-full md:w-auto">
-                <a href="{{ route('addons.anchorman.refreshAll') }}" class="btn btn-default">Refresh all</a>
+                <a href="#" @click="refresh()" class="btn btn-default">Refresh all</a>
                 <a href="{{ route('addons.anchorman.create') }}" class="btn btn-primary ml-1 mt-1 md:mt-0">Add a feed</a>
             </div>
         </div>

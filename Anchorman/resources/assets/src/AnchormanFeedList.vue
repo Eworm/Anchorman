@@ -8,6 +8,7 @@ export default {
     },
 
     methods: {
+
         deleteFeed: function(feed) {
             var self = this;
 
@@ -31,6 +32,14 @@ export default {
                     )
                 }
             });
+        },
+
+        refresh: function() {
+            var self = this;
+            self.$http.get(
+                cp_url('addons/anchorman/refreshAll')
+            );
+            location.reload();
         }
     },
 
