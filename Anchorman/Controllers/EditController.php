@@ -45,14 +45,19 @@ class EditController extends Controller
             if (!in_array($rem, $ignore) and substr($rem, 0, 1) != '.') {
 
                 $info = $this->storage->getYaml($rem);
-                $timediff = (time() - $info['updated']) / 60;
+                if (isset($info['updated'])) {
+                    $timediff = (time() - $info['updated']) / 60;
+                    $updated = number_format($timediff, 1) . ' minutes ago';
+                } else {
+                    $updated = 'No updates yet';
+                }
 
                 $feeds[] = (object) [
                     'active'    => $info['active'],
                     'collection'=> $info['publish_to'][0],
                     'name'      => slugify($info['feed_title']),
                     'title'     => $info['feed_title'],
-                    'updated'   => number_format($timediff, 1) . ' minutes ago',
+                    'updated'   => $updated,
                     'url'       => $info['url']
                 ];
 
