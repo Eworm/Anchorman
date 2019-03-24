@@ -27,7 +27,7 @@ class UpdateCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Update all feeds';
+    protected $description = 'Updates all feeds';
 
     /**
      * Create a new command instance.
@@ -90,7 +90,7 @@ class UpdateCommand extends Command
                     $taxonomy = $info['custom_taxonomies'][0];
                 }
 
-                // Add custom terms to the chosen taxonomy
+                // Custom terms to the chosen taxonomy
                 if (isset($info['custom_terms'])) {
                     $tags = $info['custom_terms'];
                     foreach ($tags as $term) {
@@ -101,7 +101,7 @@ class UpdateCommand extends Command
                     }
                 }
 
-                // Add custom queries
+                // Custom queries
                 if (isset($info['query_grid'])) {
                     $queries = $info['query_grid'];
                     $newquery = [];
@@ -121,28 +121,32 @@ class UpdateCommand extends Command
                     if ($active === true) {
 
                         $with = [];
-                        $with[$info['item_title']['value']] = $item->get_title();
-                        $with['item_pubdate'] = $item->get_date();
+                        $with[$info['item_title']['value']] = $item->get_title(); // Add the title
+                        $with['item_pubdate'] = $item->get_date(); // Add the pubdate
                         $slugged = slugify($item->get_title());
 
+                        // Item description
                         if (isset($info['item_description']) && $item->get_description()) {
                             if ($info['item_description']['source'] != 'disable' && $info['item_description']['value'] != null) {
                                 $with[$info['item_description']['value']] = $item->get_description();
                             }
                         }
 
+                        // Item content
                         if (isset($info['item_content']) && $item->get_content()) {
                             if ($info['item_content']['source'] != 'disable' && $info['item_content']['value'] != null) {
                                 $with[$info['item_content']['value']] = $item->get_content();
                             }
                         }
 
+                        // Item permalink
                         if (isset($info['item_permalink']) && $item->get_permalink()) {
                             if ($info['item_permalink']['source'] != 'disable' && $info['item_permalink']['value'] != null) {
                                 $with[$info['item_permalink']['value']] = $item->get_permalink();
                             }
                         }
 
+                        // Item authors
                         if (isset($info['item_authors'])) {
                             if ($info['item_authors']['source'] != 'disable' && $info['item_authors']['value'] != null) {
                                 if ($author_options == 'create') {
@@ -153,12 +157,13 @@ class UpdateCommand extends Command
                                             ->save();
                                     }
                                 } else {
-                                    // Assign to existing user
+                                    // Assign to an existing user
                                     $with[$info['item_authors']['value']] = $author;
                                 }
                             }
                         }
 
+                        // Item thumbnails
                         if ($enclosure = $item->get_enclosure()) {
                             $enclosure_type = $enclosure->get_type();
                             $enclosure_link = $enclosure->get_link();
@@ -176,6 +181,7 @@ class UpdateCommand extends Command
                             }
                         }
 
+                        // Custom terms
                         if (isset($info['custom_terms']) && isset($info['custom_taxonomies'])) {
                             $tags = $info['custom_terms'];
                             $newtags = [];
@@ -185,13 +191,14 @@ class UpdateCommand extends Command
                             $with[$taxonomy] = $newtags;
                         }
 
+                        // Create an entry
                         if (Entry::slugExists($slugged, $publish_to)) {
 
                             $this->info($item->get_title() . " <fg=red>already exists</>");
 
                         } else {
 
-                            if ($info['status'] == 'publish') :
+                            if ($info['status'] == 'publish') {
 
                                 $this->info('Adding "' . $item->get_title() . '"');
 
@@ -201,7 +208,7 @@ class UpdateCommand extends Command
                                     ->date($item->get_date('Y-m-d'))
                                     ->save();
 
-                            else :
+                            } else {
 
                                 $this->info('Adding "' . $item->get_title() . '" <fg=red>(draft)</>');
 
@@ -212,7 +219,7 @@ class UpdateCommand extends Command
                                     ->date($item->get_date('Y-m-d'))
                                     ->save();
 
-                            endif;
+                            }
 
                             $i++;
 
@@ -224,15 +231,15 @@ class UpdateCommand extends Command
 
                 }
 
-                if ($i == 0) :
+                if ($i == 0) {
 
                     $this->info("No new articles.");
 
-                else :
+                } else {
 
                     $this->info("Update complete. I found " . $i . " new articles and added them to " . $publish_to . ".");
 
-                endif;
+                }
                 $this->info("\n");
 
             }
