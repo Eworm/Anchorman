@@ -14,6 +14,9 @@ routes:
   post@update:
     as: addons.anchorman.update
     uses: EditController@update
+  delete@destroy:
+    as: addons.anchorman.destroy
+    uses: EditController@destroy
   /refreshAll:
     as: addons.anchorman.refreshAll
     uses: EditController@refreshAll

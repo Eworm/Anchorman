@@ -207,6 +207,22 @@ class EditController extends Controller
     }
 
 
+    /**
+     * Maps to your route definition in routes.yaml
+     *
+     * @return mixed
+     */
+    public function destroy(Request $request)
+    {
+        Storage::delete('site/storage/addons/anchorman/' . $request->feed . '.yaml');
+
+        return [
+            'success' => true,
+            'message' => 'Menu deleted successfully'
+        ];
+    }
+
+
     protected function fieldset($fieldset)
     {
         return $this->translateFieldset(Fieldset::create(

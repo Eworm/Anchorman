@@ -8,4 +8,7 @@ elixir(function(mix) {
     mix.webpack([
         './resources/assets/src/fieldtype.js'
     ], './resources/assets/js/fieldtype.js');
+    mix.webpack([
+        './resources/assets/src/scripts.js'
+    ], './resources/assets/js/scripts.js');
 });
