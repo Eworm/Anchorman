@@ -266,9 +266,17 @@ class UpdateCommand extends Command
         curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
         $data = curl_exec($ch);
 
-        $this->info('Saving "' . $basename . '"');
-        File::disk('local')->put($container->data()['path'] . '/' . $basename, $data);
+        if (!File::disk('local')->exists($container->data()['path'] . '/' . $basename, $data)) {
+
+            $this->info('Saving "' . $basename . '"');
+            File::disk('local')->put($container->data()['path'] . '/' . $basename, $data);
+            return $container->data()['url'] . '/' . $basename;
+
+        } else {
+
+            $this->info('"' . $basename . '" <fg=red>already exists</>');
+
+        }
         curl_close ($ch);
-        return $container->data()['url'] . '/' . $basename;
     }
 }
