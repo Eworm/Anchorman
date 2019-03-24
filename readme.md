@@ -8,8 +8,8 @@ You can use it for free while in development, but requires a license to use on a
 ## Features
 * Add multiple feeds and populate different collections
 * Chose where to save content from a feed
-* Add custom queries and terms to each entry
+* Add custom queries and add custom terms to each entry
 * Add authors as new users or attribute new articles to an existing user
-* Save images to an assetcontainer of your choice
+* Save images to the assetcontainer of your choice
 
 _Features requests? Found a bug? [Let me know!](mailto:wout@woutmager.nl)!_
