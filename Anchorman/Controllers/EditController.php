@@ -44,13 +44,15 @@ class EditController extends Controller
             $ignore = array( 'cgi-bin', '.', '..','._' );
             if (!in_array($rem, $ignore) and substr($rem, 0, 1) != '.') {
 
-                $info   = $this->storage->getYaml($rem);
+                $info = $this->storage->getYaml($rem);
+                $timediff = (time() - $info['updated']) / 60;
 
                 $feeds[] = (object) [
                     'active'    => $info['active'],
                     'collection'=> $info['publish_to'][0],
                     'name'      => slugify($info['feed_title']),
                     'title'     => $info['feed_title'],
+                    'updated'   => number_format($timediff, 1) . ' minutes ago',
                     'url'       => $info['url']
                 ];
 

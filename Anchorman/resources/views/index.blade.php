@@ -49,7 +49,7 @@
                             </td>
 
                             <td class="cell-updated">
-                                1 uur ago
+                                {{ $feed->updated }}
                             </td>
 
                             <td class="cell-status">
