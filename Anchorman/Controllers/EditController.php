@@ -120,6 +120,7 @@ class EditController extends Controller
     public function refreshAll()
     {
         Please::call('anchorman:update');
+        return redirect()->route('addons.anchorman.index');
     }
 
 

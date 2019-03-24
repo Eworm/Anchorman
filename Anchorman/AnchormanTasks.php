@@ -24,11 +24,16 @@ class AnchormanTasks extends Tasks
         foreach ($feeds_storage as $feed) {
 
             $rem = str_replace('site/storage/addons/Anchorman/', '', $feed);
-            $info = $this->storage->getYaml($rem);
-            $int = intval($info['scheduling']);
 
-            $schedule->command('anchorman:update')->cron('*/' . $int . ' * * * * *');
+            $ignore = array( 'cgi-bin', '.', '..','._' );
+            if (!in_array($rem, $ignore) and substr($rem, 0, 1) != '.') {
 
+                $info = $this->storage->getYaml($rem);
+                $int = intval($info['scheduling']);
+
+                $schedule->command('anchorman:update')->cron('*/' . $int . ' * * * * *');
+
+            }
         }
     }
 }
