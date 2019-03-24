@@ -47,7 +47,13 @@ class EditController extends Controller
                 $info = $this->storage->getYaml($rem);
                 if (isset($info['updated'])) {
                     $timediff = (time() - $info['updated']) / 60;
-                    $updated = number_format($timediff, 0) . ' minutes ago';
+                    $updated = number_format($timediff, 0);
+
+                    if ($updated == 1) {
+                        $updated = $updated . ' minute ago';
+                    } else {
+                        $updated = $updated . ' minutes ago';
+                    }
                 } else {
                     $updated = 'No updates yet';
                 }
@@ -120,7 +126,7 @@ class EditController extends Controller
     public function refreshAll()
     {
         Please::call('anchorman:update');
-        return redirect()->route('addons.anchorman.index');
+        return redirect()->route('addons.anchorman');
     }
 
 
