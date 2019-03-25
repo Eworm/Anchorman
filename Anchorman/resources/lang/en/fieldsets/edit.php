@@ -39,11 +39,11 @@ return [
     'authors_section' => 'Authors',
     'authors_section_instruct' => 'Options for article authors.',
 
-    'item_authors' => 'Article authors',
-    'item_authors_instruct' => 'Choose an existing field, add a custom fieldtype name, or disable saving the author.',
-
     'author_options' => 'Article authors',
     'author_options_instruct' => 'Save the article author as a new user or attribute new articles to an existing one.',
+
+    'item_authors' => 'Article author',
+    'item_authors_instruct' => 'Choose an existing field, add a custom fieldtype name, or disable saving the author.',
 
     'item_author' => 'Choose a user',
     'item_author_instruct' => 'To attribute new articles to.',

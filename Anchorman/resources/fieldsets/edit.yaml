@@ -71,13 +71,6 @@ sections:
     fields:
       authors_section:
         type: section
-      item_authors:
-        disableable: true
-        type: anchorman.source
-        allowed_fieldtypes:
-          - users
-        field:
-          type: text
       author_options:
         type: radio
         options:
@@ -88,6 +81,13 @@ sections:
           max_items: 1
           show_when:
             author_options: assign
+      item_authors:
+        disableable: false
+        type: anchorman.source
+        allowed_fieldtypes:
+          - users
+        field:
+          type: text
   taxonomies:
     fields:
       taxonomies_section:
