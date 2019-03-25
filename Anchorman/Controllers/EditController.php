@@ -60,7 +60,7 @@ class EditController extends Controller
 
                 $feeds[] = (object) [
                     'enabled'   => $info['enabled'],
-                    'collection'=> $info['publish_to'],
+                    'collection'=> $info['publish_to'][0],
                     'name'      => slugify($info['feed_title']),
                     'title'     => $info['feed_title'],
                     'updated'   => $updated,
@@ -149,7 +149,12 @@ class EditController extends Controller
         if ($success)
         {
             $this->storage->putYAML($feed_title, [
+                'custom_taxonomies'     => null,
                 'enabled'               => true,
+                'images_container'      => null,
+                'item_authors'          => '@ron:author',
+                'item_content'          => '@ron:content',
+                'item_description'      => '@ron:sub_title',
                 'item_title'            => '@ron:title',
                 'feed_copyright'        => $feed->get_copyright(),
                 'feed_language'         => $feed->get_language(),
