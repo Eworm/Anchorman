@@ -60,7 +60,7 @@ class EditController extends Controller
 
                 $feeds[] = (object) [
                     'active'    => $info['active'],
-                    'collection'=> $info['publish_to'][0],
+                    'collection'=> $info['publish_to'],
                     'name'      => slugify($info['feed_title']),
                     'title'     => $info['feed_title'],
                     'updated'   => $updated,
