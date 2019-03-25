@@ -12,29 +12,29 @@ class SourceFieldtype extends Fieldtype
 
     public function preProcess($data)
     {
-        if ($data['source'] === 'field') {
-            return ['source' => 'field', 'value' => $data['value']];
-        }
-
-        if ($data['source'] === 'disable') {
-            return ['source' => 'disable', 'value' => $data['value']];
+        if (is_string($data) && Str::startsWith($data, '@ron:')) {
+            return ['source' => 'field', 'value' => explode('@ron:', $data)[1]];
         }
 
         if ($data === false && $this->getFieldConfig('disableable') === true) {
             return ['source' => 'disable', 'value' => null];
         }
 
-        return ['source' => 'custom', 'value' => $data['value']];
+        if (! $data && $this->getFieldConfig('inherit') !== false) {
+            return ['source' => 'inherit', 'value' => null];
+        }
+
+        return ['source' => 'custom', 'value' => $this->fieldtype()->preProcess($data)];
     }
 
     public function process($data)
     {
         if ($data['source'] === 'field') {
-            return $data['value'];
+            return '@ron:' . $data['value'];
         }
 
-        if ($data['source'] === 'custom') {
-            return $data['value'];
+        if ($data['source'] === 'inherit') {
+            return null;
         }
 
         if ($data['source'] === 'disable') {

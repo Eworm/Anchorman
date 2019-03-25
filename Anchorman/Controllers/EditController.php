@@ -150,7 +150,7 @@ class EditController extends Controller
         {
             $this->storage->putYAML($feed_title, [
                 'active'                => true,
-                'item_title'            => ['source' => 'field', 'value' => 'title'],
+                'item_title'            => '@ron:title',
                 'feed_copyright'        => $feed->get_copyright(),
                 'feed_language'         => $feed->get_language(),
                 'feed_permalink'        => $feed->get_permalink(),
@@ -180,8 +180,8 @@ class EditController extends Controller
     public function update(Request $request)
     {
 
-        $data = $this->processFields($this->fieldset('create'), $request->fields);
-        $this->storage->putYAML($request->feed, $data);
+        $data = $this->processFields($this->fieldset('edit'), $request->fields);
+        $this->storage->putYAML(slugify($data['feed_title']), $data);
 
         return [
             'success' => true,
