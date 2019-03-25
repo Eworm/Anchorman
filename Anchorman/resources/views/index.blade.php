@@ -24,7 +24,7 @@
                             <th class="column-slug">Url</th>
                             <th class="column-slug">Publishes to</th>
                             <th class="column-date">Last Update</th>
-                            <th class="column-active">Status</th>
+                            <th class="column-enabled">Status</th>
                             <th class="column-actions"></th>
                         </tr>
                     </thead>
@@ -55,7 +55,7 @@
                                 </td>
 
                                 <td class="cell-status">
-                                    @if ($feed->active)
+                                    @if ($feed->enabled)
                                         Enabled
                                     @else
                                         <span class="red">Disabled</span>

@@ -7,8 +7,8 @@ return [
 
     'url' => 'Url',
 
-    'active' => 'Enabled',
-    'active_instruct' => "If disabled, this feed won't check for new articles.",
+    'enabled' => 'Enabled',
+    'enabled_instruct' => "If disabled, this feed won't check for new articles.",
 
     'scheduling' => 'Schedule',
     'scheduling_instruct' => 'Wait time between updates, in minutes.',

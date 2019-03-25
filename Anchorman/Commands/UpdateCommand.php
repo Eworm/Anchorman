@@ -56,7 +56,7 @@ class UpdateCommand extends Command
                 $info       = $this->storage->getYaml($rem);
                 $url        = $info['url'];
                 $publish_to = $info['publish_to'][0];
-                $active     = $info['active'];
+                $enabled    = $info['enabled'];
 
                 // Add the last updated time to the feed info
                 $info['updated'] = time();
@@ -127,7 +127,7 @@ class UpdateCommand extends Command
                 // Add items to the chosen collection
                 foreach ($feed->get_items() as $item) {
 
-                    if ($active === true) {
+                    if ($enabled === true) {
 
                         $with = [];
                         $with[$info['item_title']['value']] = $item->get_title(); // Add the title

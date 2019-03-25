@@ -6,7 +6,7 @@ sections:
       url:
         type: text
         mode: url
-      active:
+      enabled:
         type: toggle
       scheduling:
         type: text
