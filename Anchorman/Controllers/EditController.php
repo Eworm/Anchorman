@@ -60,7 +60,7 @@ class EditController extends Controller
 
                 $feeds[] = (object) [
                     'enabled'   => $info['enabled'],
-                    'collection'=> $info['publish_to'][0],
+                    'collection'=> $info['publish_to'],
                     'name'      => slugify($info['feed_title']),
                     'title'     => $info['feed_title'],
                     'updated'   => $updated,
@@ -110,7 +110,7 @@ class EditController extends Controller
         $fieldset  = $this->fieldset('create');
 
         return $this->view('create', [
-            'data'         => $fieldset->toPublishArray(),
+            'data'         => $this->prepareData([]),
             'fieldset'     => $fieldset->toPublishArray(),
             'submitUrl'    => route('addons.anchorman.store'),
             'title'        => 'Create feed',
@@ -148,23 +148,21 @@ class EditController extends Controller
 
         if ($success)
         {
-            $this->storage->putYAML($feed_title, [
-                'custom_taxonomies'     => null,
-                'enabled'               => true,
-                'images_container'      => null,
-                'item_authors'          => '@ron:author',
-                'item_content'          => '@ron:content',
-                'item_description'      => '@ron:sub_title',
-                'item_title'            => '@ron:title',
-                'feed_copyright'        => $feed->get_copyright(),
-                'feed_language'         => $feed->get_language(),
-                'feed_permalink'        => $feed->get_permalink(),
-                'feed_title'            => $feed->get_title(),
-                'publish_to'            => $request['fields']['publish_to'],
-                'scheduling'            => 60,
-                'status'                => 'publish',
-                'url'                   => $request['fields']['url']
-            ]);
+
+            $data = $this->processFields($this->fieldset('create'), $request->fields);
+            $data['enabled'] = true;
+            $data['feed_copyright'] = $feed->get_copyright();
+            $data['feed_language'] = $feed->get_language();
+            $data['feed_permalink'] = $feed->get_permalink();
+            $data['feed_title'] = $feed->get_title();
+            $data['item_authors'] = '@ron:author';
+            $data['item_content'] = '@ron:content';
+            $data['item_content'] = '@ron:content';
+            $data['item_description'] = '@ron:sub_title';
+            $data['item_title'] = '@ron:title';
+            $data['scheduling'] = 60;
+            $data['status'] = 'publish';
+            $this->storage->putYAML($feed_title, $data);
 
             return [
                 'success' => true,
@@ -218,5 +216,10 @@ class EditController extends Controller
             $fieldset,
             YAML::parse(File::get($this->getDirectory() . '/resources/fieldsets/' . $fieldset . '.yaml'))
         ));
+    }
+
+    private function prepareData($data)
+    {
+        return $this->preProcessWithBlankFields(Fieldset::get('post'), $data);
     }
 }
