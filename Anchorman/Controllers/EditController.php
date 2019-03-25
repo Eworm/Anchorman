@@ -179,30 +179,14 @@ class EditController extends Controller
      */
     public function update(Request $request)
     {
-        $feed = new SimplePie();
-        $feed->set_cache_location(Feed::cache_location());
-        $feed->set_feed_url($request->fields['url']);
 
-        $success = $feed->init();
-        $feed->handle_content_type();
-        $feed_title = slugify($feed->get_title());
-
-        if ($success)
-        {
-            $feed_params = [
-                $request->fields,
-                'feed_copyright' => $feed->get_copyright(),
-                'feed_permalink' => $feed->get_permalink(),
-                'feed_language' => $feed->get_language(),
-                'feed_title' => $feed->get_title()
-            ];
-            $this->storage->putYAML($feed_title, $feed_params[0]);
-        }
+        $data = $this->processFields($this->fieldset('create'), $request->fields);
+        $this->storage->putYAML($request->feed, $data);
 
         return [
             'success' => true,
             'message' => 'Feed updated successfully.',
-            'feed'    => $feed_title
+            'feed'    => $request->feed
         ];
     }
 
