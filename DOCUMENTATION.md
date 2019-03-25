@@ -7,7 +7,7 @@ There is some additional info saved with the new feed. The feed title, copyright
 * Feed updates are enabled.
 * Scheduling is set to 60 minutes.
 * New articles are set to publish.
-* The article title is set to 'From field' and 'title'.
+* The article title, description, content and authors are saved as defaults.
 
 These settings are the most basic info a feed update needs. But you'll probably want to tweak the feed info more.
 
@@ -33,6 +33,6 @@ Feed items can contain categories, which can be mapped to Statamic terms. You ca
 Choose what to do with item thumbnails. Enable 'Save thumbnails' to save the thumbnails to the chosen asset container. Anchorman uses cUrl to grab and save images.
 
 ## Updates
-Anchorman uses the `php please anchorman:update` task to check feeds for new articles. You'll have to add the cron to your server if you want to automate this task. [More info on how to is here](https://docs.statamic.com/addons/classes/tasks).
+Anchorman uses the `php please anchorman:refresh` task to check feeds for new articles. You'll have to add the cron to your server if you want to automate this task. [More info on how to is here](https://docs.statamic.com/addons/classes/tasks).
 
-You can also call the task manually from the command line. Anchorman will only add new articles and will skip existing ones. The pubdate of an item is used as the date to generate the filename.
+You can also call the task manually from the command line. Anchorman will only add new articles and will skip existing ones (same for terms, users and images). The pubdate of an item is used as the date to generate the filename.

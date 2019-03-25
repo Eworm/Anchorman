@@ -16,8 +16,7 @@ class AnchormanTasks extends Tasks
     public function schedule(Schedule $schedule)
     {
 
-        $schedule->command('anchorman:update')->everyMinute();
-        // file_get_contents("https://cronhub.io/ping/20ea29f0-0c79-11e9-bad3-65985bc7f86f");
+        $schedule->command('anchorman:refresh')->everyMinute();
 
         $feeds_storage  = Storage::files('/site/storage/addons/Anchorman');
 
@@ -31,7 +30,7 @@ class AnchormanTasks extends Tasks
                 $info = $this->storage->getYaml($rem);
                 $int = intval($info['scheduling']);
 
-                $schedule->command('anchorman:update')->cron('*/' . $int . ' * * * * *');
+                $schedule->command('anchorman:refresh')->cron('*/' . $int . ' * * * * *');
 
             }
         }

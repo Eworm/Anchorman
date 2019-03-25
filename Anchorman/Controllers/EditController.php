@@ -125,7 +125,7 @@ class EditController extends Controller
      */
     public function refreshAll()
     {
-        Please::call('anchorman:update');
+        Please::call('anchorman:refresh');
         return redirect()->route('addons.anchorman');
     }
 
@@ -156,7 +156,6 @@ class EditController extends Controller
             $data['feed_permalink'] = $feed->get_permalink();
             $data['feed_title'] = $feed->get_title();
             $data['item_authors'] = '@ron:author';
-            $data['item_content'] = '@ron:content';
             $data['item_content'] = '@ron:content';
             $data['item_description'] = '@ron:sub_title';
             $data['item_title'] = '@ron:title';

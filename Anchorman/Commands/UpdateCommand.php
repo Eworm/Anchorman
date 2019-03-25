@@ -20,7 +20,7 @@ class UpdateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'anchorman:update';
+    protected $signature = 'anchorman:refresh';
 
     /**
      * The console command description.
