@@ -236,8 +236,6 @@ class UpdateCommand extends Command
 
                     }
 
-                    sleep(3);
-
                 }
 
                 if ($i == 0) {
@@ -258,6 +256,7 @@ class UpdateCommand extends Command
     public function grabImage($url, $path)
     {
         $container = AssetContainer::wherePath($path);
+        $url = str_replace(' ', '+', $url);
         $basename = basename($url);
         $ch = curl_init();
 
