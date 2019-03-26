@@ -161,12 +161,23 @@ class UpdateCommand extends Command
                             if ($info['item_authors'] != false) {
                                 if ($author_options == 'create') {
                                     if ($author = $item->get_author()) {
+
                                         // Create new user
-                                        $this->info(User::whereUsername(slugify($author->get_name()))->get('id'));
-                                        User::create($author->get_name())
-                                            ->username(slugify($author->get_name()))
-                                            ->save();
-                                        $with[Str::removeLeft($info['item_authors'], '@ron:')] = User::whereUsername(slugify($author->get_name()))->get('id');
+                                        $authorname = $author->get_name();
+                                        if (!User::whereUsername(slugify($authorname))) {
+
+                                            User::create($authorname)
+                                                ->username(slugify($authorname))
+                                                ->save();
+
+                                        } else {
+
+                                            $this->info($authorname . ' <fg=red>already exists</>');
+
+                                        }
+
+                                        $with[Str::removeLeft($info['item_authors'], '@ron:')] = User::whereUsername(slugify($authorname))->get('id');
+                                        $this->info('Adding '. $authorname);
                                     }
                                 } else {
                                     // Assign to an existing user
@@ -254,7 +265,7 @@ class UpdateCommand extends Command
 
                 if ($i == 0) {
 
-                    $this->info("No new articles.");
+                    $this->info("No new articles. Go fuck yourself San Diego.");
 
                 } else {
 
