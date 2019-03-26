@@ -6,6 +6,7 @@ sections:
       url:
         type: text
         mode: url
+        validate: required
       enabled:
         type: toggle
       scheduling:
@@ -48,6 +49,7 @@ sections:
         type: collections
         max_items: 1
         width: 50
+        validate: required
       item_title:
         type: anchorman.source
         field:

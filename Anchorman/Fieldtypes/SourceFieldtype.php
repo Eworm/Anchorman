@@ -20,10 +20,6 @@ class SourceFieldtype extends Fieldtype
             return ['source' => 'disable', 'value' => null];
         }
 
-        if (! $data && $this->getFieldConfig('inherit') !== false) {
-            return ['source' => 'inherit', 'value' => null];
-        }
-
         return ['source' => 'custom', 'value' => $this->fieldtype()->preProcess($data)];
     }
 
@@ -31,10 +27,6 @@ class SourceFieldtype extends Fieldtype
     {
         if ($data['source'] === 'field') {
             return '@ron:' . $data['value'];
-        }
-
-        if ($data['source'] === 'inherit') {
-            return null;
         }
 
         if ($data['source'] === 'disable') {

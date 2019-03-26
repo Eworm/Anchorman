@@ -97,6 +97,7 @@ class EditController extends Controller
             'suggestions'  => $this->getSuggestions($fieldset),
             'title'        => $data['feed_title'],
         ]);
+
      }
 
 
@@ -107,10 +108,15 @@ class EditController extends Controller
      */
     public function create()
     {
-        $fieldset  = $this->fieldset('create');
+        $fieldset  = $this->fieldset('edit');
+
+        $data = $this->preProcessWithBlankFields(
+            $fieldset,
+            File::get($this->getDirectory() . '/default.yaml')
+        );
 
         return $this->view('create', [
-            'data'         => $this->prepareData([]),
+            'data'         => $data,
             'fieldset'     => $fieldset->toPublishArray(),
             'submitUrl'    => route('addons.anchorman.store'),
             'title'        => 'Create feed',
