@@ -1,0 +1,6 @@
+Anchorman/resources/assets/src export-ignore
+Anchorman/package.json export-ignore
+Anchorman/package-lock.json export-ignore
+Anchorman/gulpfile.js export-ignore
+yarn.lock export-ignore
+.gitattributes export-ignore
