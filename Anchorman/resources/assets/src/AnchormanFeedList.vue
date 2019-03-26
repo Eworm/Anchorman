@@ -39,7 +39,9 @@ export default {
             self.$http.get(
                 cp_url('addons/anchorman/refreshAll')
             );
-            location.reload();
+            setTimeout(function () {
+                location.reload();
+            }, 250);
         }
     },
 
