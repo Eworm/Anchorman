@@ -162,9 +162,11 @@ class UpdateCommand extends Command
                                 if ($author_options == 'create') {
                                     if ($author = $item->get_author()) {
                                         // Create new user
+                                        $this->info(User::whereUsername(slugify($author->get_name()))->get('id'));
                                         User::create($author->get_name())
                                             ->username(slugify($author->get_name()))
                                             ->save();
+                                        $with[Str::removeLeft($info['item_authors'], '@ron:')] = User::whereUsername(slugify($author->get_name()))->get('id');
                                     }
                                 } else {
                                     // Assign to an existing user
