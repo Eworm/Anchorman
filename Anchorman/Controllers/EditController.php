@@ -112,7 +112,7 @@ class EditController extends Controller
 
         $data = $this->preProcessWithBlankFields(
             $fieldset,
-            YAML::parse(File::get($this->getDirectory() . '/default.yaml'))
+            YAML::parse(File::get($this->getDirectory() . '/defaults.yaml'))
         );
 
         return $this->view('create', [

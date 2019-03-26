@@ -54,7 +54,7 @@ class Settings
         // Statamic merges in defaults with any user-defined configs, but only does one
         // level deep. It doesn't merge nested arrays. We'll go through and manually
         // merge in any of our nested array defaults, like "defaults" and "humans".
-        $defaultConfig = YAML::parse(File::get($this->getDirectory().'/default.yaml'));
+        $defaultConfig = YAML::parse(File::get($this->getDirectory().'/defaults.yaml'));
         foreach ($defaultConfig as $key => $value) {
             if (is_array($value)) {
                 $config[$key] = array_merge($value, $config[$key]);

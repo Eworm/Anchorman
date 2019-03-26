@@ -8,3 +8,4 @@ item_content: '@ron:content'
 item_authors: '@ron:author'
 item_taxonomies: '@ron:taggable'
 item_thumbnail: '@ron:intro_image'
+publish_to: blog
