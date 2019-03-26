@@ -12,6 +12,11 @@ You can use it for free while in development, but requires a license to use on a
 * Add authors as new users or attribute new articles to an existing user
 * Save images to the assetcontainer of your choice
 
+## Future plans
+* More cp translations
+* Cleaner code
+* Rules?
+
 _Features requests? Found a bug? [Let me know!](mailto:wout@woutmager.nl)_
 
 Stay classy, San Diego!
