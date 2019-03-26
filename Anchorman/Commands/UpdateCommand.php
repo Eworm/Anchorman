@@ -72,7 +72,7 @@ class UpdateCommand extends Command
                 }
 
                 if (isset($info['images_container'])) {
-                    $assetcontainer = $info['images_container'][0];
+                    $assetcontainer = $info['images_container'];
                 }
 
                 if (isset($info['save_images'])) {
@@ -88,7 +88,7 @@ class UpdateCommand extends Command
 
                 // Get the chosen taxonomy for custom terms
                 if (isset($info['custom_taxonomies'])) {
-                    $taxonomy = $info['custom_taxonomies'][0];
+                    $taxonomy = $info['custom_taxonomies'];
                 }
 
                 // Add custom terms to the chosen taxonomy
