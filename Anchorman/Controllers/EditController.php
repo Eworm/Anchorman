@@ -156,17 +156,10 @@ class EditController extends Controller
         {
 
             $data = $this->processFields($this->fieldset('create'), $request->fields);
-            $data['enabled'] = true;
             $data['feed_copyright'] = $feed->get_copyright();
             $data['feed_language'] = $feed->get_language();
             $data['feed_permalink'] = $feed->get_permalink();
             $data['feed_title'] = $feed->get_title();
-            $data['item_authors'] = '@ron:author';
-            $data['item_content'] = '@ron:content';
-            $data['item_description'] = '@ron:sub_title';
-            $data['item_title'] = '@ron:title';
-            $data['scheduling'] = 60;
-            $data['status'] = 'publish';
             $this->storage->putYAML($feed_title, $data);
 
             return [
