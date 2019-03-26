@@ -160,7 +160,7 @@ class UpdateCommand extends Command
                         if (isset($info['item_authors'])) {
                             if ($info['item_authors'] != false) {
                                 if ($author_options == 'create') {
-                                    if ($author = $feed->get_author()) {
+                                    if ($author = $item->get_author()) {
                                         // Create new user
                                         User::create($author->get_name())
                                             ->username(slugify($author->get_name()))
