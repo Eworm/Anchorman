@@ -95,12 +95,9 @@ sections:
       taxonomies_section:
         type: section
       item_taxonomies:
-        disableable: true
-        type: anchorman.source
-        allowed_fieldtypes:
-          - tags
-        field:
-          type: text
+        type: suggest
+        mode: Anchorman
+        max_items: 1
       custom_taxonomies:
         type: suggest
         mode: Anchorman

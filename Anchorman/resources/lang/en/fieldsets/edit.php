@@ -52,7 +52,7 @@ return [
     'taxonomies_section_instruct' => 'Options for article categories.',
 
     'item_taxonomies' => 'Article categories',
-    'item_taxonomies_instruct' => 'Choose an existing field, add a custom fieldtype name, or disable saving categories.',
+    'item_taxonomies_instruct' => 'Which taxonomy should I use for article terms?',
 
     'custom_taxonomies' => 'Custom term taxonomy',
     'custom_taxonomies_instruct' => 'Which taxonomy should I use for custom terms?',

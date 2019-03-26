@@ -128,9 +128,7 @@ class UpdateCommand extends Command
                 // Add items to the chosen collection
                 foreach ($feed->get_items() as $item) {
 
-                    if ($enabled === true) {
-
-                        // dd(var_dump($info));
+                    if ($enabled == true) {
 
                         $with = [];
                         $with[Str::removeLeft($info['item_title'], '@ron:')] = $item->get_title(); // Add the title
@@ -172,6 +170,17 @@ class UpdateCommand extends Command
                                     // Assign to an existing user
                                     $with[Str::removeLeft($info['item_authors'], '@ron:')] = $author;
                                 }
+                            }
+                        }
+
+                        // Item categories
+                        if (isset($info['item_taxonomies']) && $item->get_categories()) {
+                            if ($info['item_taxonomies'] != false) {
+                                $itemcategories = [];
+                                foreach ($item->get_categories() as $category) {
+                                    array_push($itemcategories, $category->get_label());
+                                }
+                                $with[Str::removeLeft($info['item_taxonomies'], '@ron:')] = $itemcategories;
                             }
                         }
 
