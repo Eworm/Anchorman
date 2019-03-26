@@ -3,6 +3,7 @@
 namespace Statamic\Addons\Anchorman\Commands;
 
 use SimplePie;
+use Statamic\API\Str;
 use Statamic\Addons\Anchorman\Feed;
 use Illuminate\Support\Facades\Storage;
 use Statamic\API\Entry;
@@ -85,12 +86,12 @@ class UpdateCommand extends Command
                 $this->info('Updating ' . $feed->get_title());
                 $i = 0;
 
-                // Get the chosen taxonomy
+                // Get the chosen taxonomy for custom terms
                 if (isset($info['custom_taxonomies'])) {
                     $taxonomy = $info['custom_taxonomies'][0];
                 }
 
-                // Custom terms to the chosen taxonomy
+                // Add custom terms to the chosen taxonomy
                 if (isset($info['custom_terms'])) {
                     $tags = $info['custom_terms'];
                     foreach ($tags as $term) {
@@ -132,28 +133,28 @@ class UpdateCommand extends Command
                         // dd(var_dump($info));
 
                         $with = [];
-                        $with[$info['item_title']] = $item->get_title(); // Add the title
+                        $with[Str::removeLeft($info['item_title'], '@ron:')] = $item->get_title(); // Add the title
                         $with['item_pubdate'] = $item->get_date(); // Add the pubdate
                         $slugged = slugify($item->get_title());
 
                         // Item description
                         if (isset($info['item_description']) && $item->get_description()) {
                             if ($info['item_description'] != false) {
-                                $with[$info['item_description']] = $item->get_description();
+                                $with[Str::removeLeft($info['item_description'], '@ron:')] = $item->get_description();
                             }
                         }
 
                         // Item content
                         if (isset($info['item_content']) && $item->get_content()) {
                             if ($info['item_content'] != false) {
-                                $with[$info['item_content']] = $item->get_content();
+                                $with[Str::removeLeft($info['item_content'], '@ron:')] = $item->get_content();
                             }
                         }
 
                         // Item permalink
                         if (isset($info['item_permalink']) && $item->get_permalink()) {
                             if ($info['item_permalink'] != false) {
-                                $with[$info['item_permalink']] = $item->get_permalink();
+                                $with[Str::removeLeft($info['item_permalink'], '@ron:')] = $item->get_permalink();
                             }
                         }
 
@@ -169,7 +170,7 @@ class UpdateCommand extends Command
                                     }
                                 } else {
                                     // Assign to an existing user
-                                    $with[$info['item_authors']] = $author;
+                                    $with[Str::removeLeft($info['item_authors'], '@ron:')] = $author;
                                 }
                             }
                         }
@@ -183,9 +184,9 @@ class UpdateCommand extends Command
                                 if ($info['item_thumbnail'] != false) {
                                     if ($enclosure_type == 'image/jpeg' || $enclosure_type == 'image/png' || $enclosure_type == 'image/gif') {
                                         if ($save_images) {
-                                            $with[$info['item_thumbnail']] = $this->grabImage($enclosure_link, $assetcontainer);
+                                            $with[Str::removeLeft($info['item_thumbnail'], '@ron:')] = $this->grabImage($enclosure_link, $assetcontainer);
                                         } else {
-                                            $with[$info['item_thumbnail']] = $enclosure_link;
+                                            $with[Str::removeLeft($info['item_thumbnail'], '@ron:')] = $enclosure_link;
                                         }
                                     }
                                 }
