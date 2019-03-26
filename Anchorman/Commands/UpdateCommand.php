@@ -55,7 +55,7 @@ class UpdateCommand extends Command
 
                 $info       = $this->storage->getYaml($rem);
                 $url        = $info['url'];
-                $publish_to = $info['publish_to'][0];
+                $publish_to = $info['publish_to'];
                 $enabled    = $info['enabled'];
 
                 // Add the last updated time to the feed info
@@ -67,7 +67,7 @@ class UpdateCommand extends Command
                 }
 
                 if (isset($info['item_author'])) {
-                    $author = $info['item_author'][0];
+                    $author = $info['item_author'];
                 }
 
                 if (isset($info['images_container'])) {
@@ -129,35 +129,37 @@ class UpdateCommand extends Command
 
                     if ($enabled === true) {
 
+                        // dd(var_dump($info));
+
                         $with = [];
-                        $with[$info['item_title']['value']] = $item->get_title(); // Add the title
+                        $with[$info['item_title']] = $item->get_title(); // Add the title
                         $with['item_pubdate'] = $item->get_date(); // Add the pubdate
                         $slugged = slugify($item->get_title());
 
                         // Item description
                         if (isset($info['item_description']) && $item->get_description()) {
-                            if ($info['item_description']['source'] != 'disable' && $info['item_description']['value'] != null) {
-                                $with[$info['item_description']['value']] = $item->get_description();
+                            if ($info['item_description'] != false) {
+                                $with[$info['item_description']] = $item->get_description();
                             }
                         }
 
                         // Item content
                         if (isset($info['item_content']) && $item->get_content()) {
-                            if ($info['item_content']['source'] != 'disable' && $info['item_content']['value'] != null) {
-                                $with[$info['item_content']['value']] = $item->get_content();
+                            if ($info['item_content'] != false) {
+                                $with[$info['item_content']] = $item->get_content();
                             }
                         }
 
                         // Item permalink
                         if (isset($info['item_permalink']) && $item->get_permalink()) {
-                            if ($info['item_permalink']['source'] != 'disable' && $info['item_permalink']['value'] != null) {
-                                $with[$info['item_permalink']['value']] = $item->get_permalink();
+                            if ($info['item_permalink'] != false) {
+                                $with[$info['item_permalink']] = $item->get_permalink();
                             }
                         }
 
                         // Item authors
                         if (isset($info['item_authors'])) {
-                            if ($info['item_authors']['source'] != 'disable' && $info['item_authors']['value'] != null) {
+                            if ($info['item_authors'] != false) {
                                 if ($author_options == 'create') {
                                     if ($author = $feed->get_author()) {
                                         // Create new user
@@ -167,7 +169,7 @@ class UpdateCommand extends Command
                                     }
                                 } else {
                                     // Assign to an existing user
-                                    $with[$info['item_authors']['value']] = $author;
+                                    $with[$info['item_authors']] = $author;
                                 }
                             }
                         }
@@ -178,12 +180,12 @@ class UpdateCommand extends Command
                             $enclosure_link = $enclosure->get_link();
 
                             if (isset($info['item_thumbnail'])) {
-                                if ($info['item_thumbnail']['source'] != 'disable' && $info['item_thumbnail']['value'] != null) {
+                                if ($info['item_thumbnail'] != false) {
                                     if ($enclosure_type == 'image/jpeg' || $enclosure_type == 'image/png' || $enclosure_type == 'image/gif') {
                                         if ($save_images) {
-                                            $with[$info['item_thumbnail']['value']] = $this->grabImage($enclosure_link, $assetcontainer);
+                                            $with[$info['item_thumbnail']] = $this->grabImage($enclosure_link, $assetcontainer);
                                         } else {
-                                            $with[$info['item_thumbnail']['value']] = $enclosure_link;
+                                            $with[$info['item_thumbnail']] = $enclosure_link;
                                         }
                                     }
                                 }
@@ -267,8 +269,6 @@ class UpdateCommand extends Command
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-        // curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
-        // curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
         // Required to be true
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);

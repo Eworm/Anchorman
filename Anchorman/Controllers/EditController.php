@@ -155,7 +155,7 @@ class EditController extends Controller
         if ($success)
         {
 
-            $data = $this->processFields($this->fieldset('create'), $request->fields);
+            $data = $this->processFields($this->fieldset('edit'), $request->fields);
             $data['feed_copyright'] = $feed->get_copyright();
             $data['feed_language'] = $feed->get_language();
             $data['feed_permalink'] = $feed->get_permalink();
