@@ -4,6 +4,7 @@ After installing Anchorman you'll see a new menu-item in Tools called Syndicatio
 Click the 'Create feed' button. You'll go to a new page which asks for 2 things: the feed url, and which collection new articles should be added to. Clicking save will create a new feed.
 
 There is some additional info saved with the new feed. The feed title, copyright, language and permalink are also saved. Some settings are set to their standard:
+
 * Feed updates are enabled.
 * Scheduling is set to 60 minutes.
 * New articles are set to publish and use the 'Blog' collection.
