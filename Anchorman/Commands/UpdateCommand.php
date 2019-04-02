@@ -63,10 +63,6 @@ class UpdateCommand extends Command
                 $info['updated'] = time();
                 $this->storage->putYAML($rem, $info);
 
-                if (isset($info['author_options'])) {
-                    $author_options = $info['author_options'];
-                }
-
                 if (isset($info['item_author'])) {
                     $author = $info['item_author'];
                 }
@@ -157,31 +153,35 @@ class UpdateCommand extends Command
                         }
 
                         // Item authors
-                        if (isset($info['item_authors'])) {
-                            if ($info['item_authors'] != false) {
-                                if ($author_options == 'create') {
-                                    if ($author = $item->get_author()) {
+                        if (isset($info['author_options'])) {
+                            $author_options = $info['author_options'];
 
-                                        // Create new user
-                                        $authorname = $author->get_name();
-                                        if (!User::whereUsername(slugify($authorname))) {
+                            if (isset($info['item_authors'])) {
+                                if ($info['item_authors'] != false) {
+                                    if ($author_options == 'create') {
+                                        if ($author = $item->get_author()) {
 
-                                            User::create($authorname)
-                                                ->username(slugify($authorname))
-                                                ->save();
+                                            // Create new user
+                                            $authorname = $author->get_name();
+                                            if (!User::whereUsername(slugify($authorname))) {
 
-                                        } else {
+                                                User::create($authorname)
+                                                    ->username(slugify($authorname))
+                                                    ->save();
 
-                                            $this->info($authorname . ' <fg=red>already exists</>');
+                                            } else {
 
+                                                $this->info($authorname . ' <fg=red>already exists</>');
+
+                                            }
+
+                                            $with[Str::removeLeft($info['item_authors'], '@ron:')] = User::whereUsername(slugify($authorname))->get('id');
+                                            $this->info('Adding '. $authorname);
                                         }
-
-                                        $with[Str::removeLeft($info['item_authors'], '@ron:')] = User::whereUsername(slugify($authorname))->get('id');
-                                        $this->info('Adding '. $authorname);
+                                    } else {
+                                        // Assign to an existing user
+                                        $with[Str::removeLeft($info['item_authors'], '@ron:')] = $author;
                                     }
-                                } else {
-                                    // Assign to an existing user
-                                    $with[Str::removeLeft($info['item_authors'], '@ron:')] = $author;
                                 }
                             }
                         }
