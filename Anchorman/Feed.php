@@ -14,6 +14,6 @@ class Feed
      */
     public static function cache_location()
     {
-        return 'local/cache';
+        return cache_path();
     }
 }
