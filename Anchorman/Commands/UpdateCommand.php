@@ -265,7 +265,7 @@ class UpdateCommand extends Command
 
                 if ($i == 0) {
 
-                    $this->info("No new articles. Go fuck yourself San Diego.");
+                    $this->info("No new articles.");
 
                 } else {
 
