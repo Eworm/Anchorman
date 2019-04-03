@@ -49,9 +49,10 @@ class UpdateCommand extends Command
         $feeds_storage  = Storage::files('/site/storage/addons/Anchorman');
 
         foreach ($feeds_storage as $feed) {
-            $rem        = str_replace('site/storage/addons/Anchorman/', '', $feed);
 
+            $rem        = str_replace('site/storage/addons/Anchorman/', '', $feed);
             $ignore = array( 'cgi-bin', '.', '..','._' );
+
             if (!in_array($rem, $ignore) and substr($rem, 0, 1) != '.') {
 
                 $info       = $this->storage->getYaml($rem);
@@ -163,20 +164,32 @@ class UpdateCommand extends Command
 
                                             // Create new user
                                             $authorname = $author->get_name();
-                                            if (!User::whereUsername(slugify($authorname))) {
+                                            $authoremail = $author->get_email();
 
-                                                User::create($authorname)
-                                                    ->username(slugify($authorname))
-                                                    ->save();
+                                            if ($authorname != null) {
+
+                                                if (!User::whereUsername(slugify($authorname))) {
+
+                                                    User::create($authorname)
+                                                        ->username(slugify($authorname))
+                                                        ->email($authoremail)
+                                                        ->save();
+
+                                                } else {
+
+                                                    $this->info($authorname . ' <fg=red>already exists</>');
+
+                                                }
+
+                                                $with[Str::removeLeft($info['item_authors'], '@ron:')] = User::whereUsername(slugify($authorname))->get('id');
+                                                $this->info('Adding '. $authorname);
 
                                             } else {
 
-                                                $this->info($authorname . ' <fg=red>already exists</>');
+                                                $this->info($authorname . "<fg=red>I can't find a username for this author</>");
 
                                             }
 
-                                            $with[Str::removeLeft($info['item_authors'], '@ron:')] = User::whereUsername(slugify($authorname))->get('id');
-                                            $this->info('Adding '. $authorname);
                                         }
                                     } else {
                                         // Assign to an existing user
