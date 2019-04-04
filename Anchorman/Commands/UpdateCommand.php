@@ -110,16 +110,7 @@ class UpdateCommand extends Command
 
                 // Custom queries
                 if (isset($info['query_grid'])) {
-                    $queries = $info['query_grid'];
-                    $newquery = [];
-                    foreach ($queries as $query) {
-                        $newquery[$query['name']] = $query['value'];
-                    }
-                    if (strpos($url, '?') !== false) {
-                        $url = $url . '&amp;' . http_build_query($newquery, '', '&amp;');
-                    } else {
-                        $url = $url . '?' . http_build_query($newquery, '', '&amp;');
-                    }
+                    $url = $this->custom_queries($url, $info['query_grid']);
                 }
 
                 // Add items to the chosen collection
@@ -322,5 +313,25 @@ class UpdateCommand extends Command
 
         }
         curl_close ($ch);
+    }
+
+
+    /**
+     * Adds custom queries to the feed url
+     *
+     * @return string
+     */
+    private function custom_queries($url, $queries)
+    {
+        $newquery = [];
+        foreach ($queries as $query) {
+            $newquery[$query['name']] = $query['value'];
+        }
+        if (strpos($url, '?') !== false) {
+            $url = $url . '&amp;' . http_build_query($newquery, '', '&amp;');
+        } else {
+            $url = $url . '?' . http_build_query($newquery, '', '&amp;');
+        }
+        return $url;
     }
 }
