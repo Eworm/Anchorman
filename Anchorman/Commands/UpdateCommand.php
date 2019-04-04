@@ -193,11 +193,12 @@ class UpdateCommand extends Command
                         // Item categories
                         if (isset($info['item_taxonomies']) && $item->get_categories()) {
                             if ($info['item_taxonomies'] != false) {
-                                $itemcategories = [];
-                                foreach ($item->get_categories() as $category) {
-                                    array_push($itemcategories, $category->get_label());
-                                }
-                                $with[Str::removeLeft($info['item_taxonomies'], '@ron:')] = $itemcategories;
+                                // $this->item_categories($item);
+                                $with[Str::removeLeft($info['item_taxonomies'], '@ron:')] = $this->item_categories($item);
+                                // $itemcategories = [];
+                                // foreach ($item->get_categories() as $category) {
+                                //     array_push($itemcategories, $category->get_label());
+                                // }
                             }
                         }
 
@@ -349,5 +350,20 @@ class UpdateCommand extends Command
             array_push($newtags, $term);
         }
         return $newtags;
+    }
+
+
+    /**
+     * Adds item categories
+     *
+     * @return array
+     */
+    private function item_categories($item, $category)
+    {
+        $itemcategories = [];
+        foreach ($item->get_categories() as $category) {
+            array_push($itemcategories, $category->get_label());
+        }
+        return $itemcategories;
     }
 }
