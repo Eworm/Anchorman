@@ -221,12 +221,7 @@ class UpdateCommand extends Command
 
                         // Custom terms
                         if (isset($info['custom_terms']) && isset($info['custom_taxonomies'])) {
-                            $tags = $info['custom_terms'];
-                            $newtags = [];
-                            foreach ($tags as $term) {
-                                array_push($newtags, $term);
-                            }
-                            $with[$taxonomy] = $newtags;
+                            $with[$taxonomy] = $this->custom_terms($info['custom_terms']);
                         }
 
                         // Create an entry
@@ -282,6 +277,12 @@ class UpdateCommand extends Command
         }
     }
 
+
+    /**
+     * Downloads an image to an asset container
+     *
+     * @return info
+     */
     public function grabImage($url, $path)
     {
         $container = AssetContainer::wherePath($path);
@@ -319,7 +320,7 @@ class UpdateCommand extends Command
     /**
      * Adds custom queries to the feed url
      *
-     * @return string
+     * @return url
      */
     private function custom_queries($url, $queries)
     {
@@ -333,5 +334,20 @@ class UpdateCommand extends Command
             $url = $url . '?' . http_build_query($newquery, '', '&amp;');
         }
         return $url;
+    }
+
+
+    /**
+     * Adds custom terms to an entry
+     *
+     * @return variable
+     */
+    private function custom_terms($tags)
+    {
+        $newtags = [];
+        foreach ($tags as $term) {
+            array_push($newtags, $term);
+        }
+        return $newtags;
     }
 }
