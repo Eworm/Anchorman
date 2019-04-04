@@ -83,34 +83,15 @@ class UpdateCommand extends Command
                 $this->info('Updating ' . $feed->get_title());
                 $i = 0;
 
-                // Get the chosen taxonomy for custom terms
-                if (isset($info['custom_taxonomies'])) {
+                // Saves custom terms to the chosen taxonomy
+                if (isset($info['custom_terms']) && isset($info['custom_taxonomies'])) {
                     $taxonomy = $info['custom_taxonomies'];
+                    $this->save_custom_terms($info['custom_terms'], $taxonomy);
                 }
 
-                // Add custom terms to the chosen taxonomy
-                if (isset($info['custom_terms'])) {
-                    $tags = $info['custom_terms'];
-                    foreach ($tags as $term) {
-
-                        if (!Term::slugExists(slugify($term), $taxonomy)) {
-
-                            $this->info('Adding "' . $term . '" to "' . $taxonomy . '".');
-                            Term::create(slugify($term))
-                                ->taxonomy($taxonomy)
-                                ->save();
-
-                        } else {
-
-                            $this->info('"' . $term . '" <fg=red>already exists</>');
-
-                        }
-                    }
-                }
-
-                // Custom queries
+                // Adds custom queries to the url
                 if (isset($info['query_grid'])) {
-                    $url = $this->custom_queries($url, $info['query_grid']);
+                    $url = $this->add_custom_queries($url, $info['query_grid']);
                 }
 
                 // Add items to the chosen collection
@@ -193,12 +174,7 @@ class UpdateCommand extends Command
                         // Item categories
                         if (isset($info['item_taxonomies']) && $item->get_categories()) {
                             if ($info['item_taxonomies'] != false) {
-                                // $this->item_categories($item);
-                                $with[Str::removeLeft($info['item_taxonomies'], '@ron:')] = $this->item_categories($item);
-                                // $itemcategories = [];
-                                // foreach ($item->get_categories() as $category) {
-                                //     array_push($itemcategories, $category->get_label());
-                                // }
+                                $with[Str::removeLeft($info['item_taxonomies'], '@ron:')] = $this->add_item_categories($item);
                             }
                         }
 
@@ -211,7 +187,7 @@ class UpdateCommand extends Command
                                 if ($info['item_thumbnail'] != false) {
                                     if ($enclosure_type == 'image/jpeg' || $enclosure_type == 'image/png' || $enclosure_type == 'image/gif') {
                                         if ($save_images) {
-                                            $with[Str::removeLeft($info['item_thumbnail'], '@ron:')] = $this->grabImage($enclosure_link, $assetcontainer);
+                                            $with[Str::removeLeft($info['item_thumbnail'], '@ron:')] = $this->grab_image($enclosure_link, $assetcontainer);
                                         } else {
                                             $with[Str::removeLeft($info['item_thumbnail'], '@ron:')] = $enclosure_link;
                                         }
@@ -222,7 +198,7 @@ class UpdateCommand extends Command
 
                         // Custom terms
                         if (isset($info['custom_terms']) && isset($info['custom_taxonomies'])) {
-                            $with[$taxonomy] = $this->custom_terms($info['custom_terms']);
+                            $with[$taxonomy] = $this->add_custom_terms($info['custom_terms']);
                         }
 
                         // Create an entry
@@ -284,7 +260,7 @@ class UpdateCommand extends Command
      *
      * @return info
      */
-    public function grabImage($url, $path)
+    public function grab_image($url, $path)
     {
         $container = AssetContainer::wherePath($path);
         $url = str_replace(' ', '+', $url);
@@ -319,11 +295,36 @@ class UpdateCommand extends Command
 
 
     /**
+     * Saves custom terms
+     *
+     * @return info
+     */
+    private function save_custom_terms($tags, $taxonomy)
+    {
+        foreach ($tags as $term) {
+
+            if (!Term::slugExists(slugify($term), $taxonomy)) {
+
+                $this->info('Adding "' . $term . '" to "' . $taxonomy . '".');
+                Term::create(slugify($term))
+                    ->taxonomy($taxonomy)
+                    ->save();
+
+            } else {
+
+                $this->info('"' . $term . '" <fg=red>already exists</>');
+
+            }
+        }
+    }
+
+
+    /**
      * Adds custom queries to the feed url
      *
      * @return url
      */
-    private function custom_queries($url, $queries)
+    private function add_custom_queries($url, $queries)
     {
         $newquery = [];
         foreach ($queries as $query) {
@@ -343,7 +344,7 @@ class UpdateCommand extends Command
      *
      * @return variable
      */
-    private function custom_terms($tags)
+    private function add_custom_terms($tags)
     {
         $newtags = [];
         foreach ($tags as $term) {
@@ -354,11 +355,11 @@ class UpdateCommand extends Command
 
 
     /**
-     * Adds item categories
+     * Adds item categories to an entry
      *
      * @return array
      */
-    private function item_categories($item, $category)
+    private function add_item_categories($item)
     {
         $itemcategories = [];
         foreach ($item->get_categories() as $category) {
