@@ -50,87 +50,93 @@ class UpdateCommand extends Command
 
         foreach ($feeds_storage as $feed) {
 
-            $rem        = str_replace('site/storage/addons/Anchorman/', '', $feed);
+            $st_feed = str_replace('site/storage/addons/Anchorman/', '', $feed);
             $ignore = array( 'cgi-bin', '.', '..','._' );
 
-            if (!in_array($rem, $ignore) and substr($rem, 0, 1) != '.') {
+            if (!in_array($st_feed, $ignore) and substr($st_feed, 0, 1) != '.') {
 
-                $info       = $this->storage->getYaml($rem);
-                $url        = $info['url'];
-                $publish_to = $info['publish_to'];
-                $enabled    = $info['enabled'];
+                $settings   = $this->storage->getYaml($st_feed);
+                $url        = $settings['url'];
+                $publish_to = $settings['publish_to'];
+                $enabled    = $settings['enabled'];
 
                 // Add the last updated time to the feed info
-                $info['updated'] = time();
-                $this->storage->putYAML($rem, $info);
+                $settings['updated'] = time();
+                $this->storage->putYAML($st_feed, $settings);
 
-                if (isset($info['item_author'])) {
-                    $author = $info['item_author'];
+                if (isset($settings['item_author'])) {
+                    $author = $settings['item_author'];
                 }
 
-                if (isset($info['images_container'])) {
-                    $assetcontainer = $info['images_container'];
+                if (isset($settings['images_container'])) {
+                    $assetcontainer = $settings['images_container'];
                 }
 
-                if (isset($info['save_images'])) {
-                    $save_images = $info['save_images'];
+                if (isset($settings['save_images'])) {
+                    $save_images = $settings['save_images'];
                 }
 
                 $feed = new SimplePie();
                 $feed->set_cache_location(Feed::cache_location());
                 $feed->set_feed_url($url);
                 $feed->init();
+                // Allow addons to modify the feed.
+                $feed = $this->runFeedInitEvent($feed);
                 $this->info('Updating ' . $feed->get_title());
                 $i = 0;
 
                 // Saves custom terms to the chosen taxonomy
-                if (isset($info['custom_terms']) && isset($info['custom_taxonomies'])) {
-                    $taxonomy = $info['custom_taxonomies'];
-                    $this->save_custom_terms($info['custom_terms'], $taxonomy);
+                if (isset($settings['custom_terms']) && isset($settings['custom_taxonomies'])) {
+                    $taxonomy = $settings['custom_taxonomies'];
+                    $this->save_custom_terms($settings['custom_terms'], $taxonomy);
                 }
 
                 // Adds custom queries to the url
-                if (isset($info['query_grid'])) {
-                    $url = $this->add_custom_queries($url, $info['query_grid']);
+                if (isset($settings['query_grid'])) {
+                    $url = $this->add_custom_queries($url, $settings['query_grid']);
                 }
 
                 // Add items to the chosen collection
                 foreach ($feed->get_items() as $item) {
 
+                    // Allow addons to modify the entry.
+                    $item = $this->runItemLoopEvent($item);
+
                     if ($enabled == true) {
 
+                        $item_title = $item->get_title();
                         $with = [];
-                        $with[Str::removeLeft($info['item_title'], '@ron:')] = $item->get_title(); // Add the title
+                        $with[Str::removeLeft($settings['item_title'], '@ron:')] = $item_title; // Add the title
                         $with['item_pubdate'] = $item->get_date(); // Add the pubdate
-                        $slugged = slugify($item->get_title());
+                        $item_title_slugged = slugify($item_title);
 
                         // Item description
-                        if (isset($info['item_description']) && $item->get_description()) {
-                            if ($info['item_description'] != false) {
-                                $with[Str::removeLeft($info['item_description'], '@ron:')] = $item->get_description();
+                        if (isset($settings['item_description']) && $item->get_description()) {
+                            if ($settings['item_description'] != false) {
+                                $with[Str::removeLeft($settings['item_description'], '@ron:')] = $item->get_description();
                             }
                         }
 
                         // Item content
-                        if (isset($info['item_content']) && $item->get_content()) {
-                            if ($info['item_content'] != false) {
-                                $with[Str::removeLeft($info['item_content'], '@ron:')] = $item->get_content();
+                        if (isset($settings['item_content']) && $item->get_content()) {
+                            if ($settings['item_content'] != false) {
+                                $with[Str::removeLeft($settings['item_content'], '@ron:')] = $item->get_content();
                             }
                         }
 
                         // Item permalink
-                        if (isset($info['item_permalink']) && $item->get_permalink()) {
-                            if ($info['item_permalink'] != false) {
-                                $with[Str::removeLeft($info['item_permalink'], '@ron:')] = $item->get_permalink();
+                        if (isset($settings['item_permalink']) && $item->get_permalink()) {
+                            if ($settings['item_permalink'] != false) {
+                                $with[Str::removeLeft($settings['item_permalink'], '@ron:')] = $item->get_permalink();
                             }
                         }
 
                         // Item authors
-                        if (isset($info['author_options'])) {
-                            $author_options = $info['author_options'];
+                        if (isset($settings['author_options'])) {
+                            $author_options = $settings['author_options'];
 
-                            if (isset($info['item_authors'])) {
-                                if ($info['item_authors'] != false) {
+                            if (isset($settings['item_authors'])) {
+                                if ($settings['item_authors'] != false) {
                                     if ($author_options == 'create') {
                                         if ($author = $item->get_author()) {
 
@@ -153,7 +159,7 @@ class UpdateCommand extends Command
 
                                                 }
 
-                                                $with[Str::removeLeft($info['item_authors'], '@ron:')] = User::whereUsername(slugify($authorname))->get('id');
+                                                $with[Str::removeLeft($settings['item_authors'], '@ron:')] = User::whereUsername(slugify($authorname))->get('id');
                                                 $this->info('Adding '. $authorname);
 
                                             } else {
@@ -165,16 +171,16 @@ class UpdateCommand extends Command
                                         }
                                     } else {
                                         // Assign to an existing user
-                                        $with[Str::removeLeft($info['item_authors'], '@ron:')] = $author;
+                                        $with[Str::removeLeft($settings['item_authors'], '@ron:')] = $author;
                                     }
                                 }
                             }
                         }
 
                         // Item categories
-                        if (isset($info['item_taxonomies']) && $item->get_categories()) {
-                            if ($info['item_taxonomies'] != false) {
-                                $with[Str::removeLeft($info['item_taxonomies'], '@ron:')] = $this->add_item_categories($item);
+                        if (isset($settings['item_taxonomies']) && $item->get_categories()) {
+                            if ($settings['item_taxonomies'] != false) {
+                                $with[Str::removeLeft($settings['item_taxonomies'], '@ron:')] = $this->add_item_categories($item);
                             }
                         }
 
@@ -183,13 +189,13 @@ class UpdateCommand extends Command
                             $enclosure_type = $enclosure->get_type();
                             $enclosure_link = $enclosure->get_link();
 
-                            if (isset($info['item_thumbnail'])) {
-                                if ($info['item_thumbnail'] != false) {
+                            if (isset($settings['item_thumbnail'])) {
+                                if ($settings['item_thumbnail'] != false) {
                                     if ($enclosure_type == 'image/jpeg' || $enclosure_type == 'image/png' || $enclosure_type == 'image/gif') {
                                         if ($save_images) {
-                                            $with[Str::removeLeft($info['item_thumbnail'], '@ron:')] = $this->grab_image($enclosure_link, $assetcontainer);
+                                            $with[Str::removeLeft($settings['item_thumbnail'], '@ron:')] = $this->grab_image($enclosure_link, $assetcontainer);
                                         } else {
-                                            $with[Str::removeLeft($info['item_thumbnail'], '@ron:')] = $enclosure_link;
+                                            $with[Str::removeLeft($settings['item_thumbnail'], '@ron:')] = $enclosure_link;
                                         }
                                     }
                                 }
@@ -197,22 +203,24 @@ class UpdateCommand extends Command
                         }
 
                         // Custom terms
-                        if (isset($info['custom_terms']) && isset($info['custom_taxonomies'])) {
-                            $with[$taxonomy] = $this->add_custom_terms($info['custom_terms']);
+                        if (isset($settings['custom_terms']) && isset($settings['custom_taxonomies'])) {
+                            $with[$taxonomy] = $this->add_custom_terms($settings['custom_terms']);
                         }
 
-                        // Create an entry
-                        if (Entry::slugExists($slugged, $publish_to)) {
 
-                            $this->info($item->get_title() . " <fg=red>already exists</>");
+                        // Create an entry
+                        if (Entry::slugExists($item_title_slugged, $publish_to)) {
+
+                            $this->info($item_title . " <fg=red>already exists</>");
 
                         } else {
 
-                            if ($info['status'] == 'publish') {
+                            // Checks the status
+                            if ($settings['status'] == 'publish') {
 
-                                $this->info('Adding "' . $item->get_title() . '"');
+                                $this->info('Adding "' . $item_title . '"');
 
-                                Entry::create($slugged)
+                                Entry::create($item_title_slugged)
                                     ->collection($publish_to)
                                     ->with($with)
                                     ->date($item->get_date('Y-m-d'))
@@ -220,9 +228,9 @@ class UpdateCommand extends Command
 
                             } else {
 
-                                $this->info('Adding "' . $item->get_title() . '" <fg=red>(draft)</>');
+                                $this->info('Adding "' . $item_title . '" <fg=red>(draft)</>');
 
-                                Entry::create($slugged)
+                                Entry::create($item_title_slugged)
                                     ->collection($publish_to)
                                     ->published(false)
                                     ->with($with)
@@ -366,5 +374,69 @@ class UpdateCommand extends Command
             array_push($itemcategories, $category->get_label());
         }
         return $itemcategories;
+    }
+
+
+    /**
+     * Run the `anchorman:init` event.
+     *
+     * This allows the feed to be short-circuited after init.
+     * Or, the feed may be modified. Lastly, an addon could just 'do something'
+     * here without modifying/stopping the feed.
+     *
+     * Expects an array of event responses (multiple listeners can listen for the same event).
+     * Each response in the array should be another array with an `feed` key.
+     *
+     * @param  Feed $feed
+     * @return array
+     */
+    private function runFeedInitEvent($feed)
+    {
+        $responses = $this->emitEvent('init', $feed);
+
+        foreach ($responses as $response) {
+            // Ignore any non-arrays
+            if (! is_array($response)) {
+                continue;
+            }
+
+            // If the event returned an item, we'll replace it with that.
+            $feed = array_get($response, 'title');
+        }
+
+        return $feed;
+    }
+
+
+    /**
+     * Run the `anchorman:creating` event.
+     *
+     * This allows the item to be short-circuited before it gets saved.
+     * Or, the item may be modified. Lastly, an addon could just 'do something'
+     * here without modifying/stopping the item.
+     *
+     * Expects an array of event responses (multiple listeners can listen for the same event).
+     * Each response in the array should be another array with an `item` key.
+     *
+     * @param  Item $item
+     * @return array
+     */
+    private function runItemLoopEvent($item)
+    {
+        $this->info('<fg=yellow>Emitting $item: ' . $item . '</>');
+        $responses = $this->emitEvent('creating', $item);
+        // $this->info('<fg=magenta>$responses: ' . var_dump($responses) . '</>');
+
+        foreach ($responses as $response) {
+            // Ignore any non-arrays
+            if (! is_array($response)) {
+                continue;
+            }
+
+            // If the event returned an item, we'll replace it with that.
+            $item = array_get($response, 'title');
+        }
+
+        return $item;
     }
 }

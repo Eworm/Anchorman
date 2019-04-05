@@ -22,6 +22,7 @@ class AnchormanListener extends Listener
     */
     public $events = [
         'cp.nav.created' => 'addNavItems',
+        'Anchorman.creating' => 'changeEntry',
         'cp.add_to_head' => 'addToHead'
     ];
 
@@ -31,27 +32,18 @@ class AnchormanListener extends Listener
         $nav->addTo('tools', $syndication);
     }
 
-    protected function getPlaceholder($key, $field, $data)
+    public function changeEntry($item)
     {
-        if (! $data) {
-            return;
-        }
-
-        $vars = (new TagData)
-            ->with(Settings::load()->get('defaults'))
-            ->with($data->getWithCascade('anchorman', []))
-            ->withCurrent($data)
-            ->get();
-
-        return array_get($vars, $key);
+        return $item;
+        // return [
+        //     'entry' => $entry
+        // ];
     }
 
     public function addToHead()
     {
         $assetContainer = $this->getConfig('asset_container');
-
         $suggestions = json_encode((new FieldSuggestions)->suggestions());
-
         return "<script>var Anchorman = { assetContainer: '{$assetContainer}', fieldSuggestions: {$suggestions} };</script>";
     }
 }
