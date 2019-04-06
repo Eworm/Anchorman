@@ -37,3 +37,6 @@ Choose what to do with item thumbnails. Enable 'Save thumbnails' to save the thu
 Anchorman uses the `php please anchorman:refresh` task to check feeds for new articles. You'll have to add the cron to your server if you want to automate this task. [More info on how to is here](https://docs.statamic.com/addons/classes/tasks).
 
 You can also call the task manually from the command line (or press the 'Refresh all' button in the cp). Anchorman will only add new articles and will skip existing ones (same for terms, users and images). The pubdate of an item is used as the date to generate the filename.
+
+## Events
+Anchorman emits the `anchorman:init` event when updating a feed. The `raw_data` contains the rss data. This will return NULL when there aren't any new items in the feed.
