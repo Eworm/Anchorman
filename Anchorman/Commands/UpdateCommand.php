@@ -99,9 +99,6 @@ class UpdateCommand extends Command
                 // Add items to the chosen collection
                 foreach ($feed->get_items() as $item) {
 
-                    // Allow addons to modify the entry.
-                    $item = $this->runItemLoopEvent($item);
-
                     if ($enabled == true) {
 
                         $item_title = $item->get_title();
@@ -400,43 +397,10 @@ class UpdateCommand extends Command
                 continue;
             }
 
-            // If the event returned an item, we'll replace it with that.
-            $feed = array_get($response, 'title');
+            // If the event returned a response, we'll replace it with that.
+            $feed = $response;
         }
 
         return $feed;
-    }
-
-
-    /**
-     * Run the `anchorman:creating` event.
-     *
-     * This allows the item to be short-circuited before it gets saved.
-     * Or, the item may be modified. Lastly, an addon could just 'do something'
-     * here without modifying/stopping the item.
-     *
-     * Expects an array of event responses (multiple listeners can listen for the same event).
-     * Each response in the array should be another array with an `item` key.
-     *
-     * @param  Item $item
-     * @return array
-     */
-    private function runItemLoopEvent($item)
-    {
-        $this->info('<fg=yellow>Emitting $item: ' . $item . '</>');
-        $responses = $this->emitEvent('creating', $item);
-        // $this->info('<fg=magenta>$responses: ' . var_dump($responses) . '</>');
-
-        foreach ($responses as $response) {
-            // Ignore any non-arrays
-            if (! is_array($response)) {
-                continue;
-            }
-
-            // If the event returned an item, we'll replace it with that.
-            $item = array_get($response, 'title');
-        }
-
-        return $item;
     }
 }
