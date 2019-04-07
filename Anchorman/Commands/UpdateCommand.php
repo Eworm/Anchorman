@@ -57,7 +57,6 @@ class UpdateCommand extends Command
 
                 $settings   = $this->storage->getYaml($st_feed);
                 $url        = $settings['url'];
-                $publish_to = $settings['publish_to'];
                 $enabled    = $settings['enabled'];
 
                 // Add the last updated time to the feed info
@@ -80,8 +79,6 @@ class UpdateCommand extends Command
                 $feed->set_cache_location(Feed::cache_location());
                 $feed->set_feed_url($url);
                 $feed->init();
-                // Allow addons to modify the feed.
-                $feed = $this->runFeedInitEvent($feed);
                 $this->info('Updating ' . $feed->get_title());
                 $i = 0;
 
@@ -103,28 +100,29 @@ class UpdateCommand extends Command
 
                         $item_title = $item->get_title();
                         $with = [];
-                        $with[Str::removeLeft($settings['item_title'], '@ron:')] = $item_title; // Add the title
-                        $with['item_pubdate'] = $item->get_date(); // Add the pubdate
-                        $item_title_slugged = slugify($item_title);
+                        $with['collection'] = $settings['publish_to'];
+                        $with['entry'][Str::removeLeft($settings['item_title'], '@ron:')] = $item_title; // Add the title
+                        $with['entry']['item_pubdate'] = $item->get_date(); // Add the pubdate
+                        $with['create'] = true;
 
                         // Item description
                         if (isset($settings['item_description']) && $item->get_description()) {
                             if ($settings['item_description'] != false) {
-                                $with[Str::removeLeft($settings['item_description'], '@ron:')] = $item->get_description();
+                                $with['entry'][Str::removeLeft($settings['item_description'], '@ron:')] = $item->get_description();
                             }
                         }
 
                         // Item content
                         if (isset($settings['item_content']) && $item->get_content()) {
                             if ($settings['item_content'] != false) {
-                                $with[Str::removeLeft($settings['item_content'], '@ron:')] = $item->get_content();
+                                $with['entry'][Str::removeLeft($settings['item_content'], '@ron:')] = $item->get_content();
                             }
                         }
 
                         // Item permalink
                         if (isset($settings['item_permalink']) && $item->get_permalink()) {
                             if ($settings['item_permalink'] != false) {
-                                $with[Str::removeLeft($settings['item_permalink'], '@ron:')] = $item->get_permalink();
+                                $with['entry'][Str::removeLeft($settings['item_permalink'], '@ron:')] = $item->get_permalink();
                             }
                         }
 
@@ -156,7 +154,7 @@ class UpdateCommand extends Command
 
                                                 }
 
-                                                $with[Str::removeLeft($settings['item_authors'], '@ron:')] = User::whereUsername(slugify($authorname))->get('id');
+                                                $with['entry'][Str::removeLeft($settings['item_authors'], '@ron:')] = User::whereUsername(slugify($authorname))->get('id');
                                                 $this->info('Adding '. $authorname);
 
                                             } else {
@@ -168,7 +166,7 @@ class UpdateCommand extends Command
                                         }
                                     } else {
                                         // Assign to an existing user
-                                        $with[Str::removeLeft($settings['item_authors'], '@ron:')] = $author;
+                                        $with['entry'][Str::removeLeft($settings['item_authors'], '@ron:')] = $author;
                                     }
                                 }
                             }
@@ -177,7 +175,7 @@ class UpdateCommand extends Command
                         // Item categories
                         if (isset($settings['item_taxonomies']) && $item->get_categories()) {
                             if ($settings['item_taxonomies'] != false) {
-                                $with[Str::removeLeft($settings['item_taxonomies'], '@ron:')] = $this->add_item_categories($item);
+                                $with['entry'][Str::removeLeft($settings['item_taxonomies'], '@ron:')] = $this->add_item_categories($item);
                             }
                         }
 
@@ -190,9 +188,9 @@ class UpdateCommand extends Command
                                 if ($settings['item_thumbnail'] != false) {
                                     if ($enclosure_type == 'image/jpeg' || $enclosure_type == 'image/png' || $enclosure_type == 'image/gif') {
                                         if ($save_images) {
-                                            $with[Str::removeLeft($settings['item_thumbnail'], '@ron:')] = $this->grab_image($enclosure_link, $assetcontainer);
+                                            $with['entry'][Str::removeLeft($settings['item_thumbnail'], '@ron:')] = $this->grab_image($enclosure_link, $assetcontainer);
                                         } else {
-                                            $with[Str::removeLeft($settings['item_thumbnail'], '@ron:')] = $enclosure_link;
+                                            $with['entry'][Str::removeLeft($settings['item_thumbnail'], '@ron:')] = $enclosure_link;
                                         }
                                     }
                                 }
@@ -201,42 +199,48 @@ class UpdateCommand extends Command
 
                         // Custom terms
                         if (isset($settings['custom_terms']) && isset($settings['custom_taxonomies'])) {
-                            $with[$taxonomy] = $this->add_custom_terms($settings['custom_terms']);
+                            $with['entry'][$taxonomy] = $this->add_custom_terms($settings['custom_terms']);
                         }
 
+                        // Allow addons to modify the entry.
+                        $with = $this->runBeforeCreateEvent(array($with));
 
-                        // Create an entry
-                        if (Entry::slugExists($item_title_slugged, $publish_to)) {
+                        if ($with['create'] == true) {
 
-                            $this->info($item_title . " <fg=red>already exists</>");
+                            // Create an entry
+                            if (Entry::slugExists(slugify($with['entry']['title']), $with['collection'])) {
 
-                        } else {
-
-                            // Checks the status
-                            if ($settings['status'] == 'publish') {
-
-                                $this->info('Adding "' . $item_title . '"');
-
-                                Entry::create($item_title_slugged)
-                                    ->collection($publish_to)
-                                    ->with($with)
-                                    ->date($item->get_date('Y-m-d'))
-                                    ->save();
+                                $this->info($item_title . " <fg=red>already exists</>");
 
                             } else {
 
-                                $this->info('Adding "' . $item_title . '" <fg=red>(draft)</>');
+                                // Checks the status
+                                if ($settings['status'] == 'publish') {
 
-                                Entry::create($item_title_slugged)
-                                    ->collection($publish_to)
-                                    ->published(false)
-                                    ->with($with)
-                                    ->date($item->get_date('Y-m-d'))
-                                    ->save();
+                                    $this->info('Adding "' . $item_title . '"');
+
+                                    Entry::create(slugify($with['entry']['title']))
+                                        ->collection($with['collection'])
+                                        ->with($with['entry'])
+                                        ->date($item->get_date('Y-m-d'))
+                                        ->save();
+
+                                } else {
+
+                                    $this->info('Adding "' . $item_title . '" <fg=red>(draft)</>');
+
+                                    Entry::create(slugify($with['entry']['title']))
+                                        ->collection($with['collection'])
+                                        ->published(false)
+                                        ->with($with['entry'])
+                                        ->date($item->get_date('Y-m-d'))
+                                        ->save();
+
+                                }
+
+                                $i++;
 
                             }
-
-                            $i++;
 
                         }
 
@@ -250,7 +254,7 @@ class UpdateCommand extends Command
 
                 } else {
 
-                    $this->info("Update complete. I found " . $i . " new articles and added them to " . $publish_to . ".");
+                    $this->info("Update complete. I found " . $i . " new articles and added them to " . $with['collection'] . ".");
 
                 }
                 $this->info("\n");
@@ -375,21 +379,21 @@ class UpdateCommand extends Command
 
 
     /**
-     * Run the `anchorman:init` event.
+     * Run the `anchorman:beforecreate` event.
      *
-     * This allows the feed to be short-circuited after init.
-     * Or, the feed may be modified. Lastly, an addon could just 'do something'
-     * here without modifying/stopping the feed.
+     * This allows the entry to be short-circuited right before it's being created.
+     * Or, the entry may be modified. Lastly, an addon could just 'do something'
+     * here without modifying/stopping the entry.
      *
      * Expects an array of event responses (multiple listeners can listen for the same event).
-     * Each response in the array should be another array with an `feed` key.
+     * Each response in the array should be another array with an `entry` key.
      *
-     * @param  Feed $feed
+     * @param  Entry $entry
      * @return array
      */
-    private function runFeedInitEvent($feed)
+    private function runBeforeCreateEvent($entry)
     {
-        $responses = $this->emitEvent('init', $feed);
+        $responses = $this->emitEvent('beforecreate', $entry);
 
         foreach ($responses as $response) {
             // Ignore any non-arrays
@@ -398,9 +402,9 @@ class UpdateCommand extends Command
             }
 
             // If the event returned a response, we'll replace it with that.
-            $feed = $response;
+            $entry = $response;
         }
 
-        return $feed;
+        return $entry;
     }
 }
