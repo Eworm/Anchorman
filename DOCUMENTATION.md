@@ -37,3 +37,24 @@ Choose what to do with item thumbnails. Enable 'Save thumbnails' to save the thu
 Anchorman uses the `php please anchorman:refresh` task to check feeds for new articles. You'll have to add the cron to your server if you want to automate this task. [More info on how to is here](https://docs.statamic.com/addons/classes/tasks).
 
 You can also call the task manually from the command line (or press the 'Refresh all' button in the cp). Anchorman will only add new articles and will skip existing ones (same for terms, users and images). The pubdate of an item is used as the date to generate the filename.
+
+
+## Events
+Anchorman fires the `Anchorman:beforecreate` event right before creating an entry, and gives you the entry data, the collection and the option to cancel creating the entry. This is an example of the array:
+
+```
+{
+    "collection": "newsdesk",
+    "entry": {
+        "title": "Anchorman Ron Burgundy writes 'tell all autobiography",
+        "item_pubdate": "14 August 2013, 2:06 pm",
+        "sub_title": "<p>Anchorman star Ron Burgundy, the alter-ego of comedian Will Ferrell, is to release an "autobiography" in November.<\/p>",
+        "content": "<p>Let Me Off At The Top: My Classy Life and Other Musings promises to "tell all" about his rise to the top. A statement issued on behalf Ron Burgundy said he was "too close to the work" to tell if it is "the greatest autobiography ever written". "I will tell you this much: The first time I sat down and read this thing... I cried like a goddamn baby," he added. And you can take that to the bank.<\/p>",
+        "author": "721ca039-4244-47e8-b738-2a343da580a5",
+        "intro_image": 'ron_burgundy.jpg'
+    },
+    "create": true
+}
+```
+
+Instead of filters in the control panel you can use this to change the collection, content or disable creating the entry by setting `create: false`;

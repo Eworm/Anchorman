@@ -379,7 +379,7 @@ class UpdateCommand extends Command
 
 
     /**
-     * Run the `anchorman:beforecreate` event.
+     * Run the `Anchorman:beforecreate` event.
      *
      * This allows the entry to be short-circuited right before it's being created.
      * Or, the entry may be modified. Lastly, an addon could just 'do something'
