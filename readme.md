@@ -11,11 +11,11 @@ You can use it for free while in development, but requires a license to use on a
 * Add custom queries and add custom terms to each entry
 * Add authors as new users or attribute new articles to an existing user
 * Save images to the assetcontainer of your choice
+* Listen to the `Anchorman:beforecreate` event to change the collection, the contents of the entry, or even disable creating the entry!
 
 ## Future plans
 * More cp translations
 * Cleaner code
-* Rules?
 
 _Features requests? Found a bug? [Let me know!](mailto:wout@woutmager.nl)_
 
