@@ -19,6 +19,18 @@ sections:
         options:
           publish: Publish
           draft: Save as draft
+      cache_section:
+        type: section
+      cache:
+        type: toggle
+      cache_duration:
+        type: text
+        width: 25
+        show_when:
+          cache:
+            true
+      query_section:
+        type: section
       query:
         type: toggle
       query_grid:

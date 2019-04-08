@@ -11,9 +11,19 @@ return [
     'enabled_instruct' => "If disabled, this feed won't check for new articles.",
 
     'scheduling' => 'Schedule',
-    'scheduling_instruct' => 'Wait time between updates, in minutes.',
+    'scheduling_instruct' => 'Wait time between updates (minutes).',
 
     'status' => 'What to do with new articles',
+
+    'cache_section' => 'Cache',
+
+    'cache' => "Use caching",
+    'cache_instruct' => "If disabled, this feed won't use caching. This might make fetching new articles a little slower. [More info](http://simplepie.org/wiki/faq/how_does_simplepie_s_caching_http_conditional_get_system_work)",
+
+    'cache_duration' => "Cache freshness",
+    'cache_duration_instruct' => "How long before asking for a fresh copy (seconds).",
+
+    'query_section' => 'Custom queries',
 
     'query' => 'Add custom queries',
 

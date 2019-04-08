@@ -64,20 +64,29 @@ class UpdateCommand extends Command
                 $this->storage->putYAML($st_feed, $settings);
 
                 if (isset($settings['item_author'])) {
-                    $author = $settings['item_author'];
+                    $author = $settings['item_author']; // What to do with authors
                 }
 
                 if (isset($settings['images_container'])) {
-                    $assetcontainer = $settings['images_container'];
+                    $assetcontainer = $settings['images_container']; // Where to save images
                 }
 
                 if (isset($settings['save_images'])) {
-                    $save_images = $settings['save_images'];
+                    $save_images = $settings['save_images']; // Should I save images?
                 }
 
                 $feed = new SimplePie();
                 $feed->set_cache_location(Feed::cache_location());
                 $feed->set_feed_url($url);
+
+                if (isset($settings['cache_duration'])) {
+                    $feed->set_cache_duration($settings['cache_duration']); // Custom cache duration
+                }
+
+                if (isset($settings['cache']) && $settings['cache'] == false) {
+                    $feed->enable_cache(false); // Disable caching
+                }
+
                 $feed->init();
                 $this->info('Updating ' . $feed->get_title());
                 $i = 0;
