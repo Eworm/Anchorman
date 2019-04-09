@@ -79,12 +79,14 @@ class UpdateCommand extends Command
                 $feed->set_cache_location(Feed::cache_location());
                 $feed->set_feed_url($url);
 
-                if (isset($settings['cache_duration'])) {
-                    $feed->set_cache_duration($settings['cache_duration']); // Custom cache duration
-                }
-
-                if (isset($settings['cache']) && $settings['cache'] == false) {
-                    $feed->enable_cache(false); // Disable caching
+                if (isset($settings['cache'])) {
+                    if ($settings['cache'] == false) {
+                        $feed->enable_cache(false); // Disable caching
+                    } else {
+                        if (isset($settings['cache_duration'])) {
+                            $feed->set_cache_duration($settings['cache_duration']); // Custom cache duration
+                        }
+                    }
                 }
 
                 $feed->init();
