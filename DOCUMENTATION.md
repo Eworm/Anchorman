@@ -1,16 +1,16 @@
 After installing Anchorman you'll see a new menu-item in Tools called Syndication.
 
 ## Adding a new feed
-Click the 'Add a feed' button. You'll go to a new page which asks for 2 things: the feed url, and which collection new articles should be added to. Clicking save will create a new feed.
+Click the 'Add a feed' button. Add the necessary info and click save.
 
-There is some additional info saved with the new feed. The feed title, copyright, language and permalink are also saved. Some settings are set to their standard:
+There is some additional info saved with the new feed. The feed title, copyright, language and permalink are also saved. Some settings are set to as a standard value:
 
 * Feed updates are enabled.
 * Scheduling is set to 60 minutes.
 * New articles are set to publish and use the 'Blog' collection.
 * The article title, description, content and authors are saved as defaults.
 
-These settings are the most basic info a feed update needs. But you'll probably want to tweak the feed info more.
+These settings are the most basic info a feed update needs. But you really should tweak the feed settings more.
 
 ## About the from field/custom/disabled fieldtype
 You'll see a lot of fieldtypes with a select input next to a text/suggest fieldtype. You can use these fieldtypes to map content from the feed items to your statamic entries. Since there's no way to check the feed for available content you'll just have to check the feed yourself to see which info you can work with.
