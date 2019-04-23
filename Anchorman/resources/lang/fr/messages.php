@@ -2,8 +2,8 @@
 
 return [
 
-    'source_suggest_placeholder' => 'Select or type a field name containing the value.',
-    'no_collections' => 'There are no collections.',
-    'no_taxonomies' => 'There are no taxonomies.',
+    'source_suggest_placeholder' => ' Sélectionnez ou tapez un nom de champ contenant la valeur.',
+    'no_collections' => "Il n' y a pas de collections.",
+    'no_taxonomies' => "Il n' y a as de taxonomies.",
 
 ];

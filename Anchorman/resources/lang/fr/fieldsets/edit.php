@@ -17,11 +17,11 @@ return [
 
     'cache_section' => 'Cache',
 
-    'cache' => "Use caching",
-    'cache_instruct' => "If disabled, this feed won't use caching. This might make fetching new articles a little slower. [More info](http://simplepie.org/wiki/faq/how_does_simplepie_s_caching_http_conditional_get_system_work)",
+    'cache' => "Utilisation de la mise en cache",
+    'cache_instruct' => "Si désactivé, ce flux n'utilisera pas la mise en cache. Cela pourrait rendre la récupération des nouveaux articles un peu plus lent. [Plus d'infos](http://simplepie.org/wiki/faq/how_does_simplepie_s_caching_http_conditional_get_system_work)",
 
-    'cache_duration' => "Cache freshness",
-    'cache_duration_instruct' => "How long before asking for a fresh copy (seconds).",
+    'cache_duration' => "Fraicheur de mémoire cache",
+    'cache_duration_instruct' => "Combien de temps avant de demander une nouvelle copie (secondes).",
 
     'query_section' => 'Custom queries',
 
