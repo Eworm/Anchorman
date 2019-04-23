@@ -43,6 +43,8 @@
                                 <td class="cell-permalink">
                                     <a href="{{ $feed->url }}" rel="external" target="_blank">
                                         {{ $feed->url }}
+                                    </a> - <a href="https://validator.w3.org/feed/check.cgi?url={{ $feed->url }}" target="_blank">
+                                        Validate
                                     </a>
                                 </td>
 
