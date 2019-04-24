@@ -214,7 +214,7 @@ class UpdateCommand extends Command
                         }
 
                         // Allow addons to modify the entry.
-                        $with = $this->runBeforeCreateEvent(array($with));
+                        $with = $this->runBeforeCreateEvent($with);
 
                         if ($with['create'] == true) {
 
