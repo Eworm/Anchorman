@@ -214,7 +214,7 @@ class UpdateCommand extends Command
                         }
 
                         // Allow addons to modify the entry.
-                        $with = $this->runBeforeCreateEvent($with);
+                        $with = $this->runBeforeCreateEvent(array($with));
 
                         if ($with['create'] == true) {
 
@@ -397,7 +397,6 @@ class UpdateCommand extends Command
      * here without modifying/stopping the entry.
      *
      * Expects an array of event responses (multiple listeners can listen for the same event).
-     * Each response in the array should be another array with an `entry` key.
      *
      * @param  Entry $entry
      * @return array
@@ -406,14 +405,24 @@ class UpdateCommand extends Command
     {
         $responses = $this->emitEvent('beforecreate', $entry);
 
-        foreach ($responses as $response) {
-            // Ignore any non-arrays
-            if (! is_array($response)) {
-                continue;
+        // Replace entry with the response
+        if (!empty(reset($responses))) {
+
+            foreach ($responses as $response) {
+                // Ignore any non-arrays
+                if (! is_array($response)) {
+                    continue;
+                }
+
+                // If the event returned a response, we'll replace it with that.
+                $entry = $response;
             }
 
-            // If the event returned a response, we'll replace it with that.
-            $entry = $response;
+        } else {
+
+            // Otherwise use the original entry, but it has to be reset.
+            $entry = reset($entry);
+
         }
 
         return $entry;
